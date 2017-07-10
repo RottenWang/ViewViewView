@@ -1,7 +1,14 @@
 package com.drwang.views.base;
 
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
@@ -15,9 +22,58 @@ public abstract class BasicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         int resId = setContentViewRes();
         setContentView(resId);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+
+        // 更改状态栏颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.holo_blue_bright));
+
+            //底部导航栏
+            //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
+        }
+
+        //沉浸状态栏
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            decorView.setSystemUiVisibility(option);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
+
+        //小米手机设置状态栏颜色 黑色 /白色
+//        setStatusBarDarkMode(true,this);
         ButterKnife.bind(this);
         initializeView();
         initializeData();
+    }
+
+    public void setStatusBarDarkMode(boolean darkmode, Activity activity) {
+        Class<? extends Window> clazz = activity.getWindow().getClass();
+        try {
+            int darkModeFlag = 0;
+            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+            darkModeFlag = field.getInt(layoutParams);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     protected abstract void initializeView();
