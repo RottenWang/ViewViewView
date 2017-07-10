@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_marginTop="5dp"
-        android:id="@+id/tv_pieview"
-        android:textSize="18dp"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:background="@android:color/holo_blue_light"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="烧饼" />
+
+        <TextView
+            android:id="@+id/tv_pieview"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="@android:color/holo_blue_bright"
+            android:text="烧饼"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
 
 </LinearLayout>
