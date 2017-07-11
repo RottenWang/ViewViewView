@@ -17,7 +17,7 @@ public class IntentUtil {
     public static void toPieViewActivity(Activity activity) {
         if (activity == null){
             return;
-        }
+             }
 
         Intent intent = new Intent(activity, PieViewActivity.class);
         activity.startActivity(intent);
