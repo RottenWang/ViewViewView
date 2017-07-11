@@ -28,3 +28,6 @@ http://gitbook.liuhui998.com/
 
 #git
 https://git-scm.com/doc
+
+#git 看到了哪
+https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches
