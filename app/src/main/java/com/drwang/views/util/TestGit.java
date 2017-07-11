@@ -6,7 +6,8 @@ package com.drwang.views.util;
 
 public class TestGit {
 
+    public TestGit() {
+    }
 
 
-    
 }

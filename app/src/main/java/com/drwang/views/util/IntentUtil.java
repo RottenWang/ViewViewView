@@ -18,6 +18,7 @@ public class IntentUtil {
         if (activity == null){
             return;
         }
+
         Intent intent = new Intent(activity, PieViewActivity.class);
         activity.startActivity(intent);
     }
