@@ -80,5 +80,6 @@ public abstract class BasicActivity extends AppCompatActivity {
 
     protected abstract void initializeData();
 
+
     public abstract int setContentViewRes();
 }
