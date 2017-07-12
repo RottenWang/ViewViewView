@@ -1,99 +1,99 @@
-1.È«¾ÖÅäÖÃ
+1.å…¨å±€é…ç½®
 
 git config --global user.name "Your name"
 git config --global user.email ccwz07@163.com
 
-Ö»ÊÇÌØ¶¨µÄproject  È¥µô --global
+åªæ˜¯ç‰¹å®šçš„project  å»æ‰ --global
 
-²é¿´config
+æŸ¥çœ‹config
 git config --list
-²é¿´ÌØ¶¨µÄconfig
+æŸ¥çœ‹ç‰¹å®šçš„config
 git config user.name
 
-²é¿´°ïÖú 
-git help 
+æŸ¥çœ‹å¸®åŠ©
+git help
 
-2.»ù´¡
+2.åŸºç¡€
 
-³õÊ¼»¯Ò»¸ö²Ö¿â
-$ cd /c/user/your_repository 
+åˆå§‹åŒ–ä¸€ä¸ªä»“åº“
+$ cd /c/user/your_repository
 $ git init
- Ìí¼Ó´ËÎÄ¼ş¼ĞÖĞµÄÎÄ¼şµ½Ë÷ÒıÖĞ.
+ æ·»åŠ æ­¤æ–‡ä»¶å¤¹ä¸­çš„æ–‡ä»¶åˆ°ç´¢å¼•ä¸­.
 $ git add *.c
 $ git add LICENSE
 $ git commit -m 'initial project version'
 
-»ñÈ¡Ò»¸öÒÑ´æÔÚµÄ²Ö¿â
+è·å–ä¸€ä¸ªå·²å­˜åœ¨çš„ä»“åº“
 git clone https://github.com/abc
-ÔÚ±¾µØ´´½¨Ò»¸ö±ğÃûµÄÎÄ¼ş¼Ğ 
+åœ¨æœ¬åœ°åˆ›å»ºä¸€ä¸ªåˆ«åçš„æ–‡ä»¶å¤¹
 git clone https://github.com/abc ddd
 
-¼ì²éÎÄ¼ş×´Ì¬
+æ£€æŸ¥æ–‡ä»¶çŠ¶æ€
 git status
-¼ì²éÎÄ¼ş×´Ì¬ ¸ü¼ò¶ÌµÄĞÅÏ¢
+æ£€æŸ¥æ–‡ä»¶çŠ¶æ€ æ›´ç®€çŸ­çš„ä¿¡æ¯
 git status -s
-Ìí¼ÓÎÄ¼şµ½Ë÷Òı
+æ·»åŠ æ–‡ä»¶åˆ°ç´¢å¼•
 git add README
 
-²é¿´ºöÂÔÎÄ¼ş
-cat .gitignore  ºöÂÔ¹æÔò Çë²é¿´ https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
-²é¿´»¹Î´stagedµÄ¸Ä¶¯
+æŸ¥çœ‹å¿½ç•¥æ–‡ä»¶
+cat .gitignore  å¿½ç•¥è§„åˆ™ è¯·æŸ¥çœ‹ https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
+æŸ¥çœ‹è¿˜æœªstagedçš„æ”¹åŠ¨
 git diff
-²é¿´ÒÑ¾­stagedµÄ¸Ä¶¯ ¿ÉÄÜÊÇÏÂ¸öÌá½»½«Òª¸Ä¶¯µÄÄÚÈİ
+æŸ¥çœ‹å·²ç»stagedçš„æ”¹åŠ¨ å¯èƒ½æ˜¯ä¸‹ä¸ªæäº¤å°†è¦æ”¹åŠ¨çš„å†…å®¹
 git diff --staged
 
-Ìá½»¸Ä¶¯
+æäº¤æ”¹åŠ¨
 $ git add     $ git commit
 git commit -m "Your Commit Message"
-Ìí¼Ó²¢Ìá½»
+æ·»åŠ å¹¶æäº¤
 git commit -am "Your Commit Message"
-ºÍÉÏ´ÎÌá½»ºÏ²¢ÎªÒ»¸öÌá½»
+å’Œä¸Šæ¬¡æäº¤åˆå¹¶ä¸ºä¸€ä¸ªæäº¤
 git commit --amend
 
 
-ÒÆ³ıÎÄ¼ş(²»ÊÇºÜ¶®)
+ç§»é™¤æ–‡ä»¶(ä¸æ˜¯å¾ˆæ‡‚)
 git rm
 
-ÒÆ¶¯ÎÄ¼ş 
+ç§»åŠ¨æ–‡ä»¶
 git rm file_from file_to
 
-²é¿´Ìá½»ÀúÊ·
+æŸ¥çœ‹æäº¤å†å²
 git log
-²é¿´½ü2´ÎÌá½»
+æŸ¥çœ‹è¿‘2æ¬¡æäº¤
 git log -p -2
-²é¿´¼ò¶Ì½éÉÜ
+æŸ¥çœ‹ç®€çŸ­ä»‹ç»
 git log -stat
-²é¿´Ò»ĞĞ
+æŸ¥çœ‹ä¸€è¡Œ
 git log --pretty=oneline
 
-»ØÍËÒÑ¾­¸ü¸ÄµÄÎÄ¼şµ½×îĞÂµÄÌá½»Ê±µÄ×´Ì¬
-git reset HEAD README.md  
-git reset --hard HEAD README.md »ØÍË²¢ÇÒ²»±£Áô¸ü¸Ä
- 
-È¡Ïû¸ü¸ÄÒ»¸öÎÄ¼ş
+å›é€€å·²ç»æ›´æ”¹çš„æ–‡ä»¶åˆ°æœ€æ–°çš„æäº¤æ—¶çš„çŠ¶æ€
+git reset HEAD README.md
+git reset --hard HEAD README.md å›é€€å¹¶ä¸”ä¸ä¿ç•™æ›´æ”¹
+
+å–æ¶ˆæ›´æ”¹ä¸€ä¸ªæ–‡ä»¶
 git checkout -- FileName
- 
-´´½¨·ÖÖ§
+
+åˆ›å»ºåˆ†æ”¯
 git branch branchName
-ÇĞ»»·ÖÖ§
+åˆ‡æ¢åˆ†æ”¯
 git checkout branchName
-´´½¨ĞÂ·ÖÖ§²¢ÇĞ»»
+åˆ›å»ºæ–°åˆ†æ”¯å¹¶åˆ‡æ¢
 git checkout -b branchName
-É¾³ı·ÖÖ§
+åˆ é™¤åˆ†æ”¯
 git branch -d branchName
-ºÏ²¢·ÖÖ§
+åˆå¹¶åˆ†æ”¯
 git checkout branchName1
 git merge branchName2
-»á½«·ÖÖ§2 ºÏ²¢µ½·ÖÖ§1
-ÓĞ³åÍ»½â¾öÃ»ÓĞÖ±½Ógit commit
+ä¼šå°†åˆ†æ”¯2 åˆå¹¶åˆ°åˆ†æ”¯1
+æœ‰å†²çªè§£å†³æ²¡æœ‰ç›´æ¥git commit
 
-²é¿´ËùÓĞ·ÖÖ§µÄ×îºóÒ»´ÎÌá½»
+æŸ¥çœ‹æ‰€æœ‰åˆ†æ”¯çš„æœ€åä¸€æ¬¡æäº¤
 git branch -v
-²é¿´merge¹ıµÄ·ÖÖ§
+æŸ¥çœ‹mergeè¿‡çš„åˆ†æ”¯
 git branch --merged
-²é¿´Ã»ÓĞmerge¹ıµÄ·ÖÖ§
+æŸ¥çœ‹æ²¡æœ‰mergeè¿‡çš„åˆ†æ”¯
 git branch --no-merged
-É¾³ıÔ¶³Ì·ÖÖ§
+åˆ é™¤è¿œç¨‹åˆ†æ”¯
 git push origin --delete branchName
 
 
