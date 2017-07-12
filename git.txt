@@ -1,0 +1,100 @@
+1.全局配置
+
+git config --global user.name "Your name"
+git config --global user.email ccwz07@163.com
+
+只是特定的project  去掉 --global
+
+查看config
+git config --list
+查看特定的config
+git config user.name
+
+查看帮助 
+git help 
+
+2.基础
+
+初始化一个仓库
+$ cd /c/user/your_repository 
+$ git init
+ 添加此文件夹中的文件到索引中.
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+
+获取一个已存在的仓库
+git clone https://github.com/abc
+在本地创建一个别名的文件夹 
+git clone https://github.com/abc ddd
+
+检查文件状态
+git status
+检查文件状态 更简短的信息
+git status -s
+添加文件到索引
+git add README
+
+查看忽略文件
+cat .gitignore  忽略规则 请查看 https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
+查看还未staged的改动
+git diff
+查看已经staged的改动 可能是下个提交将要改动的内容
+git diff --staged
+
+提交改动
+$ git add     $ git commit
+git commit -m "Your Commit Message"
+添加并提交
+git commit -am "Your Commit Message"
+和上次提交合并为一个提交
+git commit --amend
+
+
+移除文件(不是很懂)
+git rm
+
+移动文件 
+git rm file_from file_to
+
+查看提交历史
+git log
+查看近2次提交
+git log -p -2
+查看简短介绍
+git log -stat
+查看一行
+git log --pretty=oneline
+
+回退已经更改的文件到最新的提交时的状态
+git reset HEAD README.md  
+git reset --hard HEAD README.md 回退并且不保留更改
+ 
+取消更改一个文件
+git checkout -- FileName
+ 
+创建分支
+git branch branchName
+切换分支
+git checkout branchName
+创建新分支并切换
+git checkout -b branchName
+删除分支
+git branch -d branchName
+合并分支
+git checkout branchName1
+git merge branchName2
+会将分支2 合并到分支1
+有冲突解决没有直接git commit
+
+查看所有分支的最后一次提交
+git branch -v
+查看merge过的分支
+git branch --merged
+查看没有merge过的分支
+git branch --no-merged
+删除远程分支
+git push origin --delete branchName
+
+
+
