@@ -95,6 +95,8 @@ git branch --merged
 git branch --no-merged
 删除远程分支
 git push origin --delete branchName
+推送本地分支到远程
+git push origin local_branch:origin_branch
 
 
 
