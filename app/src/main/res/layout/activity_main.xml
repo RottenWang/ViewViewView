@@ -5,14 +5,103 @@
     android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/tv_pieview"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@android:color/holo_blue_bright"
-            android:text="烧饼"
-            android:textColor="@android:color/black"
-            android:textSize="18dp" />
+    <TextView
+        android:id="@+id/tv_pieview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="烧饼"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_printSum"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print Sum"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_printFor"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print for"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_printWhile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print While"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_printWhen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print When(switch)"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_inin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print in"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_out"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print out"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_diedai"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print 迭代"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_inObj"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="print inObj"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
 
 </LinearLayout>
