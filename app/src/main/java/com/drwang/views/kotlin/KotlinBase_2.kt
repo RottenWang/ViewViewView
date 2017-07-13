@@ -54,6 +54,7 @@ data class KotlinBase_2(val name: String, val email: String) {
         this[index2] = tmp
     }
 
+
     fun a() {
         val l = mutableListOf(1, 2, 3)
         l.swap(0, 2) // “swap()”内部的“this”得到“l”的值
