@@ -103,5 +103,16 @@
         android:textColor="@android:color/black"
         android:textSize="18dp" />
 
+    <TextView
+        android:id="@+id/tv_paint"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="Paint"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
 
 </LinearLayout>

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.drwang.views.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,7 @@
         <activity
             android:name=".activity.PieViewActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.PaintActivity"></activity>
     </application>
 
 </manifest>
