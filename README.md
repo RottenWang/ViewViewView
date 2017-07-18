@@ -31,3 +31,9 @@ https://git-scm.com/doc
 
 #git 看到了哪
 https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches
+
+#kotlin
+https://www.kotlincn.net/
+
+#kotlin vs Java
+http://www.jcodecraeer.com/demo/from-java-to-kotlin/index.html
