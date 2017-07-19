@@ -21,7 +21,13 @@
         <activity
             android:name=".activity.PieViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PaintActivity"></activity>
+        <activity android:name=".activity.PaintActivity" />
+        <activity android:name=".activity.RecyclerActivity" />
+
+        <activity
+            android:name=".activity.SoftInputActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
+import com.drwang.views.activity.RecyclerActivity;
+import com.drwang.views.activity.SoftInputActivity;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -30,6 +32,22 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, PaintActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toRecyclerViewActivity(Activity activity) {
+        if (activity == null){
+            return;
+        }
+        Intent intent = new Intent(activity, RecyclerActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toSoftInputActivity(Activity activity) {
+        if (activity == null){
+            return;
+        }
+        Intent intent = new Intent(activity, SoftInputActivity.class);
         activity.startActivity(intent);
     }
 }

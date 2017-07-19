@@ -114,5 +114,27 @@
         android:textColor="@android:color/black"
         android:textSize="18dp" />
 
+    <TextView
+        android:id="@+id/tv_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="recyclerview"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_input_soft"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:text="input_soft"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
 
 </LinearLayout>
