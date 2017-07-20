@@ -1,13 +1,23 @@
 
 paint 的方法
 
-//设置一个渲染器  SweepGradient角度渲染  LinearGradient线性渲染 RadialGradient中心扩散渲染 BitmapShader ComposeShader
+//设置一个渲染器  TileMode 渲染模式: CLAMP延伸模式 REPEAT重复模式 MIRROR镜像模式
+1.SweepGradient(float cx, float cy, int color0, int color1)角度渲染 cx,cy 渲染的中心坐标 ,color0 开始渲染的颜色,color1 结束渲染的颜色  
+2.LinearGradient(float x0, float y0, float x1, float y1, int color0, int color1,TileMode tile)线性渲染 
+x0,y0 起点坐标 x1,y1, 坐标 color0,开始渲染的,color1,结束渲染的颜色.TileMode渲染模式
+3.RadialGradient(float centerX, float centerY, float radius,int centerColor, int edgeColor, @NonNull TileMode tileMode)中心扩散渲染
+centerX,centerY渲染的中心点 radius  渲染半径 centerColor 中心点的颜色,edgeColor 外层颜色.TileMode 渲染模式
+4.BitmapShader(@NonNull Bitmap bitmap, TileMode tileX, TileMode tileY) bitmap 渲染
+bitmap 需要渲染的bitmap   tileX x方向的渲染模式, tileY y方向的渲染模式
+5.ComposeShader(Shader shaderA, Shader shaderB, PorterDuff.Mode mode),混合渲染
+shaderA 第一个渲染器 shaderB 第二个渲染器 Mode  混合模式 src_in src_over 等
+如果shaderA和shaderB的是同一类型的渲染器 需要取消硬件加速  setLayerType(LAYER_TYPE_SOFTWARE, null);
 
 paint.setShader();
 
 //设置ColorFilter  
 
-  1. LightingColorFilter(int mul,int add); mul 与目标像素相乘,add 与目标像素相加, 参数都是颜色的int值一致
+1. LightingColorFilter(int mul,int add); mul 与目标像素相乘,add 与目标像素相加, 参数都是颜色的int值一致
    .最基本的参数为 mul = 0xffffff  add = 0x000000  这个时候设置上去 是没有任何效果的. 
    如果想去掉红色 让 mul = 0x00ffff  也就是红色的值改为0  add保持不变就可以 
    
