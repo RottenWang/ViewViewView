@@ -119,3 +119,10 @@ style，是用来指定拐弯改变的时候 shape 的转换方式 TRANSLATE：�
 在硬件加速开启的情况下， setShadowLayer() 只支持文字的绘制，文字之外的绘制必须关闭硬件加速才能正常绘制阴影。
 如果 shadowColor 是半透明的，阴影的透明度就使用 shadowColor 自己的透明度；
 而如果 shadowColor 是不透明的，阴影的透明度就使用 paint 的透明度。
+
+//setMaskFilter(MaskFilter maskfilter)
+BlurMaskFilter(float radius, BlurMaskFilter.Blur style) 效果模糊的filter
+radius 模糊的半径  style NORMAL: 内外都模糊绘制 SOLID: 内部正常绘制，外部模糊 INNER: 内部模糊，外部不绘制 OUTER: 内部不绘制，外部模糊
+EmbossMaskFilter(float[] direction, float ambient, float specular, float blurRadius); 
+direction 是一个 3 个元素的数组，指定了光源的方向； ambient 是环境光的强度，数值范围是 0 到 1； 
+specular 是炫光的系数； blurRadius 是应用光线的范围
