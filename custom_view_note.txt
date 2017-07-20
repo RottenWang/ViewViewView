@@ -1,6 +1,8 @@
 
 paint 的方法
+
 一.........颜色
+
 //设置一个渲染器  TileMode 渲染模式: CLAMP延伸模式 REPEAT重复模式 MIRROR镜像模式
 1.SweepGradient(float cx, float cy, int color0, int color1)角度渲染 cx,cy 渲染的中心坐标 ,color0 开始渲染的颜色,color1 结束渲染的颜色  
 2.LinearGradient(float x0, float y0, float x1, float y1, int color0, int color1,TileMode tile)线性渲染 
@@ -72,7 +74,9 @@ paint.setColorFilter();
 Paint.Style.FILL_AND_STROKE 填充并画线
 Paint.Style.STROKE 画线
 Paint.Style.FILL 填充
+
 二......线条形状的方法:
+
 //setStrokeWidth(float width) 设置线条宽度  默认为0           
 
 //setStrokeCap(Cap cap) 设置端点形状
