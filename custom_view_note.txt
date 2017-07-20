@@ -47,3 +47,38 @@ paint.setShader();
 ColorMatrix.setSaturation(); 设置饱和度
 
 paint.setColorFilter();
+
+//setXferMode x 就是Trans 也就是 setTransferMode
+严谨地讲，Xfermode 指的是你要绘制的内容和 Canvas 的目标位置的内容应该怎样结合计算出最终的颜色。
+但通俗地说，其实就是要你以绘制的内容作为源图像，以 View 中已有的内容作为目标图像，选取一个 PorterDuff.Mode 作为绘制内容的颜色处理方案
+可以说是两个bitmap 以怎洋的形式进行合成.
+  示例代码:
+         // 使用 paint.setXfermode() 设置不同的结合绘制效果
+        int i = canvas.saveLayer(null, null, Canvas.ALL_SAVE_FLAG); //使用离屏缓冲
+        // 别忘了用 canvas.saveLayer() 开启 off-screen buffer
+        PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
+        canvas.drawBitmap(bitmap1, 0, 0, paint);
+        // 第一个：PorterDuff.Mode.SRC
+        paint.setXfermode(porterDuffXfermode);
+        canvas.drawBitmap(bitmap2, 0, 0, paint);
+        paint.setXfermode(null);//使用后要及时清除.
+        canvas.restoreToCount(i);
+注意:  要注意控制透明区域不能太小 .否则Xfermode是影响不到结果的.
+
+//setAntiAlias (boolean aa) 设置抗锯齿
+
+
+//setStyle(Style style) 三种模式
+Paint.Style.FILL_AND_STROKE 填充并画线
+Paint.Style.STROKE 画线
+Paint.Style.FILL 填充
+
+//setStrokeWidth(float width) 设置线条宽度  默认为0
+
+//setStrokeCap(Cap cap) 设置端点形状
+三种模式
+Cap.BUTT 平头  Cap.ROUND 圆头 Cap.SQUARE  方头
+
+//setStrokeJoin(Paint.Join join)设置拐角的形状
+三种模式
+MITER 尖拐角 BEVEL 平头拐角 ROUND 圆拐角
