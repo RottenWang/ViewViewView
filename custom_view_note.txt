@@ -88,5 +88,34 @@ Cap.BUTT 平头  Cap.ROUND 圆头 Cap.SQUARE  方头
 MITER 尖拐角 BEVEL 平头拐角 ROUND 圆拐角
 
 //setStrokeMiter(int miter) 当 拐角形状模式为 MITER 时 对其的一个补充
-默认值为4  大约为一个29%的角  小于这个角度的拐角 不会时间MITER模式 会换为BEVEL模式 因为MITER的尖角延长线太长 
+默认值为4  大约为一个29%的角  小于这个角度的拐角 不会使用MITER模式 会换为BEVEL模式 因为MITER的尖角延长线太长 
 
+三.......色彩优化的方法
+//setDither  设置是否开启图像的抖动
+//setFilterBitmap 设置是否使用双线性过滤来绘制bitmap
+
+//setPathEffect(PathEffect pathEffect)
+1.CornerPathEffect(int radius) 把所有拐角都变成圆角 radius  圆角的半径
+2.DiscretePathEffect(float segmentLength, float deviation); 把线条进行随机的偏离，让轮廓变得乱七八糟。
+segmentLength 是用来拼接的每个线段的长度， deviation 是偏离量。
+3.DashPathEffect(float[] intervals, float phase) 使用虚线来绘制线条
+第一个参数 intervals 是一个数组，它指定了虚线的格式：数组中元素必须为偶数（最少是 2 个），
+按照「画线长度、空白长度、画线长度、空白长度」……的顺序排列，
+第二个参数 phase 是虚线的偏移量。
+4.PathDashPathEffect(Path shape, float advance, float phase, PathDashPathEffect.Style style)  使用一个path 来绘制虚线
+shape: 用来绘制的path 
+advance 是两个相邻的 shape 段之间的间隔，不过注意，这个间隔是两个 shape 段的起点的间隔，而不是前一个的终点和后一个的起点的距离； 
+phase 和 DashPathEffect 中一样，是虚线的偏移；
+style，是用来指定拐弯改变的时候 shape 的转换方式 TRANSLATE：位移 ROTATE：旋转 MORPH：变体
+5.SumPathEffect(PathEffect first, PathEffect second) 使用两种PathEffect 合成一种PathEffect 来画线
+6.ComposePathEffect(PathEffect outerpe, PathEffect innerpe)  
+这也是一个组合效果类的 PathEffect 。
+不过它是先对目标 Path 使用一个 PathEffect，然后再对这个改变后的 Path 使用另一个 PathEffect。
+
+//setShadowLayer(float radius,float dx,float dy,int shadowColor) 设置阴影radius 阴影范围 dx,dx 偏移量 shadowColor 阴影颜色
+清除阴影层使用 clearShadowLayer();
+注意：
+
+在硬件加速开启的情况下， setShadowLayer() 只支持文字的绘制，文字之外的绘制必须关闭硬件加速才能正常绘制阴影。
+如果 shadowColor 是半透明的，阴影的透明度就使用 shadowColor 自己的透明度；
+而如果 shadowColor 是不透明的，阴影的透明度就使用 paint 的透明度。
