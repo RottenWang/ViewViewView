@@ -32,7 +32,7 @@ public class ScanView extends View {
     private Rect rect;
     private Random random;
     private int startTime;
-    ;
+    OnZeroListener onZeroListener;
 
     public ScanView(Context context) {
         super(context);
@@ -58,7 +58,7 @@ public class ScanView extends View {
         rectF = new RectF();
         rect = new Rect();
 
-        startTime = 60;
+        startTime = 10;
     }
 
     PointF pointF;
@@ -95,12 +95,16 @@ public class ScanView extends View {
     Handler handler = new Handler();
     float drawDegree;
     int textColor;
+    int currentDegree;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int i = canvas.saveLayer(null, null, Canvas.ALL_SAVE_FLAG);
         sweepAngle += drawDegree;
+        currentDegree += drawDegree;
+        currentDegree++;
+        startAngle--;
         if (isFirst) {
             isFirst = false;
             colorCircle = Color.BLACK;
@@ -109,12 +113,21 @@ public class ScanView extends View {
             checkColor();
         }
         paint.setColor(colorCircle);
-        if (sweepAngle <= 360) {
+        if (currentDegree <= 360) {
             canvas.drawArc(rectF, startAngle + sweepAngle, 360 - sweepAngle, true, paint);
         }
-        if (sweepAngle >= 360) {
+        if (currentDegree >= 360) {
             startTime = --startTime < 0 ? 0 : startTime;
+            if (startTime == 0 && onZeroListener != null) { //这个if里面的代码是在text 为 "0"的时候进行的操作,进行了停止绘制
+                onZeroListener.onZero();
+                paint.setColor(colorArc);
+                canvas.drawArc(rectF, startAngle, 360, true, paint);
+                drawText(canvas);
+                canvas.restoreToCount(i);
+                return;
+            }
             sweepAngle = 0;
+            currentDegree = 0;
             colorCircle = colorArc;
             paint.setColor(colorArc);
             canvas.drawArc(rectF, startAngle, 360, true, paint);
@@ -154,7 +167,7 @@ public class ScanView extends View {
     }
 
     private void reDraw() {
-        handler.postDelayed(runnable, (long) (1000 / (360 / drawDegree) + 0.5f));
+        handler.postDelayed(runnable, (long) (1000 / (360 / (drawDegree + 1)) + 0.5f));
     }
 
     private Runnable runnable = new Runnable() {
@@ -164,7 +177,7 @@ public class ScanView extends View {
         }
     };
 
-    //绘制的角度间隔 建议在5左右 默认为5
+    //绘制的角度增量 建议在5左右 默认为5
     public void setMinDegree(int degree) {
         drawDegree = degree < 1 ? 1 : degree > 360 ? 360 : degree;
     }
@@ -184,5 +197,13 @@ public class ScanView extends View {
     public void setTimeStart(int startTime) {
         this.startTime = startTime;
     }
-    
+
+    //当倒计时为0时.回调方法
+    public void setOnZeroListener(OnZeroListener onZeroListener) {
+        this.onZeroListener = onZeroListener;
+    }
+
+    public interface OnZeroListener {
+        void onZero();
+    }
 }

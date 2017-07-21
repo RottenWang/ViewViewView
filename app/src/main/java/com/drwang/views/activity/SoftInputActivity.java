@@ -8,10 +8,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.util.InputMethodManagerUtil;
+import com.drwang.views.view.ScanView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +22,7 @@ import butterknife.OnClick;
 public class SoftInputActivity extends Activity {
     @BindView(R.id.rl_root)
     View rl_root;
+    private ScanView scan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,13 @@ public class SoftInputActivity extends Activity {
             //底部导航栏
             //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
         }
+        scan = (ScanView) findViewById(R.id.scan);
+        scan.setOnZeroListener(new ScanView.OnZeroListener() {
+            @Override
+            public void onZero() {
+                Toast.makeText(SoftInputActivity.this, "zerozero", Toast.LENGTH_SHORT).show();
+            }
+        });
 //        int size = (int) (getResources().getDisplayMetrics().density * 5);
 //        ButterKnife.bind(this);
 //        rl_root.setOnTouchListener(new View.OnTouchListener() {
