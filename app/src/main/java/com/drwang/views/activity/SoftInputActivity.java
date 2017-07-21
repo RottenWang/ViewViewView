@@ -35,27 +35,27 @@ public class SoftInputActivity extends Activity {
             //底部导航栏
             //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
         }
-        int size = (int) (getResources().getDisplayMetrics().density * 5);
-        ButterKnife.bind(this);
-        rl_root.setOnTouchListener(new View.OnTouchListener() {
-            int startY;
-            int movedY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startY = (int) event.getRawY();
-                        return true;
-                    case MotionEvent.ACTION_MOVE:
-                        movedY = (int) event.getRawY();
-                        if (Math.abs(movedY - startY) > size){
-                            finish();
-                        }
-                }
-                return false;
-            }
-        });
+//        int size = (int) (getResources().getDisplayMetrics().density * 5);
+//        ButterKnife.bind(this);
+//        rl_root.setOnTouchListener(new View.OnTouchListener() {
+//            int startY;
+//            int movedY;
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        startY = (int) event.getRawY();
+//                        return true;
+//                    case MotionEvent.ACTION_MOVE:
+//                        movedY = (int) event.getRawY();
+//                        if (Math.abs(movedY - startY) > size){
+//                            finish();
+//                        }
+//                }
+//                return false;
+//            }
+//        });
 
     }
 

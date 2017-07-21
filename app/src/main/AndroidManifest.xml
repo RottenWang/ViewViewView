@@ -24,10 +24,8 @@
         <activity android:name=".activity.PaintActivity" />
         <activity android:name=".activity.RecyclerActivity" />
 
-        <activity
-            android:name=".activity.SoftInputActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <activity android:name=".activity.SoftInputActivity"></activity>
     </application>
 
 </manifest>
