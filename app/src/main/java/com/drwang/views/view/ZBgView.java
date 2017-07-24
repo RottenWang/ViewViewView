@@ -130,8 +130,8 @@ public class ZBgView extends View {
         canvas.drawRoundRect(rectF, 20 * density, 20 * density, paint);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(0);
-        float xStart = rectF.left + ((rectF.right - rectF.left - (Math.abs(rect.right - rect.left))) / 2.0f);
-        float yStart = rectF.bottom - ((rectF.bottom - rectF.top - (Math.abs(rect.bottom - rect.top))) / 2.0f);
+        float xStart = (rectF.left + rectF.right) / 2 - ((rect.right + rect.left) / 2.0f);//44
+        float yStart = (rectF.bottom + rectF.top) / 2 - ((rect.bottom + rect.top) / 2.0f);
         paint.setTextSize(10 * density);
         canvas.drawText(textRound, xStart, yStart, paint);
         paint.setStyle(Paint.Style.STROKE);
@@ -150,8 +150,8 @@ public class ZBgView extends View {
         paint.setStrokeWidth(0);
         paint.setColor(Color.parseColor("#323232"));
         paint.getTextBounds(text2, 0, text2.length(), rect);
-        float x = rectF.left + (((rectF.right - rectF.left) - (rect.right - rect.left)) / 2.0f);
-        float y = rectF.bottom - (((rectF.bottom - rectF.top) - (rect.bottom - rect.top)) / 2.0f);
+        float x = (rectF.left + rectF.right) / 2 - ((rect.right + rect.left) / 2.0f);//480.5
+        float y = (rectF.bottom + rectF.top) / 2 - ((rect.bottom + rect.top) / 2.0f);
         canvas.drawText(text2, x, y, paint);
         paint.setColor(colorGray);
         paint.setTextSize(12 * density);
@@ -163,10 +163,12 @@ public class ZBgView extends View {
         paint.setColor(colorGray);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(1 * density);
-        canvas.drawCircle(340 * density,65 * density,10 * density,paint);
+        canvas.drawCircle(340 * density, 65 * density, 10 * density, paint);
 //        paint.setStrokeWidth();
         paint.setTextSize(14 * density);
-        canvas.drawText("?",337 * density,70 * density,paint);
+        canvas.drawText("?", 337 * density, 70 * density, paint);
+        paint.setHinting(Paint.HINTING_ON);
+//        canvas.drawTextRun("",9,10,93,39,39,39,true,paint);
 
     }
 }
