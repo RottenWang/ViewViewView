@@ -1,1 +1,32 @@
 
+Canvas.drawTextOnPath(String text, Path path, float hOffset, float vOffset, Paint paint);
+参数里，需要解释的只有两个： hOffset 和 vOffset。它们是文字相对于 Path 的水平偏移量和竖直偏移量，利用它们可以调整文字的位置。
+例如你设置 hOffset 为 5， vOffset 为 10，文字就会右移 5 像素和下移 10 像素。
+记住一条原则： drawTextOnPath() 使用的 Path ，拐弯处全用圆角，别用尖角。
+
+StaticLayout(CharSequence source, TextPaint paint, int width, Layout.Alignment align, float spacingmult, 
+float spacingadd, boolean includepad);
+width 是文字区域的宽度，文字到达这个宽度后就会自动换行； 
+align 是文字的对齐方向； 
+spacingmult 是行间距的倍数，通常情况下填 1 就好； 
+spacingadd 是行间距的额外增加值，通常情况下填 0 就好； 
+includeadd 是指是否在文字上下添加额外的空间，来避免某些过高的字符的绘制出现越界。
+
+如果你需要进行多行文字的绘制，并且对文字的排列和样式没有太复杂的花式要求，那么使用  StaticLayout 就好。
+
+Paint.setTextSize(int size) 设置文字大小
+
+Paint.setTypeFace(TypeFace typeFace) 设置字体
+
+Paint.setFakeBoldText(boolean fakeBoldText) 设置是否使用伪粗体
+之所以叫伪粗体（ fake bold ），因为它并不是通过选用更高 weight 的字体让文字变粗，而是通过程序在运行时把文字给「描粗」了
+
+Paint.setStrikeThruText(boolean strikeThruText) 设置是否加删除线
+
+Paint.setUnderlineText(boolean underlineText) 设置是否加下划线
+
+Paint.setTextSkewX(float skewX) 设置文字横向错切角度。其实就是文字倾斜度的啦。
+
+Paint.setTextScaleX(float scaleX) 设置文字横向放缩。也就是文字变胖变瘦。
+
+Paint.setLetterSpacing(float letterSpacing) 设置字符间距。默认值是 0。
