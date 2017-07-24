@@ -17,6 +17,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.PathInterpolator;
 
+import java.util.Locale;
+
 /**
  * Created by Administrator on 2017/7/24.
  */
@@ -89,6 +91,7 @@ public class ZBgView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+//        paint.setTextLocale(Locale.TAIWAN); //设置文字基于哪种语言
         path.moveTo(15 * density, 5 * density);
         path.lineTo(measuredWidth - 15 * density, 5 * density);
         canvas.drawPath(path, paint);

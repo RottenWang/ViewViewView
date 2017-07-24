@@ -152,8 +152,8 @@ public class ScanView extends View {
         String time = String.valueOf(startTime);
         paint.setTextSize(radius / 2);
         paint.getTextBounds(time, 0, time.length(), rect);
-        int right = rect.right - rect.left;
-        int bottom = rect.bottom - rect.top;
+        int right = -(rect.right + rect.left) / 2;
+        int bottom = -(rect.bottom + rect.top) /2;
         float x = pointF.x + right;//161
         float y = pointF.y + bottom;//264
         paint.setColor(textColor);
