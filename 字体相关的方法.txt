@@ -108,3 +108,18 @@ Paint.getTextWidths(String text, float[] widths)
 这相当于 measureText() 的一个快捷方法，它的计算等价于对字符串中的每个字符分别调用 measureText(),
 并把它们的计算结果分别填入 widths 的不同元素。
 getTextWidths() 同样也有好几个变种，使用大同小异，不再介绍。
+
+int Paint.breakText(String text, boolean measureForwards, float maxWidth, float[] measuredWidth)
+返回值 截取的字符的数量
+这个方法也是用来测量文字宽度的。但和 measureText() 的区别是， breakText() 是在给出宽度上限的前提下测量文字的宽度。如果文字的宽度超出了上限，那么在临近超限的位置截断文字。
+
+Paint.getRunAdvance(CharSequence text, int start, int end, int contextStart, int contextEnd, boolean isRtl, int offset)
+对于一段文字，计算出某个字符处光标的 x 坐标。 start end 是文字的起始和结束坐标；contextStart contextEnd 是上下文的起始和结束坐标；isRtl 是文字的方向；offset 是字数的偏移，即计算第几个字符处的光标。
+
+Paint.getOffsetForAdvance(CharSequence text, int start, int end, int contextStart, int contextEnd, boolean isRtl, float advance)
+给出一个位置的像素值，计算出文字中最接近这个位置的字符偏移量（即第几个字符最接近这个坐标）。
+方法的参数很简单： text 是要测量的文字；start end 是文字的起始和结束坐标；contextStart contextEnd 是上下文的起始和结束坐标；isRtl 是文字方向；advance 是给出的位置的像素值。填入参数，对应的字符偏移量将作为返回值返回。
+getOffsetForAdvance() 配合上 getRunAdvance() 一起使用，就可以实现「获取用户点击处的文字坐标」的需求。
+
+Paint.hasGlyph(String string)
+检查指定的字符串中是否是一个单独的字形 (glyph）。最简单的情况是，string 只有一个字母（比如  a）。
