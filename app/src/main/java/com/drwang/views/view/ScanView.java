@@ -33,6 +33,7 @@ public class ScanView extends View {
     private Random random;
     private int startTime;
     OnZeroListener onZeroListener;
+    float density;
 
     public ScanView(Context context) {
         super(context);
@@ -57,7 +58,6 @@ public class ScanView extends View {
         pointF = new PointF();
         rectF = new RectF();
         rect = new Rect();
-
         startTime = 10;
     }
 
@@ -67,6 +67,7 @@ public class ScanView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        density = getResources().getDisplayMetrics().density;
         paint.setStyle(Paint.Style.FILL);
         measuredWidth = getMeasuredWidth();
         measuredHeight = getMeasuredHeight();
