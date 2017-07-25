@@ -5,19 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Xfermode;
+import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.PathInterpolator;
-
-import java.util.Locale;
 
 /**
  * Created by Administrator on 2017/7/24.
@@ -39,6 +35,8 @@ public class ZBgView extends View {
     int colorCenterBg;
     String text2 = "优惠券";
     int colorGray = Color.parseColor("#BFBFC0");
+    private CornerPathEffect cornerPathEffect;
+    private LinearGradient linearGradient;
 
     public ZBgView(Context context) {
         super(context);
@@ -58,6 +56,7 @@ public class ZBgView extends View {
 
     private void init() {
         rect = new Rect();
+
         textRound = "未领用";
         imaginaryLineColor = Color.parseColor("#E6E6E6");
         recColor = Color.parseColor("#683000");
@@ -65,14 +64,12 @@ public class ZBgView extends View {
         colorCenterBg = Color.parseColor("#E1D7CD");
         density = getResources().getDisplayMetrics().density;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(imaginaryLineColor);
-        paint.setStrokeWidth(density);
+//        setLayerType(View.LAYER_TYPE_SOFTWARE, paint);
         path = new Path();
         pathRec = new Path();
         paint.setPathEffect(new DashPathEffect(new float[]{density * 10, density * 5}, 0));
         rectF = new RectF();
-
+        cornerPathEffect = new CornerPathEffect(5 * density);
     }
 
     @Override
@@ -91,6 +88,14 @@ public class ZBgView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        linearGradient = new LinearGradient(0, 0, measuredWidth, measuredHeight,Color.BLUE, Color.GREEN,Shader.TileMode.MIRROR);
+        paint.setShader(linearGradient);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawRect(0, 0, measuredWidth, measuredHeight, paint);
+        paint.setShader(null);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(imaginaryLineColor);
+        paint.setStrokeWidth(density);
 //        paint.setTextLocale(Locale.TAIWAN); //设置文字基于哪种语言
         path.moveTo(15 * density, 5 * density);
         path.lineTo(measuredWidth - 15 * density, 5 * density);
@@ -98,7 +103,7 @@ public class ZBgView extends View {
         paint.setPathEffect(null);
         paint.setColor(recColor);
         paint.setStrokeWidth(density * 3);
-        paint.setPathEffect(new CornerPathEffect(5 * density));
+        paint.setPathEffect(cornerPathEffect);
         paint.setStrokeJoin(Paint.Join.MITER);
         pathRec.moveTo(15 * density, 20 * density);
         pathRec.lineTo(measuredWidth * 0.85f, 20 * density);
