@@ -17,7 +17,7 @@
         android:layout_height="150dp"
         android:layout_alignParentBottom="true" />
 
-    <com.drwang.views.view.MedalBackgroundView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<com.drwang.views.view.MedalBackgroundView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 </RelativeLayout>
