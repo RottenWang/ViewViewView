@@ -37,3 +37,6 @@ https://www.kotlincn.net/
 
 #kotlin vs Java
 http://www.jcodecraeer.com/demo/from-java-to-kotlin/index.html
+
+#鸿扬自定义view
+http://www.imooc.com/learn/239
