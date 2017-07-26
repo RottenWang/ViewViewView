@@ -12,11 +12,14 @@
         android:layout_width="150dp"
         android:layout_height="150dp" />
 
-    <com.drwang.views.view.ZBgView
+    <!--<com.drwang.views.view.ZBgView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_alignParentBottom="true" />-->
+    <com.drwang.views.view.MoFaView
+        android:layout_below="@id/scan"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true" />
-
+        android:layout_height="360dp" />
     <!--<com.drwang.views.view.MedalBackgroundView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->

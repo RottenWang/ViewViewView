@@ -60,7 +60,7 @@ public class SoftInputActivity extends Activity {
             Method method2 = aClass.getDeclaredMethod("getRandomColor");
             Method method = aClass.getDeclaredMethod("setTimeStart", int.class);
             method.setAccessible(true);
-            method.invoke(scan, 100);
+            method.invoke(scan, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }
