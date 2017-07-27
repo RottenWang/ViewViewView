@@ -4,30 +4,19 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.drwang.views.R;
-import com.drwang.views.base.BasicActivity;
-import com.drwang.views.util.InputMethodManagerUtil;
 import com.drwang.views.view.ScanView;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SoftInputActivity extends Activity {
     @BindView(R.id.rl_root)
@@ -46,7 +35,7 @@ public class SoftInputActivity extends Activity {
             window.setStatusBarColor(getResources().getColor(android.R.color.holo_blue_bright));
 
             //底部导航栏
-            //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
+//            window.setNavigationBarColor(activity.getResources().getColor(colorResId));
         }
         scan = (ScanView) findViewById(R.id.scan);
         scan.setOnZeroListener(new ScanView.OnZeroListener() {
@@ -60,7 +49,7 @@ public class SoftInputActivity extends Activity {
             Method method2 = aClass.getDeclaredMethod("getRandomColor");
             Method method = aClass.getDeclaredMethod("setTimeStart", int.class);
             method.setAccessible(true);
-            method.invoke(scan, 0);
+            method.invoke(scan, 10);
         } catch (Exception e) {
             e.printStackTrace();
         }
