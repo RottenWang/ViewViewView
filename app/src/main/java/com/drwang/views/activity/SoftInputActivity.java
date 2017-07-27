@@ -13,16 +13,21 @@ import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.view.ScanView;
+import com.drwang.views.view.TouchView;
 
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SoftInputActivity extends Activity {
     @BindView(R.id.rl_root)
     View rl_root;
     private ScanView scan;
     private static final String TAG = "SoftInputActivity";
+    @BindView(R.id.touch_view)
+    TouchView touch_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class SoftInputActivity extends Activity {
             //底部导航栏
 //            window.setNavigationBarColor(activity.getResources().getColor(colorResId));
         }
+        ButterKnife.bind(this);
         scan = (ScanView) findViewById(R.id.scan);
         scan.setOnZeroListener(new ScanView.OnZeroListener() {
             @Override
@@ -74,7 +80,6 @@ public class SoftInputActivity extends Activity {
         alertDialog.show();
         alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.RED);
 //        int size = (int) (getResources().getDisplayMetrics().density * 5);
-//        ButterKnife.bind(this);
 //        rl_root.setOnTouchListener(new View.OnTouchListener() {
 //            int startY;
 //            int movedY;
@@ -95,6 +100,11 @@ public class SoftInputActivity extends Activity {
 //            }
 //        });
 
+    }
+
+    @OnClick(R.id.tv_restart)
+    public void reStart(View v) {
+        touch_view.reStart();
     }
 
 }

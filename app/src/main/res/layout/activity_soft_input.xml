@@ -13,14 +13,30 @@
         android:layout_height="150dp" />
 
     <!--<com.drwang.views.view.ZBgView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:layout_alignParentBottom="true" />-->
-    <com.drwang.views.view.MoFaView
-        android:layout_below="@id/scan"
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="150dp"-->
+    <!--android:layout_alignParentBottom="true" />-->
+    <com.drwang.views.view.MoFaView2
         android:layout_width="match_parent"
-        android:layout_height="360dp" />
+        android:layout_height="360dp"
+        android:layout_below="@id/scan" />
     <!--<com.drwang.views.view.MedalBackgroundView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <com.drwang.views.view.TouchView
+        android:layout_width="match_parent"
+        android:id="@+id/touch_view"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/tv_restart"
+        android:clickable="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:text="ReStart"
+        android:background="@android:color/transparent" />
 </RelativeLayout>
