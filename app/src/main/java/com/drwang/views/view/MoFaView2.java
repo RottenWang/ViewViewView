@@ -194,7 +194,7 @@ public class MoFaView2 extends View {
         path.quadTo(pointFcenter1.x - 17 * density, pointFcenter1.y + 5 * density, pointF3.x, pointF3.y);
         path.quadTo(pointFcenter2.x - 11 * density, pointFcenter2.y + 8 * density, pointFcenter2.x, pointFcenter2.y);
         path.quadTo(pointFcenter2.x + 10 * density, pointFcenter2.y - 5 * density, pointF4.x, pointF4.y);
-        path2.set(path);
+        path2.set(path);//直接设置给path2
         path2.moveTo(measuredWidth / 2 - deltaX2, measuredHeight / 2 - delta2y);
         path2.quadTo(pointFcenter3.x - 11 * density, pointFcenter3.y + 11 * density, pointFcenter3.x + density, pointFcenter3.y);
         path2.quadTo(pointFcenter3.x + 11 * density, pointFcenter3.y - 5 * density, pointF1.x, pointF1.y);
