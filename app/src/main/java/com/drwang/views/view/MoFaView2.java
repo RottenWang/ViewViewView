@@ -104,18 +104,18 @@ public class MoFaView2 extends View {
         paint.setStrokeJoin(Paint.Join.MITER);
         int i = canvas.saveLayer(null, null, Canvas.ALL_SAVE_FLAG);
         paint.setSubpixelText(true);
-        float detal = 5 * density;
+        float deltaA = 5 * density;
         //画6个矩形
         canvas.rotate(45, measuredWidth / 2, measuredHeight / 2);
         canvas.drawRect(half - v, half - v, half + v, half + v, paint);
-        canvas.drawRect(-detal + half - v, -detal + half - v, detal + half + v, detal + half + v, paint);
+        canvas.drawRect(-deltaA + half - v, -deltaA + half - v, deltaA + half + v, deltaA + half + v, paint);
         canvas.rotate(-30f, measuredWidth / 2, measuredHeight / 2);
         paint.setXfermode(porterDuffXfermode);
         canvas.drawRect(half - v, half - v, half + v, half + v, paint);
-        canvas.drawRect(-detal + half - v, -detal + half - v, detal + half + v, detal + half + v, paint);
+        canvas.drawRect(-deltaA + half - v, -deltaA + half - v, deltaA + half + v, deltaA + half + v, paint);
         canvas.rotate(60, measuredWidth / 2, measuredHeight / 2);
         canvas.drawRect(half - v, half - v, half + v, half + v, paint);
-        canvas.drawRect(-detal + half - v, -detal + half - v, detal + half + v, detal + half + v, paint);
+        canvas.drawRect(-deltaA + half - v, -deltaA + half - v, deltaA + half + v, deltaA + half + v, paint);
         paint.setXfermode(null);
         canvas.restoreToCount(i);
         paint.setStrokeWidth(0);
@@ -183,21 +183,21 @@ public class MoFaView2 extends View {
         PointF pointF2 = new PointF(pointF1.x - 5 * density, pointF1.y + density);
         PointF pointF3 = new PointF(measuredWidth / 2 - deltaX2, measuredHeight / 2 - delta2y);
         PointF pointF4 = new PointF(pointF1.x - 3 * density, pointF1.y - 14 * density);
-        PointF pointFcenter1 = new PointF((pointF2.x + pointF3.x) / 2.0f + 4 * density, (pointF2.y + pointF3.y) / 2.0f);
-        PointF pointFcenter2 = new PointF((pointF4.x + pointF3.x) / 2.0f + 4 * density, (pointF4.y + pointF3.y) / 2.0f);
-        PointF pointFcenter3 = new PointF((pointF1.x + pointF3.x) / 2.0f + 4 * density - 2 * density, (pointF1.y + pointF3.y) / 2.0f - 3 * density);
+        PointF pointFCenter1 = new PointF((pointF2.x + pointF3.x) / 2.0f + 4 * density, (pointF2.y + pointF3.y) / 2.0f);
+        PointF pointFCenter2 = new PointF((pointF4.x + pointF3.x) / 2.0f + 4 * density, (pointF4.y + pointF3.y) / 2.0f);
+        PointF pointFCenter3 = new PointF((pointF1.x + pointF3.x) / 2.0f + 4 * density - 2 * density, (pointF1.y + pointF3.y) / 2.0f - 3 * density);
         path.reset();
         path2.reset();
         path.moveTo(pointF1.x, pointF1.y);
         path.lineTo(pointF2.x, pointF2.y);
-        path.quadTo(pointF2.x - 3 * density, pointF2.y - 8 * density, pointFcenter1.x, pointFcenter1.y + 2.8f * density);
-        path.quadTo(pointFcenter1.x - 17 * density, pointFcenter1.y + 5 * density, pointF3.x, pointF3.y);
-        path.quadTo(pointFcenter2.x - 11 * density, pointFcenter2.y + 8 * density, pointFcenter2.x, pointFcenter2.y);
-        path.quadTo(pointFcenter2.x + 10 * density, pointFcenter2.y - 5 * density, pointF4.x, pointF4.y);
+        path.quadTo(pointF2.x - 3 * density, pointF2.y - 8 * density, pointFCenter1.x, pointFCenter1.y + 2.8f * density);
+        path.quadTo(pointFCenter1.x - 17 * density, pointFCenter1.y + 5 * density, pointF3.x, pointF3.y);
+        path.quadTo(pointFCenter2.x - 11 * density, pointFCenter2.y + 8 * density, pointFCenter2.x, pointFCenter2.y);
+        path.quadTo(pointFCenter2.x + 10 * density, pointFCenter2.y - 5 * density, pointF4.x, pointF4.y);
         path2.set(path);//直接设置给path2
         path2.moveTo(measuredWidth / 2 - deltaX2, measuredHeight / 2 - delta2y);
-        path2.quadTo(pointFcenter3.x - 11 * density, pointFcenter3.y + 11 * density, pointFcenter3.x + density, pointFcenter3.y);
-        path2.quadTo(pointFcenter3.x + 11 * density, pointFcenter3.y - 5 * density, pointF1.x, pointF1.y);
+        path2.quadTo(pointFCenter3.x - 11 * density, pointFCenter3.y + 11 * density, pointFCenter3.x + density, pointFCenter3.y);
+        path2.quadTo(pointFCenter3.x + 11 * density, pointFCenter3.y - 5 * density, pointF1.x, pointF1.y);
         while (degree <= 360) {
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.FILL);
