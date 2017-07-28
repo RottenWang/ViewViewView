@@ -44,12 +44,7 @@ public class SoftInputActivity extends Activity {
         }
         ButterKnife.bind(this);
         scan = (ScanView) findViewById(R.id.scan);
-        scan.setOnZeroListener(new ScanView.OnZeroListener() {
-            @Override
-            public void onZero() {
-                Toast.makeText(SoftInputActivity.this, "zerozero", Toast.LENGTH_SHORT).show();
-            }
-        });
+        scan.setOnZeroListener(() -> Toast.makeText(SoftInputActivity.this, "zerozero", Toast.LENGTH_SHORT).show());
         try {
             Class aClass = ScanView.class;
             Method method2 = aClass.getDeclaredMethod("getRandomColor");

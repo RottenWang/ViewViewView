@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.drwang.views.activity.SoftInputActivity">
 
+
     <com.drwang.views.view.ScanView
         android:id="@+id/scan"
         android:layout_width="150dp"
@@ -23,20 +24,25 @@
     <!--<com.drwang.views.view.MedalBackgroundView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
+
+    <!--<com.drwang.views.view.SlideView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
     <com.drwang.views.view.TouchView
-        android:layout_width="match_parent"
         android:id="@+id/touch_view"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/tv_restart"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:id="@+id/tv_restart"
-        android:clickable="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
         android:text="ReStart"
-        android:background="@android:color/transparent" />
+        android:textSize="20sp" />
 </RelativeLayout>
