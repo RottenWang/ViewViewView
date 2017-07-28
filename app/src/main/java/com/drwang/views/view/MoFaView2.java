@@ -52,10 +52,10 @@ public class MoFaView2 extends View {
     }
 
     private void init() {
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(Color.TRANSPARENT);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        colorBlack = Color.parseColor("#2d2d2d");
+        setLayerType(LAYER_TYPE_SOFTWARE, paint);
+        colorBlack = Color.BLUE;
         paint.setColor(colorBlack);
         density = getResources().getDisplayMetrics().density;
         path = new Path();
@@ -63,7 +63,6 @@ public class MoFaView2 extends View {
         path3 = new Path();
         path4 = new Path();
         porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.XOR);
-        setLayerType(LAYER_TYPE_SOFTWARE, paint);
     }
 
     @Override
@@ -81,6 +80,7 @@ public class MoFaView2 extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        paint.setShadowLayer(10 * density,0,0,Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(density);
         //画圆

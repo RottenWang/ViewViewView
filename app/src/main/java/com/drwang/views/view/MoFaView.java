@@ -13,6 +13,8 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.drwang.views.R;
+
 /**
  * Created by Administrator on 2017/7/25.
  */
@@ -50,10 +52,10 @@ public class MoFaView extends View {
     }
 
     private void init() {
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(Color.TRANSPARENT);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        colorBlack = Color.parseColor("#2D2D2D");
+        colorBlack = getResources().getColor(R.color.colorAccent);
         paint.setColor(colorBlack);
         density = getResources().getDisplayMetrics().density;
         path = new Path();
@@ -78,6 +80,7 @@ public class MoFaView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        paint.setShadowLayer(10 * density, 0, 0, getResources().getColor(R.color.colorAccent));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(density);
         //画圆
