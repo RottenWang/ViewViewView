@@ -24,8 +24,9 @@
         <activity android:name=".activity.PaintActivity" />
         <activity android:name=".activity.RecyclerActivity" />
 
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-        <activity android:name=".activity.SoftInputActivity"></activity>
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
+        <activity android:name=".activity.SoftInputActivity" />
+        <activity android:name=".activity.ShadowActivity"/>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
+import com.drwang.views.activity.ShadowActivity;
 import com.drwang.views.activity.SoftInputActivity;
 
 /**
@@ -36,7 +37,7 @@ public class IntentUtil {
     }
 
     public static void toRecyclerViewActivity(Activity activity) {
-        if (activity == null){
+        if (activity == null) {
             return;
         }
         Intent intent = new Intent(activity, RecyclerActivity.class);
@@ -44,10 +45,18 @@ public class IntentUtil {
     }
 
     public static void toSoftInputActivity(Activity activity) {
-        if (activity == null){
+        if (activity == null) {
             return;
         }
         Intent intent = new Intent(activity, SoftInputActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toShadowActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity,ShadowActivity.class);
         activity.startActivity(intent);
     }
 }
