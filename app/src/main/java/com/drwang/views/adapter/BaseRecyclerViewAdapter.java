@@ -2,6 +2,7 @@ package com.drwang.views.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -98,6 +99,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         count += hasHeader ? 1 : 0;
         count += hasFooter ? 1 : 0;
         count += mList == null ? 0 : mList.size();
+        Log.d("a", "getItemCount: " + count);
         return count;
     }
 

@@ -41,10 +41,10 @@ public class RecyclerActivity extends BasicActivity {
     protected void initializeData() {
         if (mList == null) {
             mList = new ArrayList<>();
-            mList.add("aa");
-            mList.add("bb");
-            mList.add("cc");
-            mList.add("dd");
+//            mList.add("aa");
+//            mList.add("bb");
+//            mList.add("cc");
+//            mList.add("dd");
             mList.add("ee");
         }
         if (exampleAdapter == null)
