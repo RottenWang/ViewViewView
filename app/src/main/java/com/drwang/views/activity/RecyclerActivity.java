@@ -18,8 +18,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static java.lang.Boolean.FALSE;
-
 public class RecyclerActivity extends BasicActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -61,6 +59,17 @@ public class RecyclerActivity extends BasicActivity {
             layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(exampleAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override

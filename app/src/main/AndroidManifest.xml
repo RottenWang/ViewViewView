@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,12 +29,24 @@
         <activity
             android:name=".activity.PieViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PaintActivity" />
-        <activity android:name=".activity.RecyclerActivity" />
+        <activity
+            android:name=".activity.PaintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RecyclerActivity"
+            android:screenOrientation="portrait" />
 
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
-        <activity android:name=".activity.SoftInputActivity" />
-        <activity android:name=".activity.ShadowActivity" />
+        <activity
+            android:name=".activity.SoftInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShadowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ImageActivity"
+            android:screenOrientation="portrait" />
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
     </application>
 
 </manifest>

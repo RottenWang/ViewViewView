@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,21 +24,23 @@ public abstract class BasicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         int resId = setContentViewRes();
         setContentView(resId);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-
-        // 更改状态栏颜色
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(getResources().getColor(android.R.color.holo_blue_bright));
-
-            //底部导航栏
-            //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup viewById = (ViewGroup) window.getDecorView().findViewById(android.R.id.content);
+            viewById.getChildAt(0).setFitsSystemWindows(true);
         }
+
+//        // 更改状态栏颜色
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.setStatusBarColor(getResources().getColor(android.R.color.holo_blue_bright));
+//
+//            //底部导航栏
+//            //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
+//        }
 
         //沉浸状态栏
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -48,7 +52,7 @@ public abstract class BasicActivity extends AppCompatActivity {
 //        }
 
         //小米手机设置状态栏颜色 黑色 /白色
-//        setStatusBarDarkMode(true,this);
+        setStatusBarDarkMode(true,this);
         ButterKnife.bind(this);
         initializeView();
         initializeData();

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
+    android:background="@android:color/white"
     android:layout_height="match_parent"
     tools:context="com.drwang.views.activity.SoftInputActivity">
 
 
     <com.drwang.views.view.ScanView
         android:id="@+id/scan"
-        android:layout_centerInParent="true"
         android:layout_width="150dp"
         android:layout_height="150dp" />
 

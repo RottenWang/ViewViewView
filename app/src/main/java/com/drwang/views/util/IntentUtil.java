@@ -3,6 +3,7 @@ package com.drwang.views.util;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
@@ -56,7 +57,15 @@ public class IntentUtil {
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity,ShadowActivity.class);
+        Intent intent = new Intent(activity, ShadowActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toImageActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, ImageActivity.class);
         activity.startActivity(intent);
     }
 }

@@ -1,27 +1,22 @@
 package com.drwang.views.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.drwang.views.R;
+import com.drwang.views.base.BasicActivity;
 import com.drwang.views.view.ScanView;
 import com.drwang.views.view.TouchView;
 
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SoftInputActivity extends Activity {
+public class SoftInputActivity extends BasicActivity {
     @BindView(R.id.rl_root)
     View rl_root;
     private ScanView scan;
@@ -30,19 +25,7 @@ public class SoftInputActivity extends Activity {
     TouchView touch_view;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 更改状态栏颜色
-        setContentView(R.layout.activity_soft_input);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(android.R.color.holo_blue_bright));
-
-            //底部导航栏
-//            window.setNavigationBarColor(activity.getResources().getColor(colorResId));
-        }
-        ButterKnife.bind(this);
+    protected void initializeView() {
         scan = (ScanView) findViewById(R.id.scan);
         scan.setOnZeroListener(() -> Toast.makeText(SoftInputActivity.this, "zerozero", Toast.LENGTH_SHORT).show());
         try {
@@ -74,27 +57,16 @@ public class SoftInputActivity extends Activity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.RED);
-//        int size = (int) (getResources().getDisplayMetrics().density * 5);
-//        rl_root.setOnTouchListener(new View.OnTouchListener() {
-//            int startY;
-//            int movedY;
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        startY = (int) event.getRawY();
-//                        return true;
-//                    case MotionEvent.ACTION_MOVE:
-//                        movedY = (int) event.getRawY();
-//                        if (Math.abs(movedY - startY) > size){
-//                            finish();
-//                        }
-//                }
-//                return false;
-//            }
-//        });
+    }
 
+    @Override
+    protected void initializeData() {
+
+    }
+
+    @Override
+    public int setContentViewRes() {
+        return R.layout.activity_soft_input;
     }
 
     @OnClick(R.id.tv_restart)
