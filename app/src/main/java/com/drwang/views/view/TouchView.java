@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -90,7 +91,7 @@ public class TouchView extends View {
     int currentCount = 100;
     boolean isRestart;
 
-    String str2 = new String(Character.toChars(0x261D));
+    String str2 = new String(Character.toChars(0x1F601));
     int overCount;
 
     @Override

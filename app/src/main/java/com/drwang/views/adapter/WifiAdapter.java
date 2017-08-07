@@ -46,29 +46,29 @@ public class WifiAdapter extends BaseRecyclerViewAdapter<ScanResult> {
     class WifiViewHolder extends BaseRecyclerViewHolder {
 
         private final TextView tv_wifi_name;
+        private final TextView tv_wifi_encrypt;
 
         public WifiViewHolder(View itemView) {
             super(itemView);
             tv_wifi_name = (TextView) itemView.findViewById(R.id.tv_wifi_name);
+            tv_wifi_encrypt = (TextView) itemView.findViewById(R.id.tv_wifi_encrypt);
         }
 
         @Override
         public void onBindViewHolder(int position) {
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            itemView.setAlpha(0.7f);
-                            return true;
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
-                            itemView.setAlpha(1.0f);
-                            break;
+            itemView.setOnTouchListener((v, event) -> {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                itemView.setAlpha(0.7f);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                            case MotionEvent.ACTION_CANCEL:
+                                itemView.setAlpha(1.0f);
+                                break;
+                        }
+                        return false;
                     }
-                    return false;
-                }
-            });
+            );
             ScanResult scanResult = mList.get(position);
             String capabilities = scanResult.capabilities;
             String securities = "";
@@ -77,7 +77,8 @@ public class WifiAdapter extends BaseRecyclerViewAdapter<ScanResult> {
             securities += capabilities.contains("WPS") ? " WPS" : "";
             securities += capabilities.contains("ESS") ? " ESS" : "";
 
-            tv_wifi_name.setText(mList.get(position).SSID + "  " + securities);
+            tv_wifi_name.setText("WIFI: " + mList.get(position).SSID);
+            tv_wifi_encrypt.setText("加密方式: " + securities);
         }
     }
 }
