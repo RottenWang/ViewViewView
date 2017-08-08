@@ -2,14 +2,11 @@ package com.drwang.views.support.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.SimpleCacheKey;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.AbstractDraweeController;
-import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -18,10 +15,6 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.io.File;
-
-import static android.R.attr.id;
-import static android.R.attr.width;
-import static com.drwang.views.R.id.item_iv;
 
 /**
  * Created by Administrator on 2017/8/8.

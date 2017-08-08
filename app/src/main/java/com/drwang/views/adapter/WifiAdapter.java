@@ -12,8 +12,6 @@ import com.drwang.views.R;
 
 import java.util.List;
 
-import static android.net.wifi.WifiConfiguration.Protocol.WPA;
-
 /**
  * Created by Administrator on 2017/7/31.
  */

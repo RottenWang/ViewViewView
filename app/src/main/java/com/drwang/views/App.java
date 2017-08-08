@@ -1,7 +1,6 @@
 package com.drwang.views;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.util.ByteConstants;

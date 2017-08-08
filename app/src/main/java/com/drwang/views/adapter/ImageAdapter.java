@@ -3,35 +3,24 @@ package com.drwang.views.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
-import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.io.File;
 import java.util.List;
-
-import static android.R.attr.path;
 
 /**
  * Created by Administrator on 2017/8/8.
@@ -79,7 +68,7 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
 
         @Override
         public void onBindViewHolder(int position) {
-            item_iv.setController(FrescoUtils.getController(item_iv,width,width,FrescoScheme.SCHEME_FILE + mList.get(position).path,new BaseControllerListener<ImageInfo>(){
+            item_iv.setController(FrescoUtils.getController(item_iv, width, width, FrescoScheme.SCHEME_FILE + mList.get(position).path, new BaseControllerListener<ImageInfo>() {
                 @Override
                 public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
                     super.onFinalImageSet(id, imageInfo, animatable);
@@ -100,8 +89,8 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
                 mList.remove(imageEntityBean);
                 notifyDataSetChanged();
                 //通知系统
-                mActivity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imageEntityBean.path)));
             }
+            mActivity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imageEntityBean.path)));
             Toast.makeText(mActivity, delete + "", Toast.LENGTH_SHORT).show();
         }).setNegativeButton("取消", (view, which) -> {
 

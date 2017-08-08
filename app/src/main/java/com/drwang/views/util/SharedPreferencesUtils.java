@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 
 import com.drwang.views.App;
 
-import static android.R.attr.defaultValue;
-
 /**
  * Created by Administrator on 2017/8/8.
  */

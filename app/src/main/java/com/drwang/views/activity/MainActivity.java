@@ -1,6 +1,5 @@
 package com.drwang.views.activity;
 
-import android.graphics.Color;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.view.ViewTreeObserver;

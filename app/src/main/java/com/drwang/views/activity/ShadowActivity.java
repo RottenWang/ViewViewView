@@ -20,7 +20,6 @@ import com.drwang.views.base.BasicActivity;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 import butterknife.BindView;
 

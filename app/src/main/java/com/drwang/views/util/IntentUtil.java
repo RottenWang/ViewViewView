@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.drwang.views.activity.ImageActivity;
-import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;

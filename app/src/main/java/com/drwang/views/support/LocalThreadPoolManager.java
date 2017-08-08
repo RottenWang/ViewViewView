@@ -1,9 +1,5 @@
 package com.drwang.views.support;
 
-import android.support.annotation.NonNull;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 

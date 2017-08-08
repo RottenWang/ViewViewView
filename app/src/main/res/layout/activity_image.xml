@@ -28,9 +28,10 @@
                 android:id="@+id/simpleDraweeView_title"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                app:placeholderImage="@color/colorPrimary"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                fresco:fadeDuration="0" />
+                fresco:fadeDuration="300" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar"

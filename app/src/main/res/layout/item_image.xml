@@ -12,5 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         fresco:fadeDuration="0"
-        fresco:roundedCornerRadius="5dp" />
+        fresco:roundBottomLeft="false"
+        fresco:roundBottomRight="false"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="false"
+        fresco:roundedCornerRadius="40dp" />
 </FrameLayout>
