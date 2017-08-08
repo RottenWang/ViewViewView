@@ -13,8 +13,8 @@ import java.util.List;
  */
 
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
-    private static final int TYPE_HEAD = 121;
-    private static final int TYPE_FOOT = 212;
+    private static final int TYPE_HEAD = 60001;
+    private static final int TYPE_FOOT = 60002;
     private static final int TYPE_NORMAL = 333;
     public List<T> mList;
     public Activity mActivity;
@@ -49,7 +49,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         } else if (getItemViewType(position) == TYPE_FOOT) {
             onBindFooterView(holder.itemView);
         } else if (getItemViewType(position) == TYPE_NORMAL) {
-            onBindItemView(holder,getRealPosition(position));
+            onBindItemView(holder, getRealPosition(position));
         }
     }
 
