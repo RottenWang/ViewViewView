@@ -4,12 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.drawable.Animatable
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.ContextCompat
@@ -25,28 +21,41 @@ import com.drwang.views.adapter.ImageAdapter
 import com.drwang.views.base.BasicActivity
 import com.drwang.views.bean.ImageEntityBean
 import com.drwang.views.support.LocalThreadPoolManager
+import com.drwang.views.support.PriorityRunnable
 import com.drwang.views.support.fresco.FrescoScheme
 import com.drwang.views.support.fresco.FrescoUtils
 import com.drwang.views.util.DensityUtil
+import com.drwang.views.util.SharedPreferencesUtils
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
 import kotlinx.android.synthetic.main.activity_image.*
-import kotlinx.android.synthetic.main.activity_image.view.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class ImageActivity : BasicActivity() {
-    var titleRes: Int = R.drawable.default_title_bg2;
+    val TITLE_IMAGE_KEY = "TITLE_KEY";
+    var titleRes: Int = 0;
     var mImageList: ArrayList<ImageEntityBean>? = null;
     var mImageAdapter: ImageAdapter? = null;
     val LOAD_ALL = 0;
     override fun initializeView() {
         setSupportActionBar(tool_bar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        titleRes = SharedPreferencesUtils.getInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg);
         recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         mImageList = ArrayList()
         mImageAdapter = ImageAdapter(this, mImageList);
         recycler_view.adapter = mImageAdapter;
         setTitleImage();
+        simpleDraweeView_title.setOnClickListener {
+            if (titleRes == R.drawable.default_title_bg2) {
+                titleRes = R.drawable.default_title_bg
+                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg)
+            } else {
+                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg2)
+                titleRes = R.drawable.default_title_bg
+            }
+            setTitleImage()
+
+        }
     }
 
     private fun setTitleImage() {
@@ -77,11 +86,6 @@ class ImageActivity : BasicActivity() {
                                     setStatusBarDarkMode(true, this@ImageActivity);
                                 } else {
                                     setStatusBarDarkMode(false, this@ImageActivity);
-                                }
-                                if (toHexString.length == 8) {
-
-                                } else {
-
                                 }
                             }
                         });
@@ -141,36 +145,43 @@ class ImageActivity : BasicActivity() {
         override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
             Log.i("tag", "thread = " + Thread.currentThread());
             if (data != null) {
-                LocalThreadPoolManager.getInstance().execute({
-                    if (data.moveToFirst()) {
-                        var imageList = ArrayList<ImageEntityBean>();
-                        var imageBean: ImageEntityBean
-                        do {
-                            val path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]))
-                            val name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]))
-                            val dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]))
-                            val width = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]))
-                            val height = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]))
-                            if (TextUtils.isEmpty(path) || TextUtils.isEmpty(name)) {
-                                continue
-                            }
-                            if (width == 0L || height == 0L) {
-                                continue
-                            }
-                            imageBean = ImageEntityBean(path, name, dateTime)
-                            imageList.add(imageBean)
+                LocalThreadPoolManager.execute(object : PriorityRunnable(10) {
+                    override fun run() {
+                        if (data.moveToFirst()) {
+                            var imageList = ArrayList<ImageEntityBean>();
+                            var imageBean: ImageEntityBean
+                            do {
+                                val path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]))
+                                val name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]))
+                                val dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]))
+                                val width = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]))
+                                val height = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]))
+                                if (TextUtils.isEmpty(path) || TextUtils.isEmpty(name)) {
+                                    continue
+                                }
+                                if (width == 0L || height == 0L) {
+                                    continue
+                                }
+                                imageBean = ImageEntityBean(path, name, dateTime)
+                                imageList.add(imageBean)
 
-                        } while (data.moveToNext())
-                        data.close()
-                        runOnUiThread {
-                            mImageList?.addAll(imageList);
-                            mImageAdapter?.notifyDataSetChanged()
-                            this@ImageActivity.supportLoaderManager.destroyLoader(LOAD_ALL)
+                            } while (data.moveToNext())
+                            data.close()
+                            runOnUiThread {
+                                mImageList?.addAll(imageList);
+                                mImageAdapter?.notifyDataSetChanged()
+                                this@ImageActivity.supportLoaderManager.destroyLoader(LOAD_ALL)
+                            }
                         }
                     }
                 })
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportLoaderManager.destroyLoader(LOAD_ALL)
     }
 
 

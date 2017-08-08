@@ -1,6 +1,7 @@
 package com.drwang.views;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.util.ByteConstants;
@@ -12,9 +13,12 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
  */
 
 public class App extends Application {
+    public static Application sApplication;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sApplication = this;
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this).
                 setMaxCacheSizeOnLowDiskSpace(100 * ByteConstants.MB)
                 .build();
