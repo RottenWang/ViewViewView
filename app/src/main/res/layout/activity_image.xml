@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
@@ -23,21 +24,21 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/simpleDraweeView_title"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
                 android:fitsSystemWindows="true"
-                android:src="@drawable/shadow_origin"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"
+                fresco:fadeDuration="0" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar"
-                android:clipToPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:clipToPadding="true"
                 app:layout_collapseMode="parallax"
+                app:titleTextColor="@color/half_white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:title="@string/local_image" />
         </android.support.design.widget.CollapsingToolbarLayout>

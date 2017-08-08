@@ -11,7 +11,6 @@
         android:id="@+id/item_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
         fresco:fadeDuration="0"
         fresco:roundedCornerRadius="5dp" />
 </FrameLayout>

@@ -1,6 +1,9 @@
 package com.drwang.views.activity;
 
+import android.graphics.Color;
+import android.support.v7.graphics.Palette;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.drwang.views.R;
@@ -76,6 +79,13 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void initializeView() {
         kotlinBase_1 = new KotlinBase_1();
+        Palette palette = null;
+        tv_pieview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                tv_pieview.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
 //        ButterKnife.bind(this);
 //        findViewById(R.id.tv_pieview).setOnClickListener(new View.OnClickListener() {
 //            @Override
