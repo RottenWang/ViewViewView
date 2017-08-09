@@ -50,14 +50,28 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:text="分享"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.drwang.views.view.CircleBgImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/civ"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    android:text="分享"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="0dp"
