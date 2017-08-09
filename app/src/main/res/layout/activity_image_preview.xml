@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:fitsSystemWindows="true"
     tools:context="com.drwang.views.activity.ImagePreviewActivity">
 
 
@@ -15,11 +14,55 @@
         android:fitsSystemWindows="true"
         app:contentScrim="?attr/colorPrimary"
         app:layout_scrollFlags="exitUntilCollapsed">
+
         <com.drwang.views.view.PhotoViewPager
             android:id="@+id/photo_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true" />
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="-50dp"
+            android:background="@color/hal_black"
+            android:fitsSystemWindows="true"></RelativeLayout>
     </android.support.design.widget.CollapsingToolbarLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-80dp"
+            android:background="@color/hal_black"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

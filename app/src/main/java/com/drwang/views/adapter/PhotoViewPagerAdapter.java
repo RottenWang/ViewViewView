@@ -10,14 +10,13 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.DeleteImageEvent;
+import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
-import com.drwang.views.view.PhotoViewPager;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
@@ -28,8 +27,6 @@ import java.io.File;
 import java.util.List;
 
 import me.relex.photodraweeview.PhotoDraweeView;
-
-import static com.drwang.views.R.id.photo_drawee_view;
 
 /**
  * Created by Administrator on 2017/8/9.
@@ -79,6 +76,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         );
         photo_drawee_view.setController(controller);
         photo_drawee_view.setOnViewTapListener((v, x, y) -> {
+            EventBus.getDefault().post(new ShowOrHideEvent(isHide));
             if (isHide) {
                 if (Build.VERSION.SDK_INT >= 19) {
                     View decorView = mActivity.getWindow().getDecorView();
