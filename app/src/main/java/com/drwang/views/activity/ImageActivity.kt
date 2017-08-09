@@ -120,15 +120,15 @@ class ImageActivity : BasicActivity() {
                                 val path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]))
                                 val name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]))
                                 val dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]))
-                                val width = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]))
-                                val height = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]))
+                                val width = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]))
+                                val height = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]))
                                 if (TextUtils.isEmpty(path) || TextUtils.isEmpty(name)) {
                                     continue
                                 }
-                                if (width == 0L || height == 0L) {
+                                if (width == 0 || height == 0) {
                                     continue
                                 }
-                                imageBean = ImageEntityBean(path, name, dateTime)
+                                imageBean = ImageEntityBean(path, name, dateTime, width, height)
                                 imageList.add(imageBean)
 
                             } while (data.moveToNext())

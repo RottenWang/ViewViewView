@@ -2,8 +2,10 @@ package com.drwang.views.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.drwang.views.activity.ImageActivity;
+import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
@@ -65,6 +67,15 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, ImageActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toImagePreviewActivity(Activity activity, Bundle bundle) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, ImagePreviewActivity.class);
+        intent.putExtra(ImagePreviewActivity.PHOTO_INFO, bundle);
         activity.startActivity(intent);
     }
 }

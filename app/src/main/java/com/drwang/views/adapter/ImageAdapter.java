@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.drwang.views.R;
+import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
+import com.drwang.views.util.IntentUtil;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,10 +31,10 @@ import java.util.List;
  */
 
 public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
-    private List<ImageEntityBean> mList;
+    private ArrayList<ImageEntityBean> mList;
     int width;
 
-    public ImageAdapter(Activity context, List<ImageEntityBean> list) {
+    public ImageAdapter(Activity context, ArrayList<ImageEntityBean> list) {
         super(context, list);
         this.mList = list;
         float density = context.getResources().getDisplayMetrics().density;
@@ -76,7 +80,10 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
                 }
             }));
             itemView.setOnClickListener((v) -> {
-                showDialog(mList.get(position));
+//                showDialog(mList.get(position));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ImagePreviewActivity.PHOTO_INFO,mList);
+                IntentUtil.toImagePreviewActivity(mActivity,bundle);
             });
         }
     }
