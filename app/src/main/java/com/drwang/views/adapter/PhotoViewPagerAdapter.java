@@ -14,12 +14,15 @@ import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.DeleteImageEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
 import com.drwang.views.view.PhotoViewPager;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
@@ -118,10 +121,10 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
             if (delete) {//删除图片
                 mList.remove(imageEntityBean);
                 notifyDataSetChanged();
+                EventBus.getDefault().post(new DeleteImageEvent(imageEntityBean));
                 //通知系统
             }
             mActivity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imageEntityBean.path)));
-            Toast.makeText(mActivity, delete + "", Toast.LENGTH_SHORT).show();
         }).setNegativeButton("取消", (view, which) -> {
 
         }).setTitle("删除图片?");
@@ -129,5 +132,22 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         alertDialog.show();
         alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
+    }
+
+    private int mChildCount = 0;
+
+    @Override
+    public void notifyDataSetChanged() {
+        mChildCount = getCount();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        if (mChildCount > 0) {
+            mChildCount--;
+            return POSITION_NONE;
+        }
+        return super.getItemPosition(object);
     }
 }

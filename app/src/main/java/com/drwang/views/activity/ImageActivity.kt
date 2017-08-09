@@ -21,6 +21,7 @@ import com.drwang.views.R
 import com.drwang.views.adapter.ImageAdapter
 import com.drwang.views.base.BasicActivity
 import com.drwang.views.bean.ImageEntityBean
+import com.drwang.views.event.DeleteImageEvent
 import com.drwang.views.support.LocalThreadPoolManager
 import com.drwang.views.support.PriorityRunnable
 import com.drwang.views.support.fresco.FrescoScheme
@@ -31,6 +32,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
 import kotlinx.android.synthetic.main.activity_image.*
+import org.greenrobot.eventbus.Subscribe
 
 class ImageActivity : BasicActivity() {
     val TITLE_IMAGE_KEY = "TITLE_KEY";
@@ -172,8 +174,6 @@ class ImageActivity : BasicActivity() {
                             setStatusBarMode()
                         }
                     })
-
-
                 }
             })
         } else {
@@ -205,4 +205,9 @@ class ImageActivity : BasicActivity() {
         };
     }
 
+    @Subscribe
+    fun removeImage(deleteImageEvent: DeleteImageEvent) {
+        mImageList?.remove(deleteImageEvent.imageEntityBean);
+        mImageAdapter?.notifyDataSetChanged();
+    }
 }
