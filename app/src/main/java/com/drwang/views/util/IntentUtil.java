@@ -70,12 +70,11 @@ public class IntentUtil {
         activity.startActivity(intent);
     }
 
-    public static void toImagePreviewActivity(Activity activity, Bundle bundle) {
+    public static void toImagePreviewActivity(Activity activity) {
         if (activity == null) {
             return;
         }
         Intent intent = new Intent(activity, ImagePreviewActivity.class);
-        intent.putExtra(ImagePreviewActivity.PHOTO_INFO, bundle);
         activity.startActivity(intent);
     }
 }

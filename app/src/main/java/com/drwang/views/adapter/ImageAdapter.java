@@ -15,12 +15,15 @@ import android.widget.Toast;
 import com.drwang.views.R;
 import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.ImageEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
 import com.drwang.views.util.IntentUtil;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,10 +83,8 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
                 }
             }));
             itemView.setOnClickListener((v) -> {
-//                showDialog(mList.get(position));
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ImagePreviewActivity.PHOTO_INFO,mList);
-                IntentUtil.toImagePreviewActivity(mActivity,bundle);
+                EventBus.getDefault().postSticky(new ImageEvent(mList, position));
+                IntentUtil.toImagePreviewActivity(mActivity);
             });
         }
     }

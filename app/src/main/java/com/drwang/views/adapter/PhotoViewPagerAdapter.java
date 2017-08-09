@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +32,12 @@ import static com.drwang.views.R.id.photo_drawee_view;
  * Created by Administrator on 2017/8/9.
  */
 
-public class PhotoViewPagerAdpter extends PagerAdapter {
+public class PhotoViewPagerAdapter extends PagerAdapter {
+    private boolean isHide = true;
     List<ImageEntityBean> mList;
     Activity mActivity;
 
-    public PhotoViewPagerAdpter(Activity activity, List list) {
+    public PhotoViewPagerAdapter(Activity activity, List list) {
         mList = list;
         mActivity = activity;
     }
@@ -74,7 +76,25 @@ public class PhotoViewPagerAdpter extends PagerAdapter {
         );
         photo_drawee_view.setController(controller);
         photo_drawee_view.setOnViewTapListener((v, x, y) -> {
-            Toast.makeText(mActivity, "haa", Toast.LENGTH_SHORT).show();
+            if (isHide) {
+                if (Build.VERSION.SDK_INT >= 19) {
+                    View decorView = mActivity.getWindow().getDecorView();
+                    decorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= 19) {
+                    View decorView = mActivity.getWindow().getDecorView();
+                    decorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
+            }
+            isHide = !isHide;
         });
         photo_drawee_view.setOnLongClickListener(v -> {
             showDialog(mList.get(position));

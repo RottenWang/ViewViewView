@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:fitsSystemWindows="true"
-    android:background="@android:color/black"
     tools:context="com.drwang.views.activity.ImagePreviewActivity">
 
-    <com.drwang.views.view.PhotoViewPager
-        android:id="@+id/photo_viewpager"
+
+    <android.support.design.widget.CollapsingToolbarLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:layout_height="match_parent" />
-    <Button
-        android:layout_width="match_parent"
-        android:id="@+id/btn"
-        android:layout_height="wrap_content" />
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="exitUntilCollapsed">
+        <com.drwang.views.view.PhotoViewPager
+            android:id="@+id/photo_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true" />
+    </android.support.design.widget.CollapsingToolbarLayout>
+
 </android.support.design.widget.CoordinatorLayout>
