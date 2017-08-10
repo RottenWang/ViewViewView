@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         fresco:fadeDuration="0"
+        fresco:placeholderImage="@color/hal_black"
         fresco:roundBottomLeft="false"
         fresco:roundBottomRight="false"
         fresco:roundTopLeft="true"

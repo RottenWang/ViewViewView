@@ -74,7 +74,7 @@ public class ImagePreviewActivity extends BasicActivity {
             photoViewPagerAdapter = new PhotoViewPagerAdapter(this, mImageEntityBeanList);
         }
         photo_viewpager.setAdapter(photoViewPagerAdapter);
-        photo_viewpager.setOffscreenPageLimit(10);
+        photo_viewpager.setOffscreenPageLimit(3);
         photo_viewpager.setCurrentItem(stickyEvent.position, false);
 
     }
