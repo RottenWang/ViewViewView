@@ -155,7 +155,12 @@ class ImageActivity : BasicActivity() {
     private fun setImageToTitleBg(first: Boolean) {
         var uri = FrescoScheme.SCHEME_RES + packageName + "/" + titleRes;
         Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(uri))
-        val decodeResource = BitmapFactory.decodeResource(resources, titleRes);
+        var decodeResource = BitmapFactory.decodeResource(resources, titleRes);
+        if (decodeResource == null) {
+            decodeResource = BitmapFactory.decodeResource(resources, R.drawable.default_title_bg);
+            titleRes = R.drawable.default_title_bg;
+            SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, titleRes);
+        }
         val width = decodeResource.width
         val height = decodeResource.height;
         val newWidth = DensityUtil.getInstance().getScreenWidth(this).toInt();
