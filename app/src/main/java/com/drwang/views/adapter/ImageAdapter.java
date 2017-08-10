@@ -90,24 +90,4 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
             });
         }
     }
-
-    private void showDialog(ImageEntityBean imageEntityBean) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setPositiveButton("确定", (view, which) -> {
-            File file = new File(imageEntityBean.path);
-            boolean delete = file.delete();
-            if (delete) {//删除图片
-                mList.remove(imageEntityBean);
-                notifyDataSetChanged();
-                //通知系统
-            }
-            mActivity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imageEntityBean.path)));
-            Toast.makeText(mActivity, delete + "", Toast.LENGTH_SHORT).show();
-        }).setNegativeButton("取消", (view, which) -> {
-
-        }).setTitle("删除图片?");
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
-        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
-    }
 }

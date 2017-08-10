@@ -124,6 +124,7 @@ public class ImagePreviewActivity extends BasicActivity {
         valueAnimator.start();
         AnimationUtil.marginBottomTranslateAnimation(rl_bottom, -80 * density);
         AnimationUtil.marginTopTranslateAnimation(rl_title, -(50 * density + statusBarHeight + 0.5f));
+
     }
 
     @Override
