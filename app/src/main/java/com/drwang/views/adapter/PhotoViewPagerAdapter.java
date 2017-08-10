@@ -1,5 +1,6 @@
 package com.drwang.views.adapter;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.DeleteImageEvent;
+import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
@@ -22,6 +24,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.List;
@@ -36,10 +39,12 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
     private boolean isHide = true;
     List<ImageEntityBean> mList;
     Activity mActivity;
+    private View currentView;
 
     public PhotoViewPagerAdapter(Activity activity, List list) {
         mList = list;
         mActivity = activity;
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -105,6 +110,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        currentView = (View) object;
     }
 
     @Override
@@ -148,4 +154,16 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         }
         return super.getItemPosition(object);
     }
+
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void setScale(ImageScaleEvent event) {
+        PhotoDraweeView current = (PhotoDraweeView) currentView.findViewById(R.id.photo_drawee_view);
+        current.setScale(1.0f, true);
+        current.setEnableDraweeMatrix(event.position);
+    }
+
 }

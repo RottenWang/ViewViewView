@@ -11,11 +11,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Toast;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 /**
  * Created by Administrator on 2017/8/9.
  */
 
-public class CircleBgImageView extends View implements View.OnClickListener {
+public class CircleBgImageView extends View {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     float density;
     private Path path;
@@ -42,7 +44,6 @@ public class CircleBgImageView extends View implements View.OnClickListener {
         paint.setStyle(Paint.Style.STROKE);
         paint.setFilterBitmap(true);
         cornerPathEffect = new CornerPathEffect(density);
-        setOnClickListener(this);
     }
 
     @Override
@@ -70,8 +71,4 @@ public class CircleBgImageView extends View implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(getContext(), "分享", Toast.LENGTH_SHORT).show();
-    }
 }

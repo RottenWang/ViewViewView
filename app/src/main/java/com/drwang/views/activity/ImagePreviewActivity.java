@@ -1,6 +1,8 @@
 package com.drwang.views.activity;
 
+import android.animation.ValueAnimator;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -10,8 +12,10 @@ import com.drwang.views.adapter.PhotoViewPagerAdapter;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.ImageEvent;
+import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.util.AnimationUtil;
+import com.drwang.views.view.CircleBgImageView;
 import com.drwang.views.view.PhotoViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,6 +24,11 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static android.R.attr.animation;
+import static android.R.attr.value;
+import static java.lang.Boolean.FALSE;
 
 public class ImagePreviewActivity extends BasicActivity {
     @BindView(R.id.photo_viewpager)
@@ -28,6 +37,8 @@ public class ImagePreviewActivity extends BasicActivity {
     View rl_bottom;
     @BindView(R.id.rl_title)
     View rl_title;
+    @BindView(R.id.civ)
+    CircleBgImageView civ;
     List<ImageEntityBean> mImageEntityBeanList;
     private PhotoViewPagerAdapter photoViewPagerAdapter;
     float density;
@@ -86,5 +97,54 @@ public class ImagePreviewActivity extends BasicActivity {
             AnimationUtil.marginBottomTranslateAnimation(rl_bottom, -80 * density);
             AnimationUtil.marginTopTranslateAnimation(rl_title, -(50 * density + statusBarHeight + 0.5f));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        photoViewPagerAdapter.onDestroy();
+    }
+
+    private boolean isCuteMode = false;
+
+    @OnClick(R.id.civ)
+    public void clickCiv(View v) {
+        isCuteMode = true;
+        int currentItem = photo_viewpager.getCurrentItem();
+        EventBus.getDefault().post(new ImageScaleEvent(false));
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1.0f, 0.9f);
+        valueAnimator.addUpdateListener((value) -> {
+            float animatedValue = (float) value.getAnimatedValue();
+            Log.i("animatedValue", "clickCiv: animatedValue = " + animatedValue);
+            photo_viewpager.setScaleX(animatedValue);
+            photo_viewpager.setScaleY(animatedValue);
+
+        });
+        valueAnimator.setDuration(100);
+        valueAnimator.start();
+        AnimationUtil.marginBottomTranslateAnimation(rl_bottom, -80 * density);
+        AnimationUtil.marginTopTranslateAnimation(rl_title, -(50 * density + statusBarHeight + 0.5f));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isCuteMode) {
+            isCuteMode = false;
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.9f, 1.0f);
+            valueAnimator.addUpdateListener((value) -> {
+                float animatedValue = (float) value.getAnimatedValue();
+                Log.i("animatedValue", "clickCiv: animatedValue = " + animatedValue);
+                photo_viewpager.setScaleX(animatedValue);
+                photo_viewpager.setScaleY(animatedValue);
+
+            });
+            valueAnimator.setDuration(100);
+            valueAnimator.start();
+            EventBus.getDefault().post(new ImageScaleEvent(true));
+//            AnimationUtil.marginBottomTranslateAnimation(rl_bottom, 0);
+//            AnimationUtil.marginTopTranslateAnimation(rl_title, 0);
+            return;
+        }
+        super.onBackPressed();
     }
 }
