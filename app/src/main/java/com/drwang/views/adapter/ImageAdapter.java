@@ -5,15 +5,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drwang.views.R;
-import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.ImageEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
@@ -27,7 +26,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/8.
@@ -60,28 +58,32 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
     }
 
     class ImageHolder extends BaseRecyclerViewHolder {
-        private final FrameLayout fl_root;
-        private final SimpleDraweeView item_iv;
+        private FrameLayout fl_root;
+        private SimpleDraweeView item_iv;
+        private TextView item_tv;
 
         public ImageHolder(View itemView) {
             super(itemView);
             item_iv = (SimpleDraweeView) itemView.findViewById(R.id.item_iv);
             fl_root = (FrameLayout) itemView.findViewById(R.id.fl_root);
+            item_tv = (TextView) itemView.findViewById(R.id.item_tv);
             fl_root.getLayoutParams().width = width;
             fl_root.getLayoutParams().height = width;
             item_iv.getLayoutParams().width = width;
             item_iv.getLayoutParams().height = width;
+            item_tv.getLayoutParams().width = width;
+            item_tv.getLayoutParams().height = width;
         }
 
         @Override
         public void onBindViewHolder(int position) {
             item_iv.setController(FrescoUtils.getController(item_iv, width, width, FrescoScheme.SCHEME_FILE + mList.get(position).path, new BaseControllerListener<ImageInfo>() {
-                @Override
-                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                    super.onFinalImageSet(id, imageInfo, animatable);
-
-                }
-            }));
+                        @Override
+                        public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                            super.onFinalImageSet(id, imageInfo, animatable);
+                        }
+                    }
+            ));
             itemView.setOnClickListener((v) -> {
                 EventBus.getDefault().postSticky(new ImageEvent(mList, position));
                 IntentUtil.toImagePreviewActivity(mActivity);

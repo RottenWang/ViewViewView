@@ -29,6 +29,7 @@ public class FrescoUtils {
                 .setAutoPlayAnimations(true) // 支持gif
                 .setImageRequest(ImageRequestBuilder.newBuilderWithSource(uri)  //图片请求
                         .setResizeOptions(new ResizeOptions(width, height))  //大小设置
+                        .setLocalThumbnailPreviewsEnabled(true)
                         .build())
                 .setControllerListener(listener).build();
     }
