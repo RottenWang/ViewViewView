@@ -43,6 +43,8 @@ public class ImagePreviewActivity extends BasicActivity {
     private PhotoViewPagerAdapter photoViewPagerAdapter;
     float density;
     private int statusBarHeight;
+    @BindView(R.id.rl_root)
+    View rl_root;
 
     @Override
     protected void initializeView() {
@@ -120,6 +122,7 @@ public class ImagePreviewActivity extends BasicActivity {
             photo_viewpager.setScaleY(animatedValue);
 
         });
+        rl_root.setClickable(true);
         valueAnimator.setDuration(100);
         valueAnimator.start();
         AnimationUtil.marginBottomTranslateAnimation(rl_bottom, -80 * density);
@@ -139,6 +142,8 @@ public class ImagePreviewActivity extends BasicActivity {
     @Override
     public void onBackPressed() {
         if (isCuteMode) {
+            rl_root.setOnClickListener(null);
+            rl_root.setClickable(false);
             isCuteMode = false;
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.9f, 1.0f);
             valueAnimator.addUpdateListener((value) -> {
