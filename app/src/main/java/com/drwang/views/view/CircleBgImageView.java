@@ -10,12 +10,8 @@ import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 import com.drwang.views.R;
-
-import static android.R.attr.width;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by Administrator on 2017/8/9.

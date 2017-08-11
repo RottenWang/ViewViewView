@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.drwang.views.R;
@@ -25,10 +24,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.animation;
-import static android.R.attr.value;
-import static java.lang.Boolean.FALSE;
 
 public class ImagePreviewActivity extends BasicActivity {
     @BindView(R.id.photo_viewpager)

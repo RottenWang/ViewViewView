@@ -1,16 +1,12 @@
 package com.drwang.views.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
@@ -24,7 +20,6 @@ import com.facebook.imagepipeline.image.ImageInfo;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
