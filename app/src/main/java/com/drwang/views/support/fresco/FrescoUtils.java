@@ -31,7 +31,6 @@ public class FrescoUtils {
                 .setAutoPlayAnimations(true) // 支持gif 需要添加依赖compile 'com.facebook.fresco:animated-gif:1.4.0'
                 .setImageRequest(ImageRequestBuilder.newBuilderWithSource(uri)  //图片请求
                         .setResizeOptions(new ResizeOptions(width, height))  //大小设置
-                        .setLocalThumbnailPreviewsEnabled(true)
                         .build())
                 .setControllerListener(listener).build();
     }
