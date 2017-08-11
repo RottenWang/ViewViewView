@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.drwang.views.activity.SoftInputActivity">
 
 
@@ -14,23 +14,25 @@
         android:layout_height="150dp" />
 
     <!--<com.drwang.views.view.ZBgView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="150dp"-->
-    <!--android:layout_alignParentBottom="true" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_alignParentBottom="true" />-->
+
     <com.drwang.views.view.MoFaView2
         android:layout_width="match_parent"
         android:layout_height="360dp" />
+
     <com.drwang.views.view.MoFaView
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="360dp" />
+        android:layout_height="360dp"
+        android:layout_alignParentBottom="true" />
     <!--<com.drwang.views.view.MedalBackgroundView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
 
     <!--<com.drwang.views.view.SlideView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
 
     <com.drwang.views.view.TouchView
         android:id="@+id/touch_view"
@@ -48,4 +50,9 @@
         android:clickable="true"
         android:text="ReStart"
         android:textSize="20sp" />
+
+    <com.drwang.views.view.CustomProgressView
+        android:layout_centerInParent="true"
+        android:layout_width="74dp"
+        android:layout_height="15dp" />
 </RelativeLayout>

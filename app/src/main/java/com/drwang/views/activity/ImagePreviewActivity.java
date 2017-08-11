@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.drwang.views.R;
 import com.drwang.views.adapter.PhotoViewPagerAdapter;
@@ -20,7 +21,13 @@ import com.drwang.views.view.PhotoViewPager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,6 +47,8 @@ public class ImagePreviewActivity extends BasicActivity {
     private int statusBarHeight;
     @BindView(R.id.rl_root)
     View rl_root;
+    @BindView(R.id.tv_date)
+    TextView tv_date;
 
     @Override
     protected void initializeView() {
@@ -106,6 +115,11 @@ public class ImagePreviewActivity extends BasicActivity {
 
     @OnClick(R.id.civ_share)
     public void clickCiv(View v) {
+        ImageEntityBean imageEntityBean = mImageEntityBeanList.get(photo_viewpager.getCurrentItem());
+        long dateTime = imageEntityBean.dateTime;
+        String format = new SimpleDateFormat("yyyy年MM月dd日|HH:mm", Locale.CHINA).format(new Date(dateTime * 1000));
+        String[] split = format.split("\\|");
+        tv_date.setText(split[0]);
         isCuteMode = true;
         int currentItem = photo_viewpager.getCurrentItem();
         EventBus.getDefault().post(new ImageScaleEvent(false));
