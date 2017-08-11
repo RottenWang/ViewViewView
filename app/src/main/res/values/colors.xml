@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="half_white">#7FFFFFFF</color>
     <color name="hal_black">#7f000000</color>
+    <color name="hal_black2">#af000000</color>
 </resources>
