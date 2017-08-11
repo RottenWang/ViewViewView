@@ -164,6 +164,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         PhotoDraweeView current = (PhotoDraweeView) currentView.findViewById(R.id.photo_drawee_view);
         current.setScale(1.0f, true);
         current.setEnableDraweeMatrix(event.position);
+        isHide = true;
     }
 
 }

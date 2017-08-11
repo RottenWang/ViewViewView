@@ -37,8 +37,8 @@ public class ImagePreviewActivity extends BasicActivity {
     View rl_bottom;
     @BindView(R.id.rl_title)
     View rl_title;
-    @BindView(R.id.civ)
-    CircleBgImageView civ;
+    @BindView(R.id.civ_share)
+    CircleBgImageView civ_share;
     List<ImageEntityBean> mImageEntityBeanList;
     private PhotoViewPagerAdapter photoViewPagerAdapter;
     float density;
@@ -107,7 +107,7 @@ public class ImagePreviewActivity extends BasicActivity {
 
     private boolean isCuteMode = false;
 
-    @OnClick(R.id.civ)
+    @OnClick(R.id.civ_share)
     public void clickCiv(View v) {
         isCuteMode = true;
         int currentItem = photo_viewpager.getCurrentItem();
@@ -124,7 +124,16 @@ public class ImagePreviewActivity extends BasicActivity {
         valueAnimator.start();
         AnimationUtil.marginBottomTranslateAnimation(rl_bottom, -80 * density);
         AnimationUtil.marginTopTranslateAnimation(rl_title, -(50 * density + statusBarHeight + 0.5f));
-
+        if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
     @Override

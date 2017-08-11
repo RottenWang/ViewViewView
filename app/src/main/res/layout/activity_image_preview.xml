@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:myattr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -58,10 +59,11 @@
                 android:padding="5dp">
 
                 <com.drwang.views.view.CircleBgImageView
+                    android:id="@+id/civ_share"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:id="@+id/civ"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    myattr:draw_type="share" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,6 +72,78 @@
                     android:gravity="center"
 
                     android:text="分享"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.drwang.views.view.CircleBgImageView
+                    android:id="@+id/civ_edit"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    myattr:draw_type="more" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    android:text="编辑"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.drwang.views.view.CircleBgImageView
+                    android:id="@+id/civ_delete"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    myattr:draw_type="delete" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    android:text="删除"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.drwang.views.view.CircleBgImageView
+                    android:id="@+id/civ_more"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    myattr:draw_type="more" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    android:text="更多"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
             </LinearLayout>
