@@ -81,6 +81,9 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         );
         photo_drawee_view.setController(controller);
         photo_drawee_view.setOnViewTapListener((v, x, y) -> {
+            if (!isCanTapClick) {
+                return;
+            }
             EventBus.getDefault().post(new ShowOrHideEvent(isHide));
             if (isHide) {
                 if (Build.VERSION.SDK_INT >= 19) {
@@ -159,12 +162,19 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         EventBus.getDefault().unregister(this);
     }
 
+    private boolean isCanTapClick = true;
+
     @Subscribe
     public void setScale(ImageScaleEvent event) {
         PhotoDraweeView current = (PhotoDraweeView) currentView.findViewById(R.id.photo_drawee_view);
         current.setScale(1.0f, true);
         current.setEnableDraweeMatrix(event.position);
         isHide = true;
+        if (event.position == false) {
+            isCanTapClick = false;
+        } else {
+            isCanTapClick = true;
+        }
     }
 
 }
