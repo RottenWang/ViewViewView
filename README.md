@@ -40,3 +40,22 @@ http://www.jcodecraeer.com/demo/from-java-to-kotlin/index.html
 
 #鸿扬自定义view
 http://www.imooc.com/learn/239
+
+
+#AS2.3 run bug
+http://blog.csdn.net/lucasey/article/details/61071377
+
+#RecyclerView 悬浮效果
+http://www.jianshu.com/p/b335b620af39
+
+#RecyclerView LayoutManager
+http://blog.coderclock.com/2017/03/26/android/%E5%85%B3%E4%BA%8EAndroid%20RecyclerView%E7%9A%84%E9%82%A3%E4%BA%9B%E5%BC%80%E6%BA%90LayoutManager/
+
+#状态栏
+http://www.jianshu.com/p/932568ed31af
+
+#5.x
+http://blog.csdn.net/ss1168805219/article/details/53189366
+
+#SurfaceView  绘制
+http://www.cnblogs.com/xuling/archive/2011/06/06/android.html
