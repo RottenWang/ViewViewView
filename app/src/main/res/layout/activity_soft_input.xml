@@ -52,7 +52,7 @@
         android:textSize="20sp" />
 
     <com.drwang.views.view.CustomProgressView
-        android:layout_centerInParent="true"
         android:layout_width="74dp"
+        android:layout_marginTop="100dp"
         android:layout_height="15dp" />
 </RelativeLayout>
