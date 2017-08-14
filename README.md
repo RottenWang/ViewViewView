@@ -60,5 +60,5 @@ http://blog.csdn.net/ss1168805219/article/details/53189366
 #SurfaceView  绘制
 http://www.cnblogs.com/xuling/archive/2011/06/06/android.html
 
-
-![Image text](https://raw.githubusercontent.com/RottenWang/ViewViewView/master/_hencoder_view_draw.png)
+#View绘制相关方法及先后顺序
+![View绘制相关方法及先后顺序](https://raw.githubusercontent.com/RottenWang/ViewViewView/master/_hencoder_view_draw.png)
