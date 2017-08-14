@@ -54,6 +54,7 @@
             android:name=".activity.ImagePreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensor" />
+        <activity android:name=".activity.DecorationActivity"></activity>
     </application>
 
 </manifest>

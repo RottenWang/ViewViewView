@@ -21,7 +21,7 @@ public class MainActivity extends BasicActivity {
     private KotlinBase_1 kotlinBase_1;
 
 
-    @OnClick({R.id.tv_tool_bar, R.id.tv_shadow, R.id.tv_input_soft, R.id.tv_recyclerview, R.id.tv_paint, R.id.tv_inObj, R.id.tv_diedai, R.id.tv_pieview, R.id.tv_printSum, R.id.tv_printFor, R.id.tv_printWhile, R.id.tv_printWhen, R.id.tv_inin, R.id.tv_out})
+    @OnClick({R.id.tv_decoration, R.id.tv_tool_bar, R.id.tv_shadow, R.id.tv_input_soft, R.id.tv_recyclerview, R.id.tv_paint, R.id.tv_inObj, R.id.tv_diedai, R.id.tv_pieview, R.id.tv_printSum, R.id.tv_printFor, R.id.tv_printWhile, R.id.tv_printWhen, R.id.tv_inin, R.id.tv_out})
     public void toOtherActivity(View view) {
         switch (view.getId()) {
             case R.id.tv_pieview:
@@ -65,6 +65,9 @@ public class MainActivity extends BasicActivity {
                 break;
             case R.id.tv_tool_bar:
                 IntentUtil.toImageActivity(this);
+                break;
+            case R.id.tv_decoration:
+                IntentUtil.toDecorationActivity(this);
                 break;
         }
     }

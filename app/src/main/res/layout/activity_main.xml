@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/holo_blue_bright"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,7 +30,8 @@
             android:gravity="center"
             android:text="print Sum"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_printFor"
@@ -41,7 +42,8 @@
             android:gravity="center"
             android:text="print for"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_printWhile"
@@ -52,7 +54,8 @@
             android:gravity="center"
             android:text="print While"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_printWhen"
@@ -63,7 +66,8 @@
             android:gravity="center"
             android:text="print When(switch)"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_inin"
@@ -74,7 +78,8 @@
             android:gravity="center"
             android:text="print in"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_out"
@@ -85,7 +90,8 @@
             android:gravity="center"
             android:text="print out"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_diedai"
@@ -96,7 +102,8 @@
             android:gravity="center"
             android:text="print 迭代"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_inObj"
@@ -107,7 +114,8 @@
             android:gravity="center"
             android:text="print inObj"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_paint"
@@ -161,6 +169,17 @@
             android:background="@android:color/holo_blue_bright"
             android:gravity="center"
             android:text="images"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_decoration"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/holo_blue_bright"
+            android:gravity="center"
+            android:text="decoration"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
 

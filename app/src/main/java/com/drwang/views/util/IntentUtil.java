@@ -3,8 +3,10 @@ package com.drwang.views.util;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.drwang.views.activity.DecorationActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
+import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
@@ -74,6 +76,14 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, ImagePreviewActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toDecorationActivity(Activity activity) {
+        if (activity == null){
+            return;
+        }
+        Intent intent = new Intent(activity,DecorationActivity.class);
         activity.startActivity(intent);
     }
 }
