@@ -126,3 +126,71 @@ radius 模糊的半径  style NORMAL: 内外都模糊绘制 SOLID: 内部正常
 EmbossMaskFilter(float[] direction, float ambient, float specular, float blurRadius); 
 direction 是一个 3 个元素的数组，指定了光源的方向； ambient 是环境光的强度，数值范围是 0 到 1； 
 specular 是炫光的系数； blurRadius 是应用光线的范围
+
+
+Path
+// 基本绘图方法
+addArc(RectF oval, float startAngle, float sweepAngle)
+绘制弧线,配合Paint的Style可以实现不同的填充效果
+addCircle(float x, float y, float radius, Path.Direction dir)
+绘制圆形,其中第dir参数用来指定绘制时是顺时针还是逆时针
+addOval(RectF oval, Path.Direction dir)
+绘制椭圆形，其中 oval作为椭圆的外切矩形区域
+addRect(RectF rect, Path.Direction dir)
+绘制矩形
+addRoundRect(RectF rect, float rx, float ry, Path.Direction dir)
+绘制圆角矩形
+lineTo(float x, float y)
+绘制直线
+addPath(Path src)
+添加一个新的Path到当前Path
+arcTo(RectF oval, float startAngle, float sweepAngle, boolean forceMoveTo)
+与addArc方法相似，但也有区别，下文细述。
+quadTo(float x1, float y1, float x2, float y2)
+绘制二次贝塞尔曲线,其中 (x1,y1)为控制点，(x2,y2)为终点
+cubicTo(float x1, float y1, float x2, float y2, float x3, float y3)
+绘制三次贝塞尔曲线，其中(x1,y1),(x2,y2)为控制点，(x3,y3)为终点
+
+// rXXX方法
+上面的lineTo,MoveTo,QuadTo,CubicTo方法都有与之对应的rXXX方法：
+rLineTo(float dx, float dy)
+rMoveTo(float dx, float dy)
+rQuadTo(float dx1, float dy1, float dx2, float dy2)
+rCubicTo(float x1, float y1, float x2, float y2, float x3, float y3)
+这些方法与之对应的原方法相比，惟一的区别在于：
+r方法是基于当前绘制开始点的offest,比如当前paint位于 (100,100)处，
+则使用rLineTo(100,100)方法绘制出来的直线是从(100,100)到(200,200)的一条直接，
+由此可见rXXX方法方便用来基于之前的绘制作连续绘制。
+
+//  Path.op方法
+Path.Op.DIFFERENCE 减去path1中path1与path2都存在的部分;
+path1 = (path1 - path1 ∩ path2)
+Path.Op.INTERSECT 保留path1与path2共同的部分;
+path1 = path1 ∩ path2
+Path.Op.UNION 取path1与path2的并集;
+path1 = path1 ∪ path2
+Path.Op.REVERSE_DIFFERENCE 与DIFFERENCE刚好相反;
+path1 = path2 - (path1 ∩ path2)
+Path.Op.XOR 与INTERSECT刚好相反;
+path1 = (path1 ∪ path2) - (path1 ∩ path2)
+
+//Path.setFillType
+设置path的填充模式.网上关于path的FillType的介绍很少，实际上在官方ApiDemos里就有个很好的例子:
+
+
+// 其它方法
+moveTo(float x,float y)
+移动画笔到 (x,y) 处
+offset(float dx, float dy)
+平移当前path,在此path上绘制的任何图形都会受到影响
+close()
+闭合当前路径 (系统会自动从起点到终点绘制一条直线，使当前路径闭合)
+reset()
+重置path,但不会重置fill-type设置
+rewind()
+重置path,但会保留内部数据结构
+set(Path src)
+设置新的Path到当前对象
+setLastPoint(float x,float y)
+设置当前path的终点
+transform(Matrix matrix)
