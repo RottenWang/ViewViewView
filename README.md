@@ -59,3 +59,6 @@ http://blog.csdn.net/ss1168805219/article/details/53189366
 
 #SurfaceView  绘制
 http://www.cnblogs.com/xuling/archive/2011/06/06/android.html
+
+
+![Image text](ViewViewView/_hencoder_view_draw.png)
