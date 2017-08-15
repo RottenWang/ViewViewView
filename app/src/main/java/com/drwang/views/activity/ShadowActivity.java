@@ -2,9 +2,13 @@ package com.drwang.views.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +16,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drwang.views.R;
@@ -22,8 +27,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
+import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorInvertFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageMixBlendFilter;
 
 public class ShadowActivity extends BasicActivity {
+    @BindView(R.id.iv_filter)
+    ImageView iv_filter;
     @BindView(R.id.tv_wifi)
     TextView tv_wifi;
     @BindView(R.id.recyclerview_wifi)
@@ -32,6 +44,8 @@ public class ShadowActivity extends BasicActivity {
     private WifiManager wifiManager;
     LinearLayoutManager layoutManager;
     WifiAdapter mWifiAdapter;
+    @BindView(R.id.surfaceview)
+    GLSurfaceView surfaceView;
 
     @Override
     protected void initializeView() {
@@ -47,7 +61,12 @@ public class ShadowActivity extends BasicActivity {
                 loadData();
             }
         }
-
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.shadow_origin);
+        GPUImage gpuImage = new GPUImage(this);
+        gpuImage.setGLSurfaceView(surfaceView);
+        gpuImage.setImage(bitmap);
+        gpuImage.setFilter(new GPUImageColorInvertFilter());
+//        gpuImage.saveToPictures("GPUImage","ImageFilter.jpg",null);
     }
 
     private void loadData() {

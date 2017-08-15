@@ -80,7 +80,7 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void initializeView() {
-        kotlinBase_1 = new KotlinBase_1();
+//        kotlinBase_1 = new KotlinBase_1();
         Palette palette = null;
         tv_pieview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
