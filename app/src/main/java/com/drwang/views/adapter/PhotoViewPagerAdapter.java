@@ -104,10 +104,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
             }
             isHide = !isHide;
         });
-        photo_drawee_view.setOnLongClickListener(v -> {
-            showDialog(mList.get(position));
-            return true;
-        });
+
     }
 
     @Override
@@ -120,25 +117,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    private void showDialog(ImageEntityBean imageEntityBean) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setPositiveButton("确定", (view, which) -> {
-            File file = new File(imageEntityBean.path);
-            boolean delete = file.delete();
-            if (delete) {//删除图片
-                mList.remove(imageEntityBean);
-                notifyDataSetChanged();
-                EventBus.getDefault().post(new DeleteImageEvent(imageEntityBean));
-                //通知系统
-            }
-            mActivity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imageEntityBean.path)));
-        }).setNegativeButton("取消", (view, which) -> {
 
-        }).setTitle("删除图片?");
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
-        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
-    }
 
     private int mChildCount = 0;
 

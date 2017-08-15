@@ -32,6 +32,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageColorMatrixFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageToneCurveFilter;
 
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
@@ -47,7 +48,7 @@ public class FilterActivity extends AppCompatActivity {
     private List<ImageEntityBean> mList;
     private GPUImage gpuImage;
     private boolean isRenderer;
-
+    private GPUImageFilter filter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class FilterActivity extends AppCompatActivity {
             ViewGroup viewById = (ViewGroup) window.getDecorView().findViewById(android.R.id.content);
             viewById.getChildAt(0).setFitsSystemWindows(true);
         }
+        filter = new GPUImageToneCurveFilter();
         density = DensityUtil.getInstance().getDensity(this);
         screenHeight = DensityUtil.getInstance().getScreenHeight(this);
         screenWidth = DensityUtil.getInstance().getScreenWidth(this);
@@ -180,7 +182,7 @@ public class FilterActivity extends AppCompatActivity {
                     layoutParams.width = finalWidth;
                     layoutParams.height = finalHeight;
                     glsurfaceview.setLayoutParams(layoutParams);
-                    gpuImage.setFilter(new GPUImageGaussianBlurFilter(4));
+                    gpuImage.setFilter(filter);
 //                gpuImage.requestRender();
                 }
             });
@@ -190,10 +192,7 @@ public class FilterActivity extends AppCompatActivity {
             layoutParams.width = finalWidth;
             layoutParams.height = finalHeight;
             glsurfaceview.setLayoutParams(layoutParams);
-            glsurfaceview.post(() -> {
-                gpuImage.setFilter(new GPUImageGaussianBlurFilter(4));
-                gpuImage.setImage(bitmap);
-            });
+            gpuImage.setImage(bitmap);
         }
 
     }

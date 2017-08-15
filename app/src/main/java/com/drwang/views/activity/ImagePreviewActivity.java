@@ -1,17 +1,20 @@
 package com.drwang.views.activity;
 
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drwang.views.R;
 import com.drwang.views.adapter.PhotoViewPagerAdapter;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.DeleteImageEvent;
 import com.drwang.views.event.ImageEvent;
 import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
@@ -19,13 +22,12 @@ import com.drwang.views.util.AnimationUtil;
 import com.drwang.views.util.IntentUtil;
 import com.drwang.views.view.CircleBgImageView;
 import com.drwang.views.view.PhotoViewPager;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -156,6 +158,11 @@ public class ImagePreviewActivity extends BasicActivity {
         IntentUtil.toFilterActivity(this);
     }
 
+    @OnClick(R.id.civ_delete)
+    public void deleteImage(View v) {
+        showDeleteDialog(photo_viewpager.getCurrentItem());
+    }
+
     @Override
     public void onBackPressed() {
         if (isCuteMode) {
@@ -178,5 +185,27 @@ public class ImagePreviewActivity extends BasicActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private void showDeleteDialog(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setPositiveButton("确定", (view, which) -> {
+            File file = new File(mImageEntityBeanList.get(position).path);
+            boolean delete = file.delete();
+            if (delete) {//删除图片
+                ImageEntityBean removedImageBean = mImageEntityBeanList.remove(position);
+                Fresco.getImagePipeline().evictFromCache(Uri.parse("file://" + removedImageBean.path));
+                removedImageBean = mImageEntityBeanList.remove(position);
+                photoViewPagerAdapter.notifyDataSetChanged();
+                EventBus.getDefault().post(new DeleteImageEvent(removedImageBean));
+                //通知系统
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + removedImageBean.path)));
+            }
+        }).setNegativeButton("取消", (view, which) -> {
+
+        }).setTitle("删除图片?");
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+        alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
     }
 }
