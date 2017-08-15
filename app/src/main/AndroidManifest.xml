@@ -53,7 +53,12 @@
             android:name=".activity.ImagePreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensor" />
-        <activity android:name=".activity.DecorationActivity"></activity>
+        <activity
+            android:name=".activity.DecorationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FilterActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

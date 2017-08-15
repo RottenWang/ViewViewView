@@ -44,8 +44,6 @@ public class ShadowActivity extends BasicActivity {
     private WifiManager wifiManager;
     LinearLayoutManager layoutManager;
     WifiAdapter mWifiAdapter;
-    @BindView(R.id.surfaceview)
-    GLSurfaceView surfaceView;
 
     @Override
     protected void initializeView() {
@@ -61,12 +59,6 @@ public class ShadowActivity extends BasicActivity {
                 loadData();
             }
         }
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.shadow_origin);
-        GPUImage gpuImage = new GPUImage(this);
-        gpuImage.setGLSurfaceView(surfaceView);
-        gpuImage.setImage(bitmap);
-        gpuImage.setFilter(new GPUImageColorInvertFilter());
-//        gpuImage.saveToPictures("GPUImage","ImageFilter.jpg",null);
     }
 
     private void loadData() {

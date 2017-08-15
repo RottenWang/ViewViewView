@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.drwang.views.activity.DecorationActivity;
+import com.drwang.views.activity.FilterActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.activity.MainActivity;
@@ -80,10 +81,18 @@ public class IntentUtil {
     }
 
     public static void toDecorationActivity(Activity activity) {
-        if (activity == null){
+        if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity,DecorationActivity.class);
+        Intent intent = new Intent(activity, DecorationActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toFilterActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, FilterActivity.class);
         activity.startActivity(intent);
     }
 }

@@ -31,4 +31,7 @@ public class DensityUtil {
     public float getDensity(Context context){
         return context.getApplicationContext().getResources().getDisplayMetrics().density;
     }
+    public float getScreenHeight(Context context){
+        return context.getApplicationContext().getResources().getDisplayMetrics().heightPixels;
+    }
 }

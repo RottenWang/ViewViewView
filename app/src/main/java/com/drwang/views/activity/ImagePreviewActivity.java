@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drwang.views.R;
@@ -15,6 +16,7 @@ import com.drwang.views.event.ImageEvent;
 import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.util.AnimationUtil;
+import com.drwang.views.util.IntentUtil;
 import com.drwang.views.view.CircleBgImageView;
 import com.drwang.views.view.PhotoViewPager;
 
@@ -146,6 +148,12 @@ public class ImagePreviewActivity extends BasicActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    @OnClick(R.id.civ_edit)
+    public void editImage(View v) {
+        EventBus.getDefault().postSticky(new ImageEvent(mImageEntityBeanList, photo_viewpager.getCurrentItem()));
+        IntentUtil.toFilterActivity(this);
     }
 
     @Override
