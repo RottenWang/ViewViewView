@@ -1,11 +1,7 @@
 package com.drwang.views.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 
 import com.drwang.views.R;
 import com.drwang.views.adapter.ExampleAdapter;

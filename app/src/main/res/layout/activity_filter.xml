@@ -6,9 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/hal_black"
     tools:context="com.drwang.views.activity.FilterActivity">
+
     <android.opengl.GLSurfaceView
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
         android:id="@+id/gl_surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:id="@+id/rl_slider"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>
