@@ -38,7 +38,7 @@ public class LocalThreadPoolManager {
         return mLocalThreadPoolExecutor;
     }
 
-    public static void execute(Runnable runnable) {
+    public static void execute(PriorityRunnable runnable) {
         LocalThreadPoolManager.getInstance().getExecutor().execute(runnable);
     }
 

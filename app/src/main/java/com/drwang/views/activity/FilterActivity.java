@@ -160,7 +160,7 @@ public class FilterActivity extends AppCompatActivity {
                 newHeight = (int) (screenHeight - 0.5f);
             }
         }
-        options.inSampleSize = width / newWidth;
+        options.inSampleSize = (int) (width / (newWidth * 1.0f) + 0.5f);
         options.inJustDecodeBounds = false;
         Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
         int finalWidth = width / options.inSampleSize;
