@@ -60,5 +60,8 @@ http://blog.csdn.net/ss1168805219/article/details/53189366
 #SurfaceView  绘制
 http://www.cnblogs.com/xuling/archive/2011/06/06/android.html
 
+#启动页闪屏
+http://blog.csdn.net/zivensonice/article/details/51691136
+
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
