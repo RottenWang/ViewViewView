@@ -6,6 +6,7 @@ import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by Administrator on 2017/8/8.
@@ -42,5 +43,6 @@ public class App extends Application {
                 .setMainDiskCacheConfig(diskCacheConfig)
                 .build();
         Fresco.initialize(this, config);
+        CrashReport.initCrashReport(this, "781b9b11de", false);
     }
 }

@@ -23,15 +23,12 @@ import com.drwang.views.util.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorMatrixFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageToneCurveFilter;
 
 public class FilterActivity extends AppCompatActivity {
@@ -49,6 +46,7 @@ public class FilterActivity extends AppCompatActivity {
     private GPUImage gpuImage;
     private boolean isRenderer;
     private GPUImageFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
