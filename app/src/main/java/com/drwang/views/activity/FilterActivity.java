@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageToneCurveFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageWhiteBalanceFilter;
 
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
@@ -60,7 +61,7 @@ public class FilterActivity extends AppCompatActivity {
             ViewGroup viewById = (ViewGroup) window.getDecorView().findViewById(android.R.id.content);
             viewById.getChildAt(0).setFitsSystemWindows(true);
         }
-        filter = new GPUImageToneCurveFilter();
+        filter = new GPUImageWhiteBalanceFilter();
         density = DensityUtil.getInstance().getDensity(this);
         screenHeight = DensityUtil.getInstance().getScreenHeight(this);
         screenWidth = DensityUtil.getInstance().getScreenWidth(this);
@@ -160,7 +161,7 @@ public class FilterActivity extends AppCompatActivity {
                 newHeight = (int) (screenHeight - 0.5f);
             }
         }
-        options.inSampleSize = (int) (width / (newWidth * 1.0f) + 0.5f);
+        options.inSampleSize = (int) (width / newWidth + 0.5f);
         options.inJustDecodeBounds = false;
         Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
         int finalWidth = width / options.inSampleSize;

@@ -5,21 +5,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.drwang.views.R;
+import com.drwang.views.base.BasicActivity;
 import com.drwang.views.view.PieView;
 
-public class PieViewActivity extends AppCompatActivity implements View.OnClickListener {
+public class PieViewActivity extends BasicActivity implements View.OnClickListener {
 
     private PieView mPieView;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view);
+    protected void initializeView() {
         findViewById(R.id.show_bing).setOnClickListener(this);
         mPieView = (PieView) findViewById(R.id.pieview);
     }
 
-    private static final String TAG = "PieViewActivity";
+    @Override
+    protected void initializeData() {
+
+    }
+
+    @Override
+    public int setContentViewRes() {
+        return R.layout.activity_view;
+    }
 
     @Override
     public void onClick(View v) {

@@ -25,10 +25,6 @@ public class RecyclerActivity extends BasicActivity {
     List<String> mList;
     LinearLayoutManager layoutManager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected void initializeView() {

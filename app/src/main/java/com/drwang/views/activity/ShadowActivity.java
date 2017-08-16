@@ -34,8 +34,6 @@ import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageMixBlendFilter;
 
 public class ShadowActivity extends BasicActivity {
-    @BindView(R.id.iv_filter)
-    ImageView iv_filter;
     @BindView(R.id.tv_wifi)
     TextView tv_wifi;
     @BindView(R.id.recyclerview_wifi)
