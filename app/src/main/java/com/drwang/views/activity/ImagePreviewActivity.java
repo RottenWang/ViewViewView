@@ -193,6 +193,7 @@ public class ImagePreviewActivity extends BasicActivity {
     private void showDeleteDialog(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setPositiveButton("确定", (view, which) -> {
             File file = new File(mImageEntityBeanList.get(position).path);
+            file.delete();
             //删除图片
             ImageEntityBean removedImageBean = mImageEntityBeanList.remove(position);
             Fresco.getImagePipeline().evictFromCache(Uri.parse("file://" + removedImageBean.path));

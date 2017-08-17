@@ -49,6 +49,14 @@ import jp.co.cyberagent.android.gpuimage.GPUImageAlphaBlendFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageBilateralFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageBoxBlurFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageBrightnessFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageCGAColorspaceFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageChromaKeyBlendFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorBalanceFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorBlendFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorBurnBlendFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorDodgeBlendFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorInvertFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageColorMatrixFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageToneCurveFilter;
@@ -232,6 +240,14 @@ public class FilterActivity extends AppCompatActivity {
         mFilterList.add(new FilterInfo(new GPUImageBrightnessFilter(0.3f), "Brightness", 0.3f, 0, 1, (p, f) -> {
             ((GPUImageBrightnessFilter) f).setBrightness(p);
         }));
+        mFilterList.add(new FilterInfo(new GPUImageCGAColorspaceFilter(), "CGAColor"));
+        mFilterList.add(new FilterInfo(new GPUImageChromaKeyBlendFilter(), "ChromaKey"));
+        mFilterList.add(new FilterInfo(new GPUImageColorBalanceFilter(), "ColorBalance"));
+        mFilterList.add(new FilterInfo(new GPUImageColorBlendFilter(), "ColorBlend"));
+        mFilterList.add(new FilterInfo(new GPUImageColorBurnBlendFilter(), "ColorBurn"));
+        mFilterList.add(new FilterInfo(new GPUImageColorDodgeBlendFilter(), "ColorDodge"));
+        mFilterList.add(new FilterInfo(new GPUImageColorInvertFilter(), "ColorInvert"));
+        mFilterList.add(new FilterInfo(new GPUImageColorMatrixFilter(), "ColorMatrix"));
     }
 
     private void resetImageAndFilter() {
