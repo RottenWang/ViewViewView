@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drwang.views.R;
@@ -41,10 +42,12 @@ public class FilterAdapter extends BaseRecyclerViewAdapter<FilterInfo> {
     class FilterViewHolder extends BaseRecyclerViewHolder {
 
         private TextView tv_filter_name;
+        private ImageView iv_filter_preview;
 
         public FilterViewHolder(View itemView) {
             super(itemView);
             tv_filter_name = (TextView) itemView.findViewById(R.id.tv_filter_name);
+            iv_filter_preview = (ImageView) itemView.findViewById(R.id.iv_filter_preview);
         }
 
         @Override
@@ -54,6 +57,7 @@ public class FilterAdapter extends BaseRecyclerViewAdapter<FilterInfo> {
                 EventBus.getDefault().post(new FilterChangeEvent(mList.get(position)));
 
             });
+            iv_filter_preview.setImageBitmap(mList.get(position).bitmap);
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.drwang.views.bean;
 
+import android.graphics.Bitmap;
+import android.widget.ScrollView;
+
 import com.drwang.views.event.RefreshGPUImageEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -18,6 +21,7 @@ public class FilterInfo {
     public float rangeMix;
     public float progress;
     public float value;
+    public Bitmap bitmap;
     GPUImageChangeInterface<GPUImageFilter> listener;
 
     public FilterInfo(GPUImageFilter filter, String filterName, float currentRange, float rangeMix, float rangeMax, GPUImageChangeInterface<GPUImageFilter> listener) {
@@ -53,5 +57,9 @@ public class FilterInfo {
         void setProgress(float progress, T filter);
     }
 
+
+    public void setFilterBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
 }
