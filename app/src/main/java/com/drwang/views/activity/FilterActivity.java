@@ -2,6 +2,7 @@ package com.drwang.views.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,29 +144,30 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     private void resizeImage(boolean init) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
-        int width = options.outWidth;
-        int height = options.outHeight;
+        Bitmap bitmapOrigin = BitmapFactory.decodeFile(mList.get(currentPosition).path);
+        int width = bitmapOrigin.getWidth();
+        int height = bitmapOrigin.getHeight();
         int newWidth = width;
         int newHeight = height;
+        float scale = 1.0f;
         if (newWidth > screenWidth || newHeight > screenHeight) {
             //格式化宽和高
             if (newWidth > screenWidth) {
+                scale = screenWidth / (newWidth * 1.0f);
                 newHeight = (int) (newHeight * screenWidth / newWidth);
                 newWidth = (int) (screenWidth - 0.5f);
             }
             if (newHeight > screenHeight) {
-                newWidth = (int) (newWidth * screenHeight / newHeight);
-                newHeight = (int) (screenHeight - 0.5f);
+                scale = scale * screenHeight / (newHeight * 1.0f);
             }
         }
-        options.inSampleSize = (int) (width / newWidth + 0.5f);
-        options.inJustDecodeBounds = false;
-        Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
-        int finalWidth = width / options.inSampleSize;
-        int finalHeight = height / options.inSampleSize;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Bitmap bitmap = Bitmap.createBitmap(bitmapOrigin, 0, 0, width, height, matrix, false);
+//        Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
+//        Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
+        int finalWidth = (int) (width * scale);
+        int finalHeight = (int) (height * scale);
         if (init) {
             gpuImage = new GPUImage(this);
             gpuImage.setGLSurfaceView(glsurfaceview);

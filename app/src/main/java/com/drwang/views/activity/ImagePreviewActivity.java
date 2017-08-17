@@ -3,6 +3,7 @@ package com.drwang.views.activity;
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -77,8 +78,10 @@ public class ImagePreviewActivity extends BasicActivity {
         }
         setStatusBarDarkMode(false, this);
         ImageEvent stickyEvent = EventBus.getDefault().getStickyEvent(ImageEvent.class);
-        EventBus.getDefault().removeStickyEvent(stickyEvent);
-        mImageEntityBeanList = stickyEvent.mList;
+        if (stickyEvent != null) {
+            EventBus.getDefault().removeStickyEvent(stickyEvent);
+            mImageEntityBeanList = stickyEvent.mList;
+        }
 
         if (photoViewPagerAdapter == null) {
             photoViewPagerAdapter = new PhotoViewPagerAdapter(this, mImageEntityBeanList);
@@ -191,15 +194,14 @@ public class ImagePreviewActivity extends BasicActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setPositiveButton("确定", (view, which) -> {
             File file = new File(mImageEntityBeanList.get(position).path);
             boolean delete = file.delete();
-            if (delete) {//删除图片
-                ImageEntityBean removedImageBean = mImageEntityBeanList.remove(position);
-                Fresco.getImagePipeline().evictFromCache(Uri.parse("file://" + removedImageBean.path));
-                removedImageBean = mImageEntityBeanList.remove(position);
-                photoViewPagerAdapter.notifyDataSetChanged();
-                EventBus.getDefault().post(new DeleteImageEvent(removedImageBean));
-                //通知系统
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + removedImageBean.path)));
-            }
+            //删除图片
+            ImageEntityBean removedImageBean = mImageEntityBeanList.remove(position);
+            Fresco.getImagePipeline().evictFromCache(Uri.parse("file://" + removedImageBean.path));
+            photoViewPagerAdapter.notifyDataSetChanged();
+            EventBus.getDefault().post(new DeleteImageEvent(removedImageBean));
+            //通知系统
+            MediaScannerConnection.scanFile(this, new String[]{removedImageBean.path.toString()}, null, null);
+//            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + removedImageBean.path)));
         }).setNegativeButton("取消", (view, which) -> {
 
         }).setTitle("删除图片?");

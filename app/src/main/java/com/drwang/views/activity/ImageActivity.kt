@@ -127,7 +127,7 @@ class ImageActivity : BasicActivity() {
                                 if (TextUtils.isEmpty(path) || TextUtils.isEmpty(name)) {
                                     continue
                                 }
-                                if (width == 0 || height == 0) {
+                                if (width <= 0 || height <= 0) {
                                     continue
                                 }
                                 imageBean = ImageEntityBean(path, name, dateTime, width, height)
