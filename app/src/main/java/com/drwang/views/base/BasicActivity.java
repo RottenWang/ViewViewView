@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.drwang.views.R;
 import com.drwang.views.event.SupportEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,7 +57,7 @@ public abstract class BasicActivity extends AppCompatActivity {
 //        }
 
         //小米手机设置状态栏颜色 黑色 /白色
-        setStatusBarDarkMode(true,this);
+        setStatusBarDarkMode(true, this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initializeView();
@@ -99,8 +100,16 @@ public abstract class BasicActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
     @Subscribe
-    public void SupportEvent(SupportEvent event){
+    public void SupportEvent(SupportEvent event) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        overridePendingTransition(R.anim.push_right_in, R.anim.not_exit_push_left_out);
 
     }
 }

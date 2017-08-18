@@ -69,7 +69,7 @@ public class ShadowView extends View {
         mOptions.inJustDecodeBounds = true;
         type = TYPE_ORIGIN;
         matrix = new Matrix();
-        BitmapFactory.decodeResource(getResources(), R.drawable.shadow_origin, mOptions);
+        BitmapFactory.decodeResource(getResources(), R.drawable.timg, mOptions);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class ShadowView extends View {
     private void reloadingBitmap() {
         switch (type) {
             case TYPE_ORIGIN:
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shadow_origin, mOptions);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.timg, mOptions);
                 break;
             case TYPE_INPUTSTREM:
                 mBitmap = BitmapFactory.decodeStream(mInputStream, new Rect(), mOptions);

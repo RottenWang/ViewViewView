@@ -1,9 +1,11 @@
 package com.drwang.views.util;
 
 import android.graphics.PointF;
+import android.media.ExifInterface;
 
 import com.drwang.views.bean.FilterInfo;
 
+import java.io.IOException;
 import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage3x3ConvolutionFilter;
@@ -110,7 +112,7 @@ public class FilterUtil {
         mFilterList.add(new FilterInfo(new GPUImageChromaKeyBlendFilter(), "ChromaKey"));
         mFilterList.add(new FilterInfo(new GPUImageColorBalanceFilter(), "ColorBalance"));
         mFilterList.add(new FilterInfo(new GPUImageColorBlendFilter(), "ColorBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageColorBurnBlendFilter(), "ColorBurn"));
+//        mFilterList.add(new FilterInfo(new GPUImageColorBurnBlendFilter(), "ColorBurn"));
         mFilterList.add(new FilterInfo(new GPUImageColorDodgeBlendFilter(), "ColorDodge"));
         mFilterList.add(new FilterInfo(new GPUImageColorInvertFilter(), "ColorInvert"));
         mFilterList.add(new FilterInfo(new GPUImageColorMatrixFilter(), "ColorMatrix"));
@@ -120,7 +122,7 @@ public class FilterUtil {
         mFilterList.add(new FilterInfo(new GPUImageCrosshatchFilter(0.01f, 0.0005f), "Crosshatch", 0.01f, 0, 0.05f, (p, f) -> {
             ((GPUImageCrosshatchFilter) f).setCrossHatchSpacing(p);
         }));
-        mFilterList.add(new FilterInfo(new GPUImageDarkenBlendFilter(), "DarkenBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageDarkenBlendFilter(), "DarkenBlend"));
         mFilterList.add(new FilterInfo(new GPUImageDifferenceBlendFilter(), "DifferenceBlend"));
         mFilterList.add(new FilterInfo(new GPUImageDilationFilter(1), "Dilation1"));
 
@@ -146,7 +148,7 @@ public class FilterUtil {
             ((GPUImageHalftoneFilter) f).setFractionalWidthOfAPixel(p);
 
         }));
-        mFilterList.add(new FilterInfo(new GPUImageHardLightBlendFilter(), "HardLight"));
+//        mFilterList.add(new FilterInfo(new GPUImageHardLightBlendFilter(), "HardLight"));
         mFilterList.add(new FilterInfo(new GPUImageHazeFilter(0.2f, 0), "Haze", 0.2f, 0, 0.99f, (p, f) -> {
             ((GPUImageHazeFilter) f).setDistance(p);
         }));
@@ -160,16 +162,16 @@ public class FilterUtil {
         mFilterList.add(new FilterInfo(new GPUImageLaplacianFilter(), "Laplacian"));
         mFilterList.add(new FilterInfo(new GPUImageLevelsFilter(), "Levels"));
         mFilterList.add(new FilterInfo(new GPUImageLightenBlendFilter(), "LightenBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageLinearBurnBlendFilter(), "LinearBurnBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageLinearBurnBlendFilter(), "LinearBurnBlend"));
         mFilterList.add(new FilterInfo(new GPUImageLookupFilter(0), "Loopup", 1, -5, 0, (p, f) -> {
             ((GPUImageLookupFilter) f).setIntensity(p);
         }));
-        mFilterList.add(new FilterInfo(new GPUImageLuminosityBlendFilter(), "LuminosityBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageLuminosityBlendFilter(), "LuminosityBlend"));
 //        mFilterList.add(new FilterInfo(new GPUImageMixBlendFilter()));
         mFilterList.add(new FilterInfo(new GPUImageMonochromeFilter(), "Monochrome"));
-        mFilterList.add(new FilterInfo(new GPUImageMultiplyBlendFilter(), "MultiplyBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageMultiplyBlendFilter(), "MultiplyBlend"));
         mFilterList.add(new FilterInfo(new GPUImageNonMaximumSuppressionFilter(), "NonMaximumSuppression"));
-        mFilterList.add(new FilterInfo(new GPUImageNormalBlendFilter(), "NormalBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageNormalBlendFilter(), "NormalBlend"));
         mFilterList.add(new FilterInfo(new GPUImageOpacityFilter(), "Opacity"));
         mFilterList.add(new FilterInfo(new GPUImageOverlayBlendFilter(), "OverlayBlend"));
         mFilterList.add(new FilterInfo(new GPUImagePixelationFilter(), "Pixelation"));
@@ -207,7 +209,7 @@ public class FilterUtil {
         mFilterList.add(new FilterInfo(new GPUImageSmoothToonFilter(), "SmoothToon"));
         mFilterList.add(new FilterInfo(new GPUImageSobelEdgeDetection(), "SobelEdge"));
         mFilterList.add(new FilterInfo(new GPUImageSoftLightBlendFilter(), "SoftLightBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageSourceOverBlendFilter(), "SourceOverBlend"));
+//        mFilterList.add(new FilterInfo(new GPUImageSourceOverBlendFilter(), "SourceOverBlend"));
         mFilterList.add(new FilterInfo(new GPUImageSphereRefractionFilter(new PointF(0.5f, 0.5f), 0.5f, 0.71f), "SphereRefraction", 0.75f, -10, 10, (p, f) -> {
             ((GPUImageSphereRefractionFilter) f).setRefractiveIndex(p);
         }));
@@ -232,4 +234,38 @@ public class FilterUtil {
             ((GPUImageWhiteBalanceFilter) f).setTemperature(p);
         }));
     }
+
+    public static int getImageDegree(String filepath) {
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(filepath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            exif = null;
+        }
+        int degree = 0;
+        if (exif != null) {
+            // 读取图片中相机方向信息
+            int ori = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+            // 计算旋转角度
+            switch (ori) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+                default:
+                    degree = 0;
+                    break;
+
+            }
+        }
+        return degree;
+    }
+
 }

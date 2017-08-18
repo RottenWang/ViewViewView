@@ -37,14 +37,15 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="返回"
+        android:id="@+id/tv_back"
         android:textColor="@color/half_white" />
 
     <TextView
+        android:id="@+id/tv_save"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/tv_save"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:text="保存图片"
+        android:text="保存"
         android:textColor="@color/half_white" />
 </RelativeLayout>

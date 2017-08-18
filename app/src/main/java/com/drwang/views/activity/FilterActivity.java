@@ -48,6 +48,9 @@ import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 
+import static android.R.attr.width;
+import static kotlin.text.Typography.degree;
+
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
     GLSurfaceView glsurfaceview;
@@ -70,7 +73,6 @@ public class FilterActivity extends AppCompatActivity {
     private List<FilterInfo> mFilterList;
     private FilterAdapter mFilterAdapter;
     private FilterInfo mFilterInfo;
-    private Bitmap mPreviewBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,6 +270,7 @@ public class FilterActivity extends AppCompatActivity {
             glsurfaceview.setLayoutParams(layoutParams);
             glsurfaceview.post(() -> {
                 gpuImage.setImage(bitmap);
+//                gpuImage.requestRender();
             });
         }
         if (init) {
@@ -295,6 +298,9 @@ public class FilterActivity extends AppCompatActivity {
                             mFilterAdapter.notifyItemChanged(il);
                         });
                     }
+                    runOnUiThread(() -> {
+                        gpuImage.setFilter(mFilterInfo.filter);
+                    });
                 }
             });
         }
@@ -330,12 +336,19 @@ public class FilterActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv_save)
     public void save(View v) {
-        gpuImage.saveToPictures(FileUtil.getFoldPath(), System.currentTimeMillis() + mList.get(currentPosition).name, new GPUImage.OnPictureSavedListener() {
+        String foldPath = FileUtil.getFoldPath();
+        String name = System.currentTimeMillis() + mList.get(currentPosition).name;
+        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
             @Override
             public void onPictureSaved(Uri uri) {
-                Toast.makeText(FilterActivity.this, "URI = " + uri.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this,"保存成功", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.tv_back)
+    public void back(View v) {
+        onBackPressed();
     }
 
 

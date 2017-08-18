@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ViewViewView</string>
+    <string name="app_name">Image Editer</string>
 
     <string name="local_image">Local Images</string>
 </resources>
