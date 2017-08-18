@@ -22,6 +22,5 @@
     <TextView
         android:id="@+id/item_tv"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/ripple_1" />
+        android:layout_height="100dp"/>
 </FrameLayout>
