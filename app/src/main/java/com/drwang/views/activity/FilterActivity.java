@@ -28,9 +28,13 @@ import com.drwang.views.bean.FilterInfo;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.FilterChangeEvent;
 import com.drwang.views.event.ImageEvent;
+import com.drwang.views.event.ImagePositionChangeEvent;
 import com.drwang.views.event.RefreshGPUImageEvent;
+import com.drwang.views.support.LocalThreadPoolManager;
+import com.drwang.views.support.PriorityRunnable;
 import com.drwang.views.util.DensityUtil;
 import com.drwang.views.util.FileUtil;
+import com.drwang.views.util.FilterUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,39 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImage3x3ConvolutionFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImage3x3TextureSamplingFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageAddBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageAlphaBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageBilateralFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageBoxBlurFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageBrightnessFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageCGAColorspaceFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageChromaKeyBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorBalanceFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorBurnBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorDodgeBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorInvertFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageColorMatrixFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageContrastFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageCrosshatchFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDarkenBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDifferenceBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDilationFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDirectionalSobelEdgeDetectionFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDissolveBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageDivideBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageEmbossFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageExclusionBlendFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageExposureFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageFalseColorFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGammaFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGaussianBlurFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageGrayscaleFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageToneCurveFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageWhiteBalanceFilter;
 
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
@@ -203,7 +175,7 @@ public class FilterActivity extends AppCompatActivity {
         density = DensityUtil.getInstance().getDensity(this);
         screenHeight = DensityUtil.getInstance().getScreenHeight(this);
         screenWidth = DensityUtil.getInstance().getScreenWidth(this);
-        mFilterInfo = new FilterInfo(new GPUImageFilter(), "custom");
+        mFilterInfo = mFilterList.get(0);
         currentPosition = stickyEvent.position;
         mList = stickyEvent.mList;
         mListSize = stickyEvent.mList.size();
@@ -238,59 +210,7 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     private void initFilterInfo() {
-        mFilterList.add(new FilterInfo(new GPUImage3x3ConvolutionFilter(new float[]{1.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 1.0f}), "3x3Convo"));
-        mFilterList.add(new FilterInfo(new GPUImageFilter(), "original"));
-        mFilterList.add(new FilterInfo(new GPUImageAddBlendFilter(), "addblend"));
-        mFilterList.add(new FilterInfo(new GPUImageAlphaBlendFilter(0.8f), "alphaBlend", 0.8f, 0, 1, (p, f) -> {
-            ((GPUImageAlphaBlendFilter) f).setMix(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageBilateralFilter(0.1f), "Bilateral", 0.1f, 0, 10, (p, f) -> {
-            ((GPUImageBilateralFilter) f).setDistanceNormalizationFactor(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageBoxBlurFilter(5f), "BoxBlur", 5f, 0, 10, (p, f) -> {
-            ((GPUImageBoxBlurFilter) f).setBlurSize(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageBrightnessFilter(0.3f), "Brightness", 0.3f, 0, 1, (p, f) -> {
-            ((GPUImageBrightnessFilter) f).setBrightness(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageCGAColorspaceFilter(), "CGAColor"));
-        mFilterList.add(new FilterInfo(new GPUImageChromaKeyBlendFilter(), "ChromaKey"));
-        mFilterList.add(new FilterInfo(new GPUImageColorBalanceFilter(), "ColorBalance"));
-        mFilterList.add(new FilterInfo(new GPUImageColorBlendFilter(), "ColorBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageColorBurnBlendFilter(), "ColorBurn"));
-        mFilterList.add(new FilterInfo(new GPUImageColorDodgeBlendFilter(), "ColorDodge"));
-        mFilterList.add(new FilterInfo(new GPUImageColorInvertFilter(), "ColorInvert"));
-        mFilterList.add(new FilterInfo(new GPUImageColorMatrixFilter(), "ColorMatrix"));
-        mFilterList.add(new FilterInfo(new GPUImageContrastFilter(1.2f), "Contrast", 1.2f, 0, 5, (p, f) -> {
-            ((GPUImageContrastFilter) f).setContrast(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageCrosshatchFilter(0.01f, 0.0005f), "Crosshatch", 0.01f, 0, 0.05f, (p, f) -> {
-            ((GPUImageCrosshatchFilter) f).setCrossHatchSpacing(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageDarkenBlendFilter(), "DarkenBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageDifferenceBlendFilter(), "DifferenceBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageDilationFilter(1), "Dilation1"));
-
-        mFilterList.add(new FilterInfo(new GPUImageDirectionalSobelEdgeDetectionFilter(), "DirectionSobel"));
-        mFilterList.add(new FilterInfo(new GPUImageDissolveBlendFilter(), "DissolveBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageDivideBlendFilter(), "DivideBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageEmbossFilter(1.0f), "Emboss", 1.0f, 0, 10, (p, f) -> {
-            ((GPUImageEmbossFilter) f).setIntensity(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageExclusionBlendFilter(), "ExclusionBlend"));
-        mFilterList.add(new FilterInfo(new GPUImageExposureFilter(1.0f), "Exposure", 1.0f, 0, 8, (p, f) -> {
-            ((GPUImageExposureFilter) f).setExposure(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageFalseColorFilter(), "FalseColor"));
-        mFilterList.add(new FilterInfo(new GPUImageGammaFilter(1.2f), "Gamma", 1.2f, 0, 10, (p, f) -> {
-            ((GPUImageGammaFilter) f).setGamma(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageGaussianBlurFilter(1f), "GaussianBlur", 1f, 0, 20, (p, f) -> {
-            ((GPUImageGaussianBlurFilter) f).setBlurSize(p);
-        }));
-        mFilterList.add(new FilterInfo(new GPUImageGrayscaleFilter(), "Grayscale"));
+        FilterUtil.getFilterInfo(mFilterList);
     }
 
     private void resetImageAndFilter() {
@@ -298,6 +218,7 @@ public class FilterActivity extends AppCompatActivity {
             currentPosition = currentPosition < 0 ? 0 : currentPosition > mListSize - 1 ? mListSize - 1 : currentPosition;
             return;
         }
+
         resizeImage(false);
     }
 
@@ -322,12 +243,6 @@ public class FilterActivity extends AppCompatActivity {
         Matrix matrix = new Matrix();
         matrix.postScale(scale, scale);
         Bitmap bitmap = Bitmap.createBitmap(bitmapOrigin, 0, 0, width, height, matrix, false);
-//        matrix.reset();
-//        scale = 50 * density / (width * 1.0f);
-//        matrix.postScale(scale, scale);
-//        Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
-//        Bitmap bitmap = BitmapFactory.decodeFile(mList.get(currentPosition).path, options);
-//        mPreviewBitmap = Bitmap.createBitmap(bitmapOrigin, 0, 0, width, height, matrix, false);
         int finalWidth = (int) (width * scale);
         int finalHeight = (int) (height * scale);
         if (init) {
@@ -335,8 +250,6 @@ public class FilterActivity extends AppCompatActivity {
             gpuImage.setGLSurfaceView(glsurfaceview);
             gpuImage.setImage(bitmap);
             gpuImage.setFilter(mFilterInfo.filter);
-        }
-        if (init) {
             glsurfaceview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
@@ -345,7 +258,6 @@ public class FilterActivity extends AppCompatActivity {
                     layoutParams.width = finalWidth;
                     layoutParams.height = finalHeight;
                     glsurfaceview.setLayoutParams(layoutParams);
-//                gpuImage.requestRender();
                 }
             });
         } else {
@@ -354,9 +266,38 @@ public class FilterActivity extends AppCompatActivity {
             layoutParams.width = finalWidth;
             layoutParams.height = finalHeight;
             glsurfaceview.setLayoutParams(layoutParams);
-            gpuImage.setImage(bitmap);
+            glsurfaceview.post(() -> {
+                gpuImage.setImage(bitmap);
+            });
         }
-
+        if (init) {
+            LocalThreadPoolManager.execute(new PriorityRunnable(10) {
+                @Override
+                public void run() {
+                    Bitmap bitmapOrigin = BitmapFactory.decodeFile(mList.get(currentPosition).path);
+                    float scale;
+                    float scaleW;
+                    float scaleH;
+                    scaleW = 50 * density / (bitmapOrigin.getWidth() * 1.0f);
+                    scaleH = 50 * density / (bitmapOrigin.getHeight() * 1.0f);
+                    scale = scaleW > scaleH ? scaleH : scaleW;
+                    Matrix matrix1 = new Matrix();
+                    matrix1.postScale(scale, scale);
+                    GPUImage gpuThumb = new GPUImage(FilterActivity.this);
+                    Bitmap bitmapThumb = Bitmap.createBitmap(bitmapOrigin, 0, 0, bitmapOrigin.getWidth(), bitmapOrigin.getHeight(), matrix1, false);
+                    for (int i = 0; i < mFilterList.size(); i++) {
+                        FilterInfo filterInfo = mFilterList.get(i);
+                        gpuThumb.setFilter(filterInfo.filter);
+                        Bitmap bitmapWithFilterApplied = gpuThumb.getBitmapWithFilterApplied(bitmapThumb);
+                        filterInfo.bitmap = bitmapWithFilterApplied;
+                        int il = i;
+                        runOnUiThread(() -> {
+                            mFilterAdapter.notifyItemChanged(il);
+                        });
+                    }
+                }
+            });
+        }
     }
 
     float deltaX;
@@ -395,5 +336,12 @@ public class FilterActivity extends AppCompatActivity {
                 Toast.makeText(FilterActivity.this, "URI = " + uri.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventBus.getDefault().post(new ImagePositionChangeEvent(currentPosition));
     }
 }

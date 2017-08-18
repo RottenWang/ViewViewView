@@ -17,6 +17,7 @@ import com.drwang.views.base.BasicActivity;
 import com.drwang.views.bean.ImageEntityBean;
 import com.drwang.views.event.DeleteImageEvent;
 import com.drwang.views.event.ImageEvent;
+import com.drwang.views.event.ImagePositionChangeEvent;
 import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.util.AnimationUtil;
@@ -88,7 +89,9 @@ public class ImagePreviewActivity extends BasicActivity {
         }
         photo_viewpager.setAdapter(photoViewPagerAdapter);
         photo_viewpager.setOffscreenPageLimit(3);
-        photo_viewpager.setCurrentItem(stickyEvent.position, false);
+        if (stickyEvent != null) {
+            photo_viewpager.setCurrentItem(stickyEvent.position, false);
+        }
 
     }
 
@@ -209,5 +212,11 @@ public class ImagePreviewActivity extends BasicActivity {
         alertDialog.show();
         alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
         alertDialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+    }
+
+
+    @Subscribe
+    public void onImagePositionChangeEvent(ImagePositionChangeEvent event) {
+        photo_viewpager.setCurrentItem(event.currentPosition);
     }
 }

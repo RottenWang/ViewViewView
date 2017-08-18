@@ -24,14 +24,14 @@ public class LocalThreadPoolManager {
 
     }
 
-    public static LocalThreadPoolManager getInstance() {
+    private static LocalThreadPoolManager getInstance() {
         if (sLocalThreadPoolManager == null) {
             sLocalThreadPoolManager = new LocalThreadPoolManager();
         }
         return sLocalThreadPoolManager;
     }
 
-    public LocalThreadPoolExecutor getExecutor() {
+    private LocalThreadPoolExecutor getExecutor() {
         if (mLocalThreadPoolExecutor == null) {
             mLocalThreadPoolExecutor = new LocalThreadPoolExecutor(corePoolSize, maximumPoolSize, 0L, TimeUnit.SECONDS, new PriorityBlockingQueue<Runnable>());
         }

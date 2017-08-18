@@ -27,7 +27,7 @@ public class FilterInfo {
     public FilterInfo(GPUImageFilter filter, String filterName, float currentRange, float rangeMix, float rangeMax, GPUImageChangeInterface<GPUImageFilter> listener) {
         this.filter = filter;
         this.filterName = filterName;
-        this.progress = currentRange / rangeMax;
+        this.progress = currentRange / (rangeMax - rangeMix);
         this.hasRange = true;
         this.rangeMix = rangeMix;
         this.rangeMax = rangeMax;
@@ -46,7 +46,7 @@ public class FilterInfo {
             return;
         }
         this.progress = progress;
-        value = rangeMax * progress;
+        value = (rangeMax - rangeMix) * progress + rangeMix;
         if (listener != null) {
             listener.setProgress(value, filter);
         }

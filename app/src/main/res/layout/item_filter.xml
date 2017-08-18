@@ -15,6 +15,7 @@
         android:id="@+id/tv_filter_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/iv_filter_preview"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@color/half_white"
