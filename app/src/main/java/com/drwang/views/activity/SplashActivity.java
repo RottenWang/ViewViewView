@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, ImageActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
             overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         }, 2000);

@@ -1,8 +1,5 @@
 package com.drwang.views.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
 
