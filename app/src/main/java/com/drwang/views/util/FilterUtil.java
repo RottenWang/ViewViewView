@@ -91,10 +91,10 @@ public class FilterUtil {
 
     public static void getFilterInfo(List<FilterInfo> mFilterList) {
         mFilterList.clear();
+        mFilterList.add(new FilterInfo(new GPUImageFilter(), "original"));
         mFilterList.add(new FilterInfo(new GPUImage3x3ConvolutionFilter(new float[]{1.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 1.0f}), "3x3Convo"));
-        mFilterList.add(new FilterInfo(new GPUImageFilter(), "original"));
         mFilterList.add(new FilterInfo(new GPUImageAddBlendFilter(), "addblend"));
         mFilterList.add(new FilterInfo(new GPUImageAlphaBlendFilter(0.8f), "alphaBlend", 0.8f, 0, 1, (p, f) -> {
             ((GPUImageAlphaBlendFilter) f).setMix(p);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Image Editer</string>
+    <string name="app_name">ImageEditor</string>
 
     <string name="local_image">本地图片</string>
 </resources>

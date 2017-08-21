@@ -20,6 +20,10 @@ import java.util.List;
  */
 
 public class FilterAdapter extends BaseRecyclerViewAdapter<FilterInfo> {
+
+    private int currentPosition;
+    private int lastPosition;
+
     public FilterAdapter(Activity context, List<FilterInfo> list) {
         super(context, list);
     }
@@ -43,11 +47,14 @@ public class FilterAdapter extends BaseRecyclerViewAdapter<FilterInfo> {
 
         private TextView tv_filter_name;
         private ImageView iv_filter_preview;
+        private ImageView iv_foreground;
+
 
         public FilterViewHolder(View itemView) {
             super(itemView);
             tv_filter_name = (TextView) itemView.findViewById(R.id.tv_filter_name);
             iv_filter_preview = (ImageView) itemView.findViewById(R.id.iv_filter_preview);
+            iv_foreground = (ImageView) itemView.findViewById(R.id.iv_foreground);
         }
 
         @Override
@@ -55,8 +62,14 @@ public class FilterAdapter extends BaseRecyclerViewAdapter<FilterInfo> {
             tv_filter_name.setText(mList.get(position).filterName);
             itemView.setOnClickListener((v) -> {
                 EventBus.getDefault().post(new FilterChangeEvent(mList.get(position)));
-
+                currentPosition = position;
+                notifyDataSetChanged();
             });
+            if (currentPosition == position) {
+                iv_foreground.setVisibility(View.VISIBLE);
+            } else {
+                iv_foreground.setVisibility(View.INVISIBLE);
+            }
             iv_filter_preview.setImageBitmap(mList.get(position).bitmap);
         }
     }
