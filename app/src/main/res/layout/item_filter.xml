@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="50dp"
+    android:layout_width="60dp"
     android:layout_height="match_parent"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary3"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp">
 
     <ImageView
         android:id="@+id/iv_filter_preview"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:id="@+id/iv_foreground"
@@ -22,10 +24,10 @@
     <TextView
         android:id="@+id/tv_filter_name"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:layout_below="@id/iv_filter_preview"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@color/half_white"
-        android:textSize="18sp" />
+        android:textSize="14dp" />
 </RelativeLayout>

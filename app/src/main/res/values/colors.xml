@@ -7,4 +7,6 @@
     <color name="color_white">#FFFFFFFF</color>
     <color name="hal_black">#7f000000</color>
     <color name="hal_black2">#af000000</color>
+    <color name="colorPrimary2">#AAAAAAAA</color>
+    <color name="colorPrimary3">#aa888888</color>
 </resources>

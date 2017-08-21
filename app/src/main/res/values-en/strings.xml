@@ -7,4 +7,6 @@
     <string name="text_edit">Edit</string>
     <string name="text_delete">Delete</string>
     <string name="text_more">More</string>
+    <string name="text_filter">Filters</string>
+    <string name="text_effect">Effects</string>
 </resources>

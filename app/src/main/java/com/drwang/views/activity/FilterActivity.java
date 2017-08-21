@@ -46,10 +46,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
-
-import static android.R.attr.width;
-import static kotlin.text.Typography.degree;
 
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
@@ -350,6 +346,27 @@ public class FilterActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    @OnClick({R.id.tv_filter, R.id.tv_effects})
+    public void changeVisible(View v) {
+        switch (v.getId()) {
+            case R.id.tv_filter:
+                recycler_view_filter.setVisibility(View.VISIBLE);
+                checkSeekBar();
+                break;
+            case R.id.tv_effects:
+                recycler_view_filter.setVisibility(View.GONE);
+                seek_bar.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private void checkSeekBar() {
+        if (mFilterInfo.hasRange) {
+            seek_bar.setVisibility(View.VISIBLE);
+        } else {
+            seek_bar.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void onBackPressed() {
