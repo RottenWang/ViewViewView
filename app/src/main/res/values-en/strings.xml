@@ -2,4 +2,9 @@
     <string name="app_name">Beaut</string>
 
     <string name="local_image">Local Images</string>
+
+    <string name="text_share">Share</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_delete">Delete</string>
+    <string name="text_more">More</string>
 </resources>
