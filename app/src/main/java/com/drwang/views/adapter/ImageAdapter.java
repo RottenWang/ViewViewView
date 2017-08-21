@@ -2,6 +2,7 @@ package com.drwang.views.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Animatable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,9 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
                 EventBus.getDefault().postSticky(new ImageEvent(mList, position));
                 IntentUtil.toImagePreviewActivity(mActivity);
             });
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                item_tv.setBackgroundResource(R.drawable.ripple_1);
+            }
         }
     }
 }
