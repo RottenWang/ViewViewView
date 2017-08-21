@@ -60,7 +60,6 @@ public class FilterActivity extends AppCompatActivity {
     RecyclerView recycler_view_filter;
     @BindView(R.id.seek_bar)
     SeekBar seek_bar;
-    private GPUImageFilter gpuImageFilter;
     private float screenHeight;
     private float screenWidth;
     float density;
@@ -175,7 +174,7 @@ public class FilterActivity extends AppCompatActivity {
         ImageEvent stickyEvent = EventBus.getDefault().getStickyEvent(ImageEvent.class);
         EventBus.getDefault().removeStickyEvent(ImageEvent.class);
         density = DensityUtil.getInstance().getDensity(this);
-        screenHeight = DensityUtil.getInstance().getScreenHeight(this);
+        screenHeight = DensityUtil.getInstance().getScreenHeight(this) / 2;
         screenWidth = DensityUtil.getInstance().getScreenWidth(this);
         mFilterInfo = mFilterList.get(0);
         currentPosition = stickyEvent.position;
@@ -341,7 +340,7 @@ public class FilterActivity extends AppCompatActivity {
         gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
             @Override
             public void onPictureSaved(Uri uri) {
-                Toast.makeText(FilterActivity.this,"保存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
             }
         });
     }

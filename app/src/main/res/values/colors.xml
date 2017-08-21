@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="half_white">#7FFFFFFF</color>
+    <color name="color_white">#FFFFFFFF</color>
     <color name="hal_black">#7f000000</color>
     <color name="hal_black2">#af000000</color>
 </resources>

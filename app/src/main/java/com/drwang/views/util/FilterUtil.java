@@ -96,7 +96,7 @@ public class FilterUtil {
                 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 1.0f}), "3x3Convo"));
         mFilterList.add(new FilterInfo(new GPUImageAddBlendFilter(), "addblend"));
-        mFilterList.add(new FilterInfo(new GPUImageAlphaBlendFilter(0.8f), "alphaBlend", 0.8f, 0, 1, (p, f) -> {
+        mFilterList.add(new FilterInfo(new GPUImageAlphaBlendFilter(0.5f), "alphaBlend", 0.5f, 0, 1, (p, f) -> {
             ((GPUImageAlphaBlendFilter) f).setMix(p);
         }));
         mFilterList.add(new FilterInfo(new GPUImageBilateralFilter(0.1f), "Bilateral", 0.1f, 0, 10, (p, f) -> {

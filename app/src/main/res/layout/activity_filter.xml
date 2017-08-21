@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hal_black"
+    android:background="@android:color/black"
     tools:context="com.drwang.views.activity.FilterActivity">
 
     <android.opengl.GLSurfaceView
@@ -20,18 +19,45 @@
         android:background="@android:color/transparent" />
 
 
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="滤镜"
+            android:textColor="@color/color_white"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="效果"
+            android:textColor="@color/color_white"
+            android:textSize="12dp" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_filter"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/black" />
+        android:layout_height="75dp"
+        android:layout_above="@+id/ll_bottom" />
 
     <SeekBar
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_above="@id/recycler_view_filter" />
+        android:layout_above="@id/recycler_view_filter"
+        android:progressDrawable="@drawable/seek_bar_style"
+        android:thumb="@drawable/selector_seekbar_point" />
 
     <TextView
         android:id="@+id/tv_back"
@@ -39,7 +65,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="返回"
-        android:textColor="@color/half_white" />
+        android:textColor="@color/color_white" />
 
     <TextView
         android:id="@+id/tv_save"
@@ -48,5 +74,5 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:text="保存"
-        android:textColor="@color/half_white" />
+        android:textColor="@color/color_white" />
 </RelativeLayout>

@@ -2,12 +2,9 @@ package com.drwang.views.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
@@ -28,7 +25,10 @@ public class PieViewActivity extends BasicActivity implements View.OnClickListen
         findViewById(R.id.show_bing).setOnClickListener(this);
         mPieView = (PieView) findViewById(R.id.pieview);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shadow_origin);
-        Bitmap bitmapEdit = BitmapUtil.generateReSizeBitmap(bitmap, 5, 1);
+        long t = System.currentTimeMillis();
+        Bitmap bitmapEdit = BitmapUtil.generateReSizeBitmapUseMatrix(bitmap, -1, 1);
+        long e = System.currentTimeMillis();
+        Log.i("a", "initializeView: time = " + (e - t));
         iv_alpha.setImageBitmap(bitmapEdit);
     }
 
