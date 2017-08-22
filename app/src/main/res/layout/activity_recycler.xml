@@ -3,20 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
     tools:context="com.drwang.views.activity.RecyclerActivity">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_title2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="我是头部默认隐藏"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/bt_add"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:background="#12aaef"
-        android:text="add" />
+        <TextView
+            android:id="@+id/tv_title3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_red_dark"
+            android:gravity="center"
+            android:text="我是头部默认显示" />
+    </RelativeLayout>
+
+    <com.drwang.views.view.NestedLinearLayout
+        android:id="@+id/nll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="我是头部" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/bt_add"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="#12aaef"
+            android:text="add" />
+    </com.drwang.views.view.NestedLinearLayout>
+
 </LinearLayout>

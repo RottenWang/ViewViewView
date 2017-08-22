@@ -1,6 +1,5 @@
 package com.drwang.views.activity;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.drwang.views.R;
 import com.drwang.views.adapter.ExampleAdapter;
 import com.drwang.views.base.BasicActivity;
+import com.drwang.views.view.NestedLinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,12 @@ import butterknife.OnClick;
 public class RecyclerActivity extends BasicActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_title2)
+    View tv_title2;
+    @BindView(R.id.tv_title3)
+    View tv_title3;
+    @BindView(R.id.nll_root)
+    NestedLinearLayout nll_root;
     ExampleAdapter exampleAdapter;
     List<String> mList;
     LinearLayoutManager layoutManager;
@@ -35,10 +41,6 @@ public class RecyclerActivity extends BasicActivity {
     protected void initializeData() {
         if (mList == null) {
             mList = new ArrayList<>();
-//            mList.add("aa");
-//            mList.add("bb");
-//            mList.add("cc");
-//            mList.add("dd");
             mList.add("ee");
         }
         if (exampleAdapter == null)
@@ -55,17 +57,8 @@ public class RecyclerActivity extends BasicActivity {
             layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(exampleAdapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
+        nll_root.addToShowViewList(tv_title2);
+        nll_root.addToHideViewList(tv_title3);
     }
 
     @Override
@@ -81,7 +74,7 @@ public class RecyclerActivity extends BasicActivity {
         exampleAdapter.notifyDataSetChanged();
 //        exampleAdapter.notifyItemInserted(0);
 //        exampleAdapter.notifyItemRangeChanged(0, mList.size()-1);
-//        recyclerView.scrollToPosition(0);
-        recyclerView.smoothScrollToPosition(mList.size() - 1);
+        recyclerView.scrollToPosition(mList.size() - 1);
+//        recyclerView.smoothScrollToPosition(mList.size() - 1);
     }
 }
