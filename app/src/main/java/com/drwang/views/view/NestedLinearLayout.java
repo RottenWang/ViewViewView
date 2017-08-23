@@ -25,8 +25,8 @@ public class NestedLinearLayout extends LinearLayout implements NestedScrollingP
     private float damp = 2f; //阻尼系数
     private List<View> mShowViewList;
     private List<View> mHideViewList;
-    private float currentHidePercent = 0.5f;
-    private float currentShowPercent = 0.5f;
+    private float currentHidePercent = 0;
+    private float currentShowPercent = 1;
 
     public NestedLinearLayout(Context context) {
         this(context, null);
