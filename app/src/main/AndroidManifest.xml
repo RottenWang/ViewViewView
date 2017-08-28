@@ -31,12 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.PieViewActivity"
             android:screenOrientation="portrait" />
@@ -68,6 +65,7 @@
         <activity
             android:name=".activity.FilterActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.EditImageActivity"></activity>
     </application>
 
 </manifest>

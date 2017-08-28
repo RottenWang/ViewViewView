@@ -2,8 +2,10 @@ package com.drwang.views.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import com.drwang.views.activity.DecorationActivity;
+import com.drwang.views.activity.EditImageActivity;
 import com.drwang.views.activity.FilterActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
@@ -13,6 +15,8 @@ import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
 import com.drwang.views.activity.ShadowActivity;
 import com.drwang.views.activity.SoftInputActivity;
+
+import static android.R.attr.bitmap;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -93,6 +97,14 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, FilterActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toEditImageActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, EditImageActivity.class);
         activity.startActivity(intent);
     }
 }

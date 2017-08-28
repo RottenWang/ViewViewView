@@ -53,7 +53,7 @@ public class GPUImage {
     private final GPUImageRenderer mRenderer;
     private GLSurfaceView mGlSurfaceView;
     private GPUImageFilter mFilter;
-    private Bitmap mCurrentBitmap;
+    public Bitmap mCurrentBitmap;
     private ScaleType mScaleType = ScaleType.CENTER_CROP;
 
     /**

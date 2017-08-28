@@ -3,7 +3,6 @@ package com.drwang.views.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,12 +19,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.drwang.views.R;
 import com.drwang.views.adapter.FilterAdapter;
 import com.drwang.views.bean.FilterInfo;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.EditImageEvent;
 import com.drwang.views.event.FilterChangeEvent;
 import com.drwang.views.event.ImageEvent;
 import com.drwang.views.event.ImagePositionChangeEvent;
@@ -35,6 +34,7 @@ import com.drwang.views.support.PriorityRunnable;
 import com.drwang.views.util.DensityUtil;
 import com.drwang.views.util.FileUtil;
 import com.drwang.views.util.FilterUtil;
+import com.drwang.views.util.IntentUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,8 +47,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 
+import static com.drwang.views.R.id.gl_surface_view;
+
+
 public class FilterActivity extends AppCompatActivity {
-    @BindView(R.id.gl_surface_view)
+    @BindView(gl_surface_view)
     GLSurfaceView glsurfaceview;
     @BindView(R.id.rl_slider)
     RelativeLayout rl_slider;
@@ -333,12 +336,19 @@ public class FilterActivity extends AppCompatActivity {
     public void save(View v) {
         String foldPath = FileUtil.getFoldPath();
         String name = System.currentTimeMillis() + mList.get(currentPosition).name;
-        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
-            @Override
-            public void onPictureSaved(Uri uri) {
-                Toast.makeText(FilterActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-            }
-        });
+        GPUImage gpuImageSave = new GPUImage(this);
+        gpuImageSave.setFilter(mFilterInfo.filter);
+        Bitmap bitmapWithFilterApplied = gpuImageSave.getBitmapWithFilterApplied(gpuImage.mCurrentBitmap);
+        EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied));
+        IntentUtil.toEditImageActivity(this);
+//        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
+//            @Override
+//            public void onPictureSaved(Uri uri) {
+//                Toast.makeText(FilterActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+//                String filePath = foldPath + "/" + name;
+////                IntentUtil.toEditImageActivity(FilterActivity.this,filePath);
+//            }
+//        });
     }
 
     @OnClick(R.id.tv_back)
@@ -346,19 +356,6 @@ public class FilterActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    @OnClick({R.id.tv_filter, R.id.tv_effects})
-    public void changeVisible(View v) {
-        switch (v.getId()) {
-            case R.id.tv_filter:
-                recycler_view_filter.setVisibility(View.VISIBLE);
-                checkSeekBar();
-                break;
-            case R.id.tv_effects:
-                recycler_view_filter.setVisibility(View.GONE);
-                seek_bar.setVisibility(View.GONE);
-                break;
-        }
-    }
 
     private void checkSeekBar() {
         if (mFilterInfo.hasRange) {

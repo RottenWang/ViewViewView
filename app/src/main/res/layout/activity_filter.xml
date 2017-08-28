@@ -18,46 +18,11 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent" />
 
-
-    <LinearLayout
-        android:id="@+id/ll_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_alignParentBottom="true"
-
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_filter"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary2"
-            android:gravity="center"
-            android:text="@string/text_filter"
-            android:textColor="@color/color_white"
-            android:textSize="12dp" />
-        <View
-            android:layout_width="1dp"
-            android:background="@color/color_white"
-            android:layout_height="match_parent"/>
-        <TextView
-            android:id="@+id/tv_effects"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary2"
-            android:gravity="center"
-            android:text="@string/text_effect"
-            android:textColor="@color/color_white"
-            android:textSize="12dp" />
-    </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_filter"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_above="@+id/ll_bottom" />
+        android:layout_alignParentBottom="true"
+        android:layout_height="75dp" />
 
     <SeekBar
         android:id="@+id/seek_bar"
@@ -81,6 +46,6 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:text="保存"
+        android:text="继续"
         android:textColor="@color/color_white" />
 </RelativeLayout>
