@@ -14,9 +14,9 @@
         android:layout_height="150dp" />
 
     <!--<com.drwang.views.view.ZBgView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:layout_alignParentBottom="true" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="150dp"-->
+    <!--android:layout_alignParentBottom="true" />-->
 
     <com.drwang.views.view.MoFaView2
         android:layout_width="match_parent"
@@ -53,6 +53,7 @@
 
     <com.drwang.views.view.CustomProgressView
         android:layout_width="74dp"
-        android:layout_marginTop="100dp"
-        android:layout_height="15dp" />
+        android:layout_height="15dp"
+        android:layout_marginTop="100dp" />
+
 </RelativeLayout>
