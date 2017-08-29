@@ -8,8 +8,10 @@ import android.graphics.Bitmap;
 
 public class EditImageEvent {
     public Bitmap bitmap;
+    public String name;
 
-    public EditImageEvent(Bitmap bitmap) {
+    public EditImageEvent(Bitmap bitmap,String name) {
         this.bitmap = bitmap;
+        this.name = name;
     }
 }

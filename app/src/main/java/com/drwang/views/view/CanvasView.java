@@ -8,11 +8,18 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.media.MediaScannerConnection;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.drwang.views.util.FileUtil;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 
 /**
@@ -21,6 +28,7 @@ import android.view.View;
 
 public class CanvasView extends View {
     private Canvas mCanvas;
+    private boolean hasInvokeInterfaceImpl;//是否已调用过接口impl
     private Paint paint;
     private Bitmap bitmapTemp;
     private Matrix matrix;
@@ -30,6 +38,13 @@ public class CanvasView extends View {
     private Bitmap bitmap;
     private PorterDuffXfermode clearMode;
     private PorterDuffXfermode srcMode;
+    private String name;
+    private Matrix matrixSave;
+    private OnSizeChangedInterface mOnSizeChangedInterface;
+    private float left;
+    private float right;
+    private float top;
+    private float bottom;
 
     public CanvasView(Context context) {
         this(context, null);
@@ -78,11 +93,6 @@ public class CanvasView extends View {
     }
 
     private void initSrcAndDst() {
-
-        float left = (mCanvas.getWidth() - bitmap.getWidth()) / 2;
-        float right = mCanvas.getWidth() / 2 + bitmap.getWidth() / 2;
-        float top = (mCanvas.getHeight() - bitmap.getHeight()) / 2;
-        float bottom = mCanvas.getHeight() / 2 + bitmap.getHeight() / 2;
         //src point left top
         src[0] = left;
         src[1] = top;
@@ -115,12 +125,23 @@ public class CanvasView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         bitmapTemp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(bitmapTemp);
+        left = (mCanvas.getWidth() - bitmap.getWidth()) / 2;
+        right = mCanvas.getWidth() / 2 + bitmap.getWidth() / 2;
+        top = (mCanvas.getHeight() - bitmap.getHeight()) / 2;
+        bottom = mCanvas.getHeight() / 2 + bitmap.getHeight() / 2;
+
+
+        if (!hasInvokeInterfaceImpl && mOnSizeChangedInterface != null) {
+            hasInvokeInterfaceImpl = true;
+            mOnSizeChangedInterface.onSizeHasChanged(left, top, right, bottom);
+        }
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        if (bitmap == null) {
+    public void setBitmap(Bitmap bitmap, String name) {
+        if (bitmap == null || name == null) {
             return;
         }
+        this.name = name;
         this.bitmap = bitmap;
         mSetBitmap = true;
         invalidate();
@@ -155,5 +176,57 @@ public class CanvasView extends View {
                 break;
         }
         return true;
+    }
+
+    public void saveImages() {
+        initSaveMatrix();
+        Bitmap bitmap2 = Bitmap.createBitmap(this.bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrixSave, false);
+        saveImage(FileUtil.getFoldPath(), System.currentTimeMillis() + name, bitmap2);
+    }
+
+    private void initSaveMatrix() {
+        matrixSave = new Matrix();
+        float[] srcSave = {0, 0,//left top
+                bitmap.getWidth(),//right top
+                0, 0, bitmap.getHeight(),//left bottom
+                bitmap.getWidth(), bitmap.getHeight()};//right bottom;
+        float[] dstSave = {0, 0,//left top
+                bitmap.getWidth(),//right top
+                0, 0, bitmap.getHeight(),//left bottom
+                bitmap.getWidth(), bitmap.getHeight()};//right bottom;
+        dstSave[0] = dstSave[0] + dst[0] - src[0];
+        dstSave[1] = dstSave[1] + dst[1] - src[1];
+        dstSave[2] = dstSave[2] + dst[2] - src[2];
+        dstSave[3] = dstSave[3] + dst[3] - src[3];
+        dstSave[4] = dstSave[4] + dst[4] - src[4];
+        dstSave[5] = dstSave[5] + dst[5] - src[5];
+        dstSave[6] = dstSave[6] + dst[6] - src[6];
+        dstSave[7] = dstSave[7] + dst[7] - src[7];
+        matrixSave.setPolyToPoly(srcSave, 0, dstSave, 0, 4);
+    }
+
+    private void saveImage(final String folderName, final String fileName, final Bitmap image) {
+        File file = new File(folderName, fileName);
+        try {
+            file.getParentFile().mkdirs();
+            image.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
+            MediaScannerConnection.scanFile(getContext(),
+                    new String[]{
+                            file.toString()
+                    }, null,
+                    (path, uri) -> {
+                        Log.i("saveImage", "saveImage: path = " + path + "uri = " + uri);
+                    });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setOnSizeChangedInterface(OnSizeChangedInterface onSizeChangedInterface) {
+        this.mOnSizeChangedInterface = onSizeChangedInterface;
+    }
+
+    public interface OnSizeChangedInterface {
+        void onSizeHasChanged(float left, float top, float right, float bottom);
     }
 }

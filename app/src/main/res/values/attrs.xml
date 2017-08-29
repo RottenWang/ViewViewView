@@ -13,5 +13,10 @@
 
     </declare-styleable>
 
+    <declare-styleable name="DragView">
 
+
+        <attr name="rotate_degree" format="integer"></attr>
+
+    </declare-styleable>
 </resources>
