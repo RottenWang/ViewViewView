@@ -32,7 +32,6 @@ import com.drwang.views.event.RefreshGPUImageEvent;
 import com.drwang.views.support.LocalThreadPoolManager;
 import com.drwang.views.support.PriorityRunnable;
 import com.drwang.views.util.DensityUtil;
-import com.drwang.views.util.FileUtil;
 import com.drwang.views.util.FilterUtil;
 import com.drwang.views.util.IntentUtil;
 
@@ -71,6 +70,7 @@ public class FilterActivity extends AppCompatActivity {
     private List<FilterInfo> mFilterList;
     private FilterAdapter mFilterAdapter;
     private FilterInfo mFilterInfo;
+    private List<FilterInfo> mFilterList2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +200,9 @@ public class FilterActivity extends AppCompatActivity {
         if (mFilterList == null) {
             mFilterList = new ArrayList<>();
         }
+        if (mFilterList2 == null) {
+            mFilterList2 = new ArrayList<>();
+        }
         if (mFilterAdapter == null) {
             mFilterAdapter = new FilterAdapter(this, mFilterList);
             initFilterInfo();
@@ -211,6 +214,7 @@ public class FilterActivity extends AppCompatActivity {
 
     private void initFilterInfo() {
         FilterUtil.getFilterInfo(mFilterList);
+        FilterUtil.getFilterInfo(mFilterList2);
     }
 
     private void resetImageAndFilter() {
@@ -283,9 +287,17 @@ public class FilterActivity extends AppCompatActivity {
                     scaleH = 50 * density / (bitmapOrigin.getHeight() * 1.0f);
                     scale = scaleW > scaleH ? scaleH : scaleW;
                     Matrix matrix1 = new Matrix();
-                    matrix1.postScale(scale, scale);
+
                     GPUImage gpuThumb = new GPUImage(FilterActivity.this);
-                    Bitmap bitmapThumb = Bitmap.createBitmap(bitmapOrigin, 0, 0, bitmapOrigin.getWidth(), bitmapOrigin.getHeight(), matrix1, false);
+                    Bitmap bitmapThumb;
+                    try {
+                        matrix1.postScale(scale, scale);
+                        bitmapThumb = Bitmap.createBitmap(bitmapOrigin, 0, 0, bitmapOrigin.getWidth(), bitmapOrigin.getHeight(), matrix1, false);
+                    } catch (IllegalArgumentException e) {
+                        matrix1.reset();
+                        matrix1.postScale(scaleW, scaleH);
+                        bitmapThumb = Bitmap.createBitmap(bitmapOrigin, 0, 0, bitmapOrigin.getWidth(), bitmapOrigin.getHeight(), matrix1, false);
+                    }
                     for (int i = 0; i < mFilterList.size(); i++) {
                         FilterInfo filterInfo = mFilterList.get(i);
                         gpuThumb.setFilter(filterInfo.filter);
@@ -335,8 +347,10 @@ public class FilterActivity extends AppCompatActivity {
     @OnClick(R.id.tv_save)
     public void save(View v) {
         GPUImage gpuImageSave = new GPUImage(this);
-        gpuImageSave.setFilter(mFilterInfo.filter);
-        Bitmap bitmapWithFilterApplied = gpuImageSave.getBitmapWithFilterApplied(gpuImage.mCurrentBitmap);
+        int i = mFilterList.indexOf(mFilterInfo);
+        gpuImageSave.setFilter(mFilterList2.get(i).filter);
+        Bitmap bitmap = Bitmap.createBitmap(gpuImage.mCurrentBitmap);
+        Bitmap bitmapWithFilterApplied = gpuImageSave.getBitmapWithFilterApplied(bitmap);
         EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied, mList.get(currentPosition).name));
         IntentUtil.toEditImageActivity(this);
 //        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {

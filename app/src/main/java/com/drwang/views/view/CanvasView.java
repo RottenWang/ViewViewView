@@ -49,6 +49,7 @@ public class CanvasView extends View {
     private Path path;
     private float density;
     private CornerPathEffect cornerPathEffect;
+    private boolean init;
 
     public CanvasView(Context context) {
         this(context, null);
@@ -67,11 +68,14 @@ public class CanvasView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setTextSize(100);
         paint.setColor(Color.RED);
+        paint.setDither(true);
+        paint.setFilterBitmap(true);
         matrix = new Matrix();
         clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         path = new Path();
         density = getResources().getDisplayMetrics().density;
         cornerPathEffect = new CornerPathEffect(density);
+        init = true;
     }
 
 
@@ -99,43 +103,49 @@ public class CanvasView extends View {
 
     }
 
+    float leftCenter;
+    float topCenter;
+    float rightCenter;
+    float bottomCenter;
+
     private void drawCircle(Canvas canvas) {
         paint.setStyle(Paint.Style.STROKE);
-        float delta;
         float radius = 10 * density;
-        if (right - left <= radius * 2) {
-            radius = (right - left) / 2;
-            delta = (right - left) / 4;
-        } else {
-            delta = 5 * density;
+        float delta = 7 * density;
+        if (init) {
+            if (left < radius) {
+                leftCenter = radius;
+            } else {
+                leftCenter = left;
+            }
+            if (top < radius) {
+                topCenter = radius;
+            } else {
+                topCenter = top;
+            }
+            if (getWidth() - right < radius) {
+                rightCenter = getWidth() - radius;
+            } else {
+                rightCenter = right;
+            }
+            if (getHeight() - bottom < radius) {
+                bottomCenter = getHeight() - radius;
+            } else {
+                bottomCenter = bottom;
+            }
+            if (right - left < 2 * radius) {
+                leftCenter = (right + left) / 2 - radius;
+                rightCenter = (right + left) / 2 + radius;
+            }
+            if (bottom - top < 2 * radius) {
+                topCenter = (top + bottom) / 2 - radius;
+                bottomCenter = (top + bottom) / 2 + radius;
+            }
         }
-        float leftCenter;
-        float topCenter;
-        float rightCenter;
-        float bottomCenter;
-        if (left < radius) {
-            leftCenter = radius;
-        } else {
-            leftCenter = left;
-        }
-        if (top < radius) {
-            topCenter = radius;
-        } else {
-            topCenter = top;
-        }
-        if (getWidth() - right < radius) {
-            rightCenter = getWidth() - radius;
-        } else {
-            rightCenter = right;
-        }
-        if (getHeight() - bottom < radius) {
-            bottomCenter = getHeight() - radius;
-        } else {
-            bottomCenter = bottom;
-        }
-        path.reset();
+
         //draw left top arrow
-        float sin45Length = (float) (radius * (Math.cos(Math.toRadians(45))));
+        path.reset();
+        float sin45Length = (float) (radius * (Math.sin(Math.toRadians(45))));
         path.moveTo(leftCenter - sin45Length, top - sin45Length + delta);
         path.lineTo(leftCenter - sin45Length, top - sin45Length);
         path.lineTo(leftCenter - sin45Length + delta, top - sin45Length);
@@ -144,13 +154,38 @@ public class CanvasView extends View {
         paint.setStrokeWidth(density);
         paint.setPathEffect(cornerPathEffect);
         canvas.drawPath(path, paint);
+
+        //draw right top arrow
+        path.reset();
+        path.moveTo(rightCenter + sin45Length - delta, topCenter - sin45Length);
+        path.lineTo(rightCenter + sin45Length, topCenter - sin45Length);
+        path.lineTo(rightCenter + sin45Length, topCenter - sin45Length + delta);
+        path.moveTo(rightCenter + sin45Length, topCenter - sin45Length);
+        path.lineTo(rightCenter - sin45Length, top + sin45Length);
+        canvas.drawPath(path, paint);
+
+        //draw left bottom arrow
+        path.reset();
+        path.moveTo(leftCenter - sin45Length, bottom + sin45Length - delta);
+        path.lineTo(leftCenter - sin45Length, bottom + sin45Length);
+        path.lineTo(leftCenter - sin45Length + delta, bottom + sin45Length);
+        path.moveTo(leftCenter - sin45Length, bottom + sin45Length);
+        path.lineTo(leftCenter + sin45Length, bottom - sin45Length);
+        canvas.drawPath(path, paint);
+        //draw right bottom arrow
+        path.reset();
+        path.moveTo(rightCenter + sin45Length, bottomCenter + sin45Length - delta);
+        path.lineTo(rightCenter + sin45Length, bottomCenter + sin45Length);
+        path.lineTo(rightCenter + sin45Length - delta, bottom + sin45Length);
+        path.moveTo(rightCenter + sin45Length, bottomCenter + sin45Length);
+        path.lineTo(rightCenter - sin45Length, bottomCenter - sin45Length);
+        canvas.drawPath(path, paint);
         paint.setPathEffect(null);
         paint.setStrokeWidth(0);
         canvas.drawCircle(leftCenter, topCenter, radius, paint);
         canvas.drawCircle(rightCenter, topCenter, radius, paint);
         canvas.drawCircle(leftCenter, bottomCenter, radius, paint);
         canvas.drawCircle(rightCenter, bottomCenter, radius, paint);
-
     }
 
     private void initSrcAndDst() {
