@@ -23,6 +23,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import static com.drwang.views.view.CanvasView.TouchArea.LEFT_BOTTOM;
+import static com.drwang.views.view.CanvasView.TouchArea.LEFT_TOP;
+import static com.drwang.views.view.CanvasView.TouchArea.OTHER;
+import static com.drwang.views.view.CanvasView.TouchArea.RIGHT_BOTTOM;
+import static com.drwang.views.view.CanvasView.TouchArea.RIGHT_TOP;
+
 
 /**
  * Created by Administrator on 2017/8/28.
@@ -50,6 +56,14 @@ public class CanvasView extends View {
     private float density;
     private CornerPathEffect cornerPathEffect;
     private boolean init;
+    private float radius;
+    private float delta;
+
+    enum TouchArea {
+        LEFT_TOP, RIGHT_TOP, LEFT_BOTTOM, RIGHT_BOTTOM, OTHER
+    }
+
+    TouchArea tArea;
 
     public CanvasView(Context context) {
         this(context, null);
@@ -74,6 +88,8 @@ public class CanvasView extends View {
         clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         path = new Path();
         density = getResources().getDisplayMetrics().density;
+        radius = 10 * density;
+        delta = 7 * density;
         cornerPathEffect = new CornerPathEffect(density);
         init = true;
     }
@@ -103,89 +119,95 @@ public class CanvasView extends View {
 
     }
 
-    float leftCenter;
-    float topCenter;
-    float rightCenter;
-    float bottomCenter;
+    float leftCenterTop;
+    float topCenterLeft;
+    float rightCenterTop;
+    float bottomCenterLeft;
+    float leftCenterBottom;
+    float topCenterRight;
+    float rightCenterBottom;
+    float bottomCenterRight;
 
     private void drawCircle(Canvas canvas) {
         paint.setStyle(Paint.Style.STROKE);
-        float radius = 10 * density;
-        float delta = 7 * density;
         if (init) {
             if (left < radius) {
-                leftCenter = radius;
+                leftCenterTop = radius;
             } else {
-                leftCenter = left;
+                leftCenterTop = left;
             }
             if (top < radius) {
-                topCenter = radius;
+                topCenterLeft = radius;
             } else {
-                topCenter = top;
+                topCenterLeft = top;
             }
             if (getWidth() - right < radius) {
-                rightCenter = getWidth() - radius;
+                rightCenterTop = getWidth() - radius;
             } else {
-                rightCenter = right;
+                rightCenterTop = right;
             }
             if (getHeight() - bottom < radius) {
-                bottomCenter = getHeight() - radius;
+                bottomCenterLeft = getHeight() - radius;
             } else {
-                bottomCenter = bottom;
+                bottomCenterLeft = bottom;
             }
             if (right - left < 2 * radius) {
-                leftCenter = (right + left) / 2 - radius;
-                rightCenter = (right + left) / 2 + radius;
+                leftCenterTop = (right + left) / 2 - radius;
+                rightCenterTop = (right + left) / 2 + radius;
             }
             if (bottom - top < 2 * radius) {
-                topCenter = (top + bottom) / 2 - radius;
-                bottomCenter = (top + bottom) / 2 + radius;
+                topCenterLeft = (top + bottom) / 2 - radius;
+                bottomCenterLeft = (top + bottom) / 2 + radius;
             }
+            leftCenterBottom = leftCenterTop;
+            rightCenterBottom = rightCenterTop;
+            topCenterRight = topCenterLeft;
+            bottomCenterRight = bottomCenterLeft;
         }
 
         //draw left top arrow
         path.reset();
         float sin45Length = (float) (radius * (Math.sin(Math.toRadians(45))));
-        path.moveTo(leftCenter - sin45Length, top - sin45Length + delta);
-        path.lineTo(leftCenter - sin45Length, top - sin45Length);
-        path.lineTo(leftCenter - sin45Length + delta, top - sin45Length);
-        path.moveTo(leftCenter - sin45Length, top - sin45Length);
-        path.lineTo(leftCenter + sin45Length, topCenter + sin45Length);
+        path.moveTo(leftCenterTop - sin45Length, topCenterLeft - sin45Length + delta);
+        path.lineTo(leftCenterTop - sin45Length, topCenterLeft - sin45Length);
+        path.lineTo(leftCenterTop - sin45Length + delta, topCenterLeft - sin45Length);
+        path.moveTo(leftCenterTop - sin45Length, topCenterLeft - sin45Length);
+        path.lineTo(leftCenterTop + sin45Length, topCenterLeft + sin45Length);
         paint.setStrokeWidth(density);
         paint.setPathEffect(cornerPathEffect);
         canvas.drawPath(path, paint);
 
         //draw right top arrow
         path.reset();
-        path.moveTo(rightCenter + sin45Length - delta, topCenter - sin45Length);
-        path.lineTo(rightCenter + sin45Length, topCenter - sin45Length);
-        path.lineTo(rightCenter + sin45Length, topCenter - sin45Length + delta);
-        path.moveTo(rightCenter + sin45Length, topCenter - sin45Length);
-        path.lineTo(rightCenter - sin45Length, top + sin45Length);
+        path.moveTo(rightCenterTop + sin45Length - delta, topCenterRight - sin45Length);
+        path.lineTo(rightCenterTop + sin45Length, topCenterRight - sin45Length);
+        path.lineTo(rightCenterTop + sin45Length, topCenterRight - sin45Length + delta);
+        path.moveTo(rightCenterTop + sin45Length, topCenterRight - sin45Length);
+        path.lineTo(rightCenterTop - sin45Length, topCenterRight + sin45Length);
         canvas.drawPath(path, paint);
 
         //draw left bottom arrow
         path.reset();
-        path.moveTo(leftCenter - sin45Length, bottom + sin45Length - delta);
-        path.lineTo(leftCenter - sin45Length, bottom + sin45Length);
-        path.lineTo(leftCenter - sin45Length + delta, bottom + sin45Length);
-        path.moveTo(leftCenter - sin45Length, bottom + sin45Length);
-        path.lineTo(leftCenter + sin45Length, bottom - sin45Length);
+        path.moveTo(leftCenterBottom - sin45Length, bottomCenterLeft + sin45Length - delta);
+        path.lineTo(leftCenterBottom - sin45Length, bottomCenterLeft + sin45Length);
+        path.lineTo(leftCenterBottom - sin45Length + delta, bottomCenterLeft + sin45Length);
+        path.moveTo(leftCenterBottom - sin45Length, bottomCenterLeft + sin45Length);
+        path.lineTo(leftCenterBottom + sin45Length, bottomCenterLeft - sin45Length);
         canvas.drawPath(path, paint);
         //draw right bottom arrow
         path.reset();
-        path.moveTo(rightCenter + sin45Length, bottomCenter + sin45Length - delta);
-        path.lineTo(rightCenter + sin45Length, bottomCenter + sin45Length);
-        path.lineTo(rightCenter + sin45Length - delta, bottom + sin45Length);
-        path.moveTo(rightCenter + sin45Length, bottomCenter + sin45Length);
-        path.lineTo(rightCenter - sin45Length, bottomCenter - sin45Length);
+        path.moveTo(rightCenterBottom + sin45Length, bottomCenterRight + sin45Length - delta);
+        path.lineTo(rightCenterBottom + sin45Length, bottomCenterRight + sin45Length);
+        path.lineTo(rightCenterBottom + sin45Length - delta, bottomCenterRight + sin45Length);
+        path.moveTo(rightCenterBottom + sin45Length, bottomCenterRight + sin45Length);
+        path.lineTo(rightCenterBottom - sin45Length, bottomCenterRight - sin45Length);
         canvas.drawPath(path, paint);
         paint.setPathEffect(null);
         paint.setStrokeWidth(0);
-        canvas.drawCircle(leftCenter, topCenter, radius, paint);
-        canvas.drawCircle(rightCenter, topCenter, radius, paint);
-        canvas.drawCircle(leftCenter, bottomCenter, radius, paint);
-        canvas.drawCircle(rightCenter, bottomCenter, radius, paint);
+        canvas.drawCircle(leftCenterTop, topCenterLeft, radius, paint);
+        canvas.drawCircle(rightCenterTop, topCenterRight, radius, paint);
+        canvas.drawCircle(leftCenterBottom, bottomCenterLeft, radius, paint);
+        canvas.drawCircle(rightCenterBottom, bottomCenterRight, radius, paint);
     }
 
     private void initSrcAndDst() {
@@ -250,28 +272,83 @@ public class CanvasView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        init = false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 startY = event.getY();
+                calculatorTouchArea(startX, startY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                dx = event.getX() - startX;
-                dy = event.getY() - startY;
-                dst[0] = dst[0] + dx;
-                dst[1] = dst[1] + dy;
-                startX = startX + dx;
-                startY = startY + dy;
-                invalidate();
                 Log.i("onTouchEvent", "onTouchEvent: dx = " + dx + ",dy = " + dy);
+                calculatorMove(event);
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 startX = 0;
                 startY = 0;
+                dx = 0;
+                dy = 0;
                 break;
         }
         return true;
+    }
+
+    private void calculatorMove(MotionEvent event) {
+        dx += event.getX() - startX;
+        dy += event.getY() - startY;
+        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+            startX = startX + dx;
+            startY = startY + dy;
+            switch (tArea) {
+                case LEFT_TOP:
+                    dst[0] = dst[0] + dx;
+                    dst[1] = dst[1] + dy;
+                    leftCenterTop += dx;
+                    topCenterLeft += dy;
+                    break;
+                case RIGHT_TOP:
+                    dst[2] = dst[2] + dx;
+                    dst[3] = dst[3] + dy;
+                    rightCenterTop += dx;
+                    topCenterRight += dy;
+                    break;
+                case LEFT_BOTTOM:
+                    dst[4] = dst[4] + dx;
+                    dst[5] = dst[5] + dy;
+                    leftCenterBottom += dx;
+                    bottomCenterLeft += dy;
+                    break;
+                case RIGHT_BOTTOM:
+                    dst[6] = dst[6] + dx;
+                    dst[7] = dst[7] + dy;
+                    rightCenterBottom += dx;
+                    bottomCenterRight += dy;
+                    break;
+                case OTHER:
+                    break;
+            }
+            dx = 0;
+            dy = 0;
+            invalidate();
+        }
+
+
+    }
+
+    private void calculatorTouchArea(float startX, float startY) {
+        float radius = this.radius * 1.5f;
+        if (startY >= topCenterLeft - radius && startY <= topCenterLeft + radius && startX >= leftCenterTop - radius && startX <= leftCenterTop + radius) {
+            tArea = LEFT_TOP;
+        } else if (startY >= topCenterRight - radius && startY <= topCenterRight + radius && startX >= rightCenterTop - radius && startX <= rightCenterTop + radius) {
+            tArea = RIGHT_TOP;
+        } else if (startY >= bottomCenterLeft - radius && startY <= bottomCenterLeft + radius && startX >= leftCenterBottom - radius && startX <= leftCenterBottom + radius) {
+            tArea = LEFT_BOTTOM;
+        } else if (startY >= bottomCenterRight - radius && startY <= bottomCenterRight + radius && startX >= rightCenterBottom - radius && startX <= rightCenterBottom + radius) {
+            tArea = RIGHT_BOTTOM;
+        } else {
+            tArea = OTHER;
+        }
     }
 
     public void saveImages() {
