@@ -112,7 +112,9 @@ public class CanvasView extends View {
         matrix.setPolyToPoly(src, 0, dst, 0, 4);
         int save = mCanvas.save();
         mCanvas.concat(matrix);
-        mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
+        if (bitmap != null) {
+            mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
+        }
         mCanvas.restoreToCount(save);
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
         drawCircle(canvas);
@@ -337,14 +339,14 @@ public class CanvasView extends View {
     }
 
     private void calculatorTouchArea(float startX, float startY) {
-        float radius = this.radius * 1.5f;
-        if (startY >= topCenterLeft - radius && startY <= topCenterLeft + radius && startX >= leftCenterTop - radius && startX <= leftCenterTop + radius) {
+        float radius = this.radius * 1.3f;
+        if (startY >= topCenterLeft - radius * 1.5f && startY <= topCenterLeft + radius && startX >= leftCenterTop - radius * 1.5f && startX <= leftCenterTop + radius) {
             tArea = LEFT_TOP;
-        } else if (startY >= topCenterRight - radius && startY <= topCenterRight + radius && startX >= rightCenterTop - radius && startX <= rightCenterTop + radius) {
+        } else if (startY >= topCenterRight - radius * 1.5f && startY <= topCenterRight + radius && startX >= rightCenterTop - radius && startX <= rightCenterTop + radius * 1.5f) {
             tArea = RIGHT_TOP;
-        } else if (startY >= bottomCenterLeft - radius && startY <= bottomCenterLeft + radius && startX >= leftCenterBottom - radius && startX <= leftCenterBottom + radius) {
+        } else if (startY >= bottomCenterLeft - radius && startY <= bottomCenterLeft + radius * 1.5f && startX >= leftCenterBottom - radius * 1.5f && startX <= leftCenterBottom + radius) {
             tArea = LEFT_BOTTOM;
-        } else if (startY >= bottomCenterRight - radius && startY <= bottomCenterRight + radius && startX >= rightCenterBottom - radius && startX <= rightCenterBottom + radius) {
+        } else if (startY >= bottomCenterRight - radius && startY <= bottomCenterRight + radius * 1.5f && startX >= rightCenterBottom - radius && startX <= rightCenterBottom + radius * 1.5f) {
             tArea = RIGHT_BOTTOM;
         } else {
             tArea = OTHER;
