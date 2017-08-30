@@ -20,28 +20,4 @@
         android:text="保存"
         android:textColor="@color/hal_black2"
         android:textSize="18sp" />
-
-    <com.drwang.views.view.DragView
-        android:id="@+id/dv_left_top"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        drwang:rotate_degree="0" />
-
-    <com.drwang.views.view.DragView
-        android:id="@+id/dv_right_top"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        drwang:rotate_degree="90" />
-
-    <com.drwang.views.view.DragView
-        android:id="@+id/dv_left_bottom"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        drwang:rotate_degree="270" />
-
-    <com.drwang.views.view.DragView
-        android:id="@+id/dv_right_bottom"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        drwang:rotate_degree="180" />
 </RelativeLayout>

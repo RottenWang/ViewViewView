@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.media.MediaScannerConnection;
@@ -37,7 +39,6 @@ public class CanvasView extends View {
     private boolean mSetBitmap;
     private Bitmap bitmap;
     private PorterDuffXfermode clearMode;
-    private PorterDuffXfermode srcMode;
     private String name;
     private Matrix matrixSave;
     private OnSizeChangedInterface mOnSizeChangedInterface;
@@ -45,6 +46,9 @@ public class CanvasView extends View {
     private float right;
     private float top;
     private float bottom;
+    private Path path;
+    private float density;
+    private CornerPathEffect cornerPathEffect;
 
     public CanvasView(Context context) {
         this(context, null);
@@ -65,7 +69,9 @@ public class CanvasView extends View {
         paint.setColor(Color.RED);
         matrix = new Matrix();
         clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
-        srcMode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
+        path = new Path();
+        density = getResources().getDisplayMetrics().density;
+        cornerPathEffect = new CornerPathEffect(density);
     }
 
 
@@ -81,7 +87,7 @@ public class CanvasView extends View {
         }
         paint.setXfermode(clearMode);
         mCanvas.drawPaint(paint);
-        paint.setXfermode(srcMode);
+        paint.setXfermode(null);
         mCanvas.drawColor(Color.WHITE);
         matrix.setPolyToPoly(src, 0, dst, 0, 4);
         int save = mCanvas.save();
@@ -89,6 +95,61 @@ public class CanvasView extends View {
         mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
         mCanvas.restoreToCount(save);
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
+        drawCircle(canvas);
+
+    }
+
+    private void drawCircle(Canvas canvas) {
+        paint.setStyle(Paint.Style.STROKE);
+        float delta;
+        float radius = 10 * density;
+        if (right - left <= radius * 2) {
+            radius = (right - left) / 2;
+            delta = (right - left) / 4;
+        } else {
+            delta = 5 * density;
+        }
+        float leftCenter;
+        float topCenter;
+        float rightCenter;
+        float bottomCenter;
+        if (left < radius) {
+            leftCenter = radius;
+        } else {
+            leftCenter = left;
+        }
+        if (top < radius) {
+            topCenter = radius;
+        } else {
+            topCenter = top;
+        }
+        if (getWidth() - right < radius) {
+            rightCenter = getWidth() - radius;
+        } else {
+            rightCenter = right;
+        }
+        if (getHeight() - bottom < radius) {
+            bottomCenter = getHeight() - radius;
+        } else {
+            bottomCenter = bottom;
+        }
+        path.reset();
+        //draw left top arrow
+        float sin45Length = (float) (radius * (Math.cos(Math.toRadians(45))));
+        path.moveTo(leftCenter - sin45Length, top - sin45Length + delta);
+        path.lineTo(leftCenter - sin45Length, top - sin45Length);
+        path.lineTo(leftCenter - sin45Length + delta, top - sin45Length);
+        path.moveTo(leftCenter - sin45Length, top - sin45Length);
+        path.lineTo(leftCenter + sin45Length, topCenter + sin45Length);
+        paint.setStrokeWidth(density);
+        paint.setPathEffect(cornerPathEffect);
+        canvas.drawPath(path, paint);
+        paint.setPathEffect(null);
+        paint.setStrokeWidth(0);
+        canvas.drawCircle(leftCenter, topCenter, radius, paint);
+        canvas.drawCircle(rightCenter, topCenter, radius, paint);
+        canvas.drawCircle(leftCenter, bottomCenter, radius, paint);
+        canvas.drawCircle(rightCenter, bottomCenter, radius, paint);
 
     }
 
@@ -105,16 +166,16 @@ public class CanvasView extends View {
         //src point right bottom
         src[6] = right;
         src[7] = bottom;
-        //
+        //dst point left top
         dst[0] = left;
         dst[1] = top;
-        //src point right top
+        //dst point right top
         dst[2] = right;
         dst[3] = top;
-        //src point left bottom
+        //dst point left bottom
         dst[4] = left;
         dst[5] = bottom;
-        //src point right bottom
+        //dst point right bottom
         dst[6] = right;
         dst[7] = bottom;
         mSetBitmap = false;
