@@ -116,8 +116,8 @@ public class CanvasView extends View {
             mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
         }
         mCanvas.restoreToCount(save);
+        drawCircle(mCanvas);
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
-        drawCircle(canvas);
 
     }
 
@@ -287,6 +287,7 @@ public class CanvasView extends View {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                tArea = null;
                 startX = 0;
                 startY = 0;
                 dx = 0;
@@ -299,9 +300,9 @@ public class CanvasView extends View {
     private void calculatorMove(MotionEvent event) {
         dx += event.getX() - startX;
         dy += event.getY() - startY;
+        startX = startX + dx;
+        startY = startY + dy;
         if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-            startX = startX + dx;
-            startY = startY + dy;
             switch (tArea) {
                 case LEFT_TOP:
                     dst[0] = dst[0] + dx;
