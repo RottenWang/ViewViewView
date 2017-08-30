@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import static com.drwang.views.view.CanvasView.DrawType.TYPE_DRAG;
+import static com.drwang.views.view.CanvasView.DrawType.TYPE_POLY_TO_POLY;
 import static com.drwang.views.view.CanvasView.TouchArea.LEFT_BOTTOM;
 import static com.drwang.views.view.CanvasView.TouchArea.LEFT_TOP;
 import static com.drwang.views.view.CanvasView.TouchArea.OTHER;
@@ -59,10 +61,17 @@ public class CanvasView extends View {
     private float radius;
     private float delta;
 
+    private float translateX;
+    private float translateY;
+
+    enum DrawType {
+        TYPE_DRAG,TYPE_POLY_TO_POLY,
+    }
+
     enum TouchArea {
         LEFT_TOP, RIGHT_TOP, LEFT_BOTTOM, RIGHT_BOTTOM, OTHER
     }
-
+    DrawType dType;
     TouchArea tArea;
 
     public CanvasView(Context context) {
@@ -92,6 +101,7 @@ public class CanvasView extends View {
         delta = 7 * density;
         cornerPathEffect = new CornerPathEffect(density);
         init = true;
+        dType = TYPE_POLY_TO_POLY;
     }
 
 
@@ -110,13 +120,16 @@ public class CanvasView extends View {
         paint.setXfermode(null);
         mCanvas.drawColor(Color.WHITE);
         matrix.setPolyToPoly(src, 0, dst, 0, 4);
+        matrix.postTranslate(translateX, translateY);
         int save = mCanvas.save();
         mCanvas.concat(matrix);
         if (bitmap != null) {
             mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
         }
         mCanvas.restoreToCount(save);
-        drawCircle(mCanvas);
+        if (dType == TYPE_POLY_TO_POLY){
+            drawCircle(mCanvas);
+        }
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
 
     }
@@ -287,11 +300,13 @@ public class CanvasView extends View {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                dType = TYPE_POLY_TO_POLY;
                 tArea = null;
                 startX = 0;
                 startY = 0;
                 dx = 0;
                 dy = 0;
+                invalidate();
                 break;
         }
         return true;
@@ -305,30 +320,45 @@ public class CanvasView extends View {
         if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
             switch (tArea) {
                 case LEFT_TOP:
+                    dType = TYPE_POLY_TO_POLY;
                     dst[0] = dst[0] + dx;
                     dst[1] = dst[1] + dy;
                     leftCenterTop += dx;
                     topCenterLeft += dy;
                     break;
                 case RIGHT_TOP:
+                    dType = TYPE_POLY_TO_POLY;
                     dst[2] = dst[2] + dx;
                     dst[3] = dst[3] + dy;
                     rightCenterTop += dx;
                     topCenterRight += dy;
                     break;
                 case LEFT_BOTTOM:
+                    dType = TYPE_POLY_TO_POLY;
                     dst[4] = dst[4] + dx;
                     dst[5] = dst[5] + dy;
                     leftCenterBottom += dx;
                     bottomCenterLeft += dy;
                     break;
                 case RIGHT_BOTTOM:
+                    dType = TYPE_POLY_TO_POLY;
                     dst[6] = dst[6] + dx;
                     dst[7] = dst[7] + dy;
                     rightCenterBottom += dx;
                     bottomCenterRight += dy;
                     break;
                 case OTHER:
+                    dType = TYPE_DRAG;
+                    translateX += dx;
+                    translateY += dy;
+                    leftCenterTop += dx;
+                    topCenterLeft += dy;
+                    rightCenterTop += dx;
+                    topCenterRight += dy;
+                    leftCenterBottom += dx;
+                    bottomCenterLeft += dy;
+                    rightCenterBottom += dx;
+                    bottomCenterRight += dy;
                     break;
             }
             dx = 0;
