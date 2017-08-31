@@ -6,26 +6,26 @@
     android:background="@color/color_white">
 
 
-
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:text="保存"
+        android:text="@string/text_save"
         android:textColor="@color/hal_black2"
         android:textSize="18sp" />
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:text="使用原图保存"
         android:id="@+id/cb_save"
-        android:layout_height="50dp" />
+
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/text_user_origin_image_save" />
 
     <com.drwang.views.view.CanvasView
-        android:layout_below="@+id/btn_save"
         android:id="@+id/canvas_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_save" />
 </RelativeLayout>

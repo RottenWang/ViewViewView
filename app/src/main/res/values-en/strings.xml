@@ -9,4 +9,9 @@
     <string name="text_more">More</string>
     <string name="text_filter">Filters</string>
     <string name="text_effect">Effects</string>
+    <string name="text_use_default_gif">Use Default Gif</string>
+    <string name="text_user_origin_image_save">Save Origin Image</string>
+    <string name="text_save">Save</string>
+    <string name="text_back">Back</string>
+    <string name="text_next">Next</string>
 </resources>

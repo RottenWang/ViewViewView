@@ -3,6 +3,7 @@ package com.drwang.views.activity
 import android.Manifest
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Animatable
 import android.net.Uri
@@ -22,6 +23,7 @@ import com.drwang.views.adapter.ImageAdapter
 import com.drwang.views.base.BasicActivity
 import com.drwang.views.bean.ImageEntityBean
 import com.drwang.views.event.DeleteImageEvent
+import com.drwang.views.event.GifChangeEvent
 import com.drwang.views.event.GifImageInfoEvent
 import com.drwang.views.support.LocalThreadPoolManager
 import com.drwang.views.support.PriorityRunnable
@@ -29,6 +31,7 @@ import com.drwang.views.support.fresco.FrescoScheme
 import com.drwang.views.support.fresco.FrescoUtils
 import com.drwang.views.util.DensityUtil
 import com.drwang.views.util.IntentUtil
+import com.drwang.views.util.MathUtil
 import com.drwang.views.util.SharedPreferencesUtils
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
@@ -36,39 +39,33 @@ import com.facebook.imagepipeline.image.ImageInfo
 import kotlinx.android.synthetic.main.activity_image.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.io.File
 
 class ImageActivity : BasicActivity() {
-    val TITLE_IMAGE_KEY = "TITLE_KEY";
-    var titleRes: Int = 0;
+    val TITLE_KEY = "title_key"
+    val STRING_DEFAULT = "default";
     var mImageList: ArrayList<ImageEntityBean>? = null;
-    var  mGifList :  ArrayList<ImageEntityBean>? = null;
+    var mGifList: ArrayList<ImageEntityBean>? = null;
     var mImageAdapter: ImageAdapter? = null;
-    var isLoadFinished : Boolean = false;
+    var isLoadFinished: Boolean = false;
     val LOAD_ALL = 0;
+    var path: String? = null;
     override fun initializeView() {
         setSupportActionBar(tool_bar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        titleRes = SharedPreferencesUtils.getInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg);
         recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         mImageList = ArrayList()
         mGifList = ArrayList()
-        mImageAdapter = ImageAdapter(this, mImageList);
+        mImageAdapter = ImageAdapter(this, mImageList, ImageAdapter.TYPE_NORMAL);
         recycler_view.adapter = mImageAdapter;
+        path = SharedPreferencesUtils.getString(TITLE_KEY, STRING_DEFAULT);
         setTitleImage(true);
         simpleDraweeView_title.setOnClickListener {
-            if (!isLoadFinished){
+            if (!isLoadFinished) {
                 return@setOnClickListener
             }
             EventBus.getDefault().postSticky(GifImageInfoEvent(mGifList))
-            IntentUtil.toSelectTitleImageActivity(ImageActivity@this);
-//            if (titleRes == R.drawable.default_title_bg2) {
-//                titleRes = R.drawable.default_title_bg
-//                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg)
-//            } else {
-//                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg2)
-//                titleRes = R.drawable.default_title_bg2
-//            }
-            setTitleImage(false)
+            IntentUtil.toSelectTitleImageActivity(ImageActivity@ this);
         }
     }
 
@@ -144,9 +141,9 @@ class ImageActivity : BasicActivity() {
                                 }
 
                                 imageBean = ImageEntityBean(path, name, dateTime, width, height)
-                                if (name.endsWith(".gif")){
+                                if (name.endsWith(".gif")) {
                                     gifList.add(imageBean)
-                                }else {
+                                } else {
                                     imageList.add(imageBean)
                                 }
 
@@ -166,20 +163,38 @@ class ImageActivity : BasicActivity() {
         }
     }
 
+    @Subscribe
+    fun onGifChangeEvent(gifChangeEvent: GifChangeEvent) {
+        if(gifChangeEvent.imageEntityBean != null){
+            path = gifChangeEvent.imageEntityBean.path;
+        }else {
+            path = STRING_DEFAULT
+        }
+        setImageToTitleBg(false)
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         supportLoaderManager.destroyLoader(LOAD_ALL)
     }
 
     private fun setImageToTitleBg(first: Boolean) {
-        var uri = FrescoScheme.SCHEME_RES + packageName + "/" + titleRes;
-        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(uri))
-        var decodeResource = BitmapFactory.decodeResource(resources, titleRes);
-        if (decodeResource == null) {
-            decodeResource = BitmapFactory.decodeResource(resources, R.drawable.default_title_bg);
-            titleRes = R.drawable.default_title_bg;
-            SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, titleRes);
+        if (TextUtils.isEmpty(path)) {
+            return;
         }
+        val file = File(path)
+        var decodeResource: Bitmap;
+        var uri: String
+        if (!file.exists()) {
+            uri = FrescoScheme.SCHEME_RES + packageName + "/" + R.drawable.default_title_bg2;
+            decodeResource = BitmapFactory.decodeResource(resources, R.drawable.default_title_bg2);
+            SharedPreferencesUtils.putString(TITLE_KEY,STRING_DEFAULT);
+        } else {
+            uri = FrescoScheme.SCHEME_FILE + path!!;
+            decodeResource = BitmapFactory.decodeFile(path)
+            SharedPreferencesUtils.putString(TITLE_KEY,path);
+        }
+        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(uri))
         val width = decodeResource.width
         val height = decodeResource.height;
         val newWidth = DensityUtil.getInstance().getScreenWidth(this).toInt();
@@ -195,7 +210,7 @@ class ImageActivity : BasicActivity() {
                     simpleDraweeView_title.controller = FrescoUtils.getController(simpleDraweeView_title, newWidth, newHeight.toInt(), uri, object : BaseControllerListener<ImageInfo>() {
                         override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
                             super.onFinalImageSet(id, imageInfo, animatable)
-                            setStatusBarMode()
+                            setStatusBarMode(decodeResource)
                         }
                     })
                 }
@@ -208,23 +223,25 @@ class ImageActivity : BasicActivity() {
             simpleDraweeView_title.controller = FrescoUtils.getController(simpleDraweeView_title, newWidth, newHeight.toInt(), uri, object : BaseControllerListener<ImageInfo>() {
                 override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
                     super.onFinalImageSet(id, imageInfo, animatable)
-                    setStatusBarMode()
+                    setStatusBarMode(decodeResource)
                 }
             })
         }
     }
 
-    private fun setStatusBarMode() {
-        Palette.from(BitmapFactory.decodeResource(resources, titleRes)).generate { palette ->
-            val lightMutedColor = palette?.getLightMutedColor(0xffffff);
-            val toHexString = Integer.toHexString(lightMutedColor!!);
-            val substring = toHexString.substring(startIndex = 0, endIndex = 2);
-            val toInt = Integer.parseInt(substring, 16)
-            if (toInt <= 127) {
+    private fun setStatusBarMode(bitmap: Bitmap) {
+        Palette.from(bitmap).generate { palette ->
+            val darkMutedColor = palette?.getDarkMutedColor(0xffffff);
+            val red = MathUtil.getRed(darkMutedColor!!);
+            val green = MathUtil.getGreen(darkMutedColor);
+            val blue = MathUtil.getBlue(darkMutedColor);
+//            val substring = toHexString.substring(startIndex = 0, endIndex = 2);
+//            val toInt = Integer.parseInt(substring, 16)
+            if (red <= 80 || green <= 80 || blue <= 80) {
                 //半透明
-                setStatusBarDarkMode(true, this@ImageActivity);
-            } else {
                 setStatusBarDarkMode(false, this@ImageActivity);
+            } else {
+                setStatusBarDarkMode(true, this@ImageActivity);
             }
         };
     }

@@ -2,11 +2,13 @@ package com.drwang.views.activity;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.drwang.views.R;
 import com.drwang.views.adapter.ImageAdapter;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.GifChangeEvent;
 import com.drwang.views.event.GifImageInfoEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -14,6 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SelectTitleImageActivity extends BasicActivity {
 
@@ -30,7 +33,7 @@ public class SelectTitleImageActivity extends BasicActivity {
             mGifInfoList = stickyEvent.gifInfoList;
         }
         if (mGifImageAdapter == null) {
-            mGifImageAdapter = new ImageAdapter(this, mGifInfoList);
+            mGifImageAdapter = new ImageAdapter(this, mGifInfoList,ImageAdapter.TYPE_GIF);
         }
         if (mGridLayoutManager == null) {
             mGridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -48,4 +51,11 @@ public class SelectTitleImageActivity extends BasicActivity {
     public int setContentViewRes() {
         return R.layout.activity_select_title_image;
     }
+
+    @OnClick(R.id.tv_default_gif)
+    public void setDefaultGif(View v){
+        EventBus.getDefault().post(new GifChangeEvent(null));
+        finish();
+    }
+
 }

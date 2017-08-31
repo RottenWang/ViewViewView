@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
+import com.drwang.views.event.GifChangeEvent;
 import com.drwang.views.event.ImageEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
 import com.drwang.views.support.fresco.FrescoUtils;
@@ -28,14 +29,17 @@ import java.util.ArrayList;
  */
 
 public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
+    public static final int TYPE_NORMAL = 1;
+    public static final int TYPE_GIF = 2;
     private ArrayList<ImageEntityBean> mList;
+    private int type;
     int width;
 
-    public ImageAdapter(Activity context, ArrayList<ImageEntityBean> list) {
+    public ImageAdapter(Activity context, ArrayList<ImageEntityBean> list, int type) {
         super(context, list);
         this.mList = list;
-        float density = context.getResources().getDisplayMetrics().density;
         width = context.getResources().getDisplayMetrics().widthPixels / 2;
+        this.type = type;
     }
 
     @Override
@@ -81,8 +85,13 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
                     }
             ));
             itemView.setOnClickListener((v) -> {
-                EventBus.getDefault().postSticky(new ImageEvent(mList, position));
-                IntentUtil.toImagePreviewActivity(mActivity);
+                if (type == TYPE_NORMAL){
+                    EventBus.getDefault().postSticky(new ImageEvent(mList, position));
+                    IntentUtil.toImagePreviewActivity(mActivity);
+                }else if (type == TYPE_GIF){
+                    EventBus.getDefault().post(new GifChangeEvent(mList.get(position)));
+                    mActivity.finish();
+                }
             });
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 item_tv.setBackgroundResource(R.drawable.ripple_1);

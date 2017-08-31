@@ -37,7 +37,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="返回"
+        android:text="@string/text_back"
         android:textColor="@color/color_white" />
 
     <TextView
@@ -46,6 +46,6 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:text="继续"
+        android:text="@string/text_next"
         android:textColor="@color/color_white" />
 </RelativeLayout>
