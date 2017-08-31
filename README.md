@@ -71,5 +71,6 @@ http://www.jianshu.com/nb/2135411
 
 #GPUImage
 http://www.jianshu.com/p/7a58a7a61f4c
+
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
