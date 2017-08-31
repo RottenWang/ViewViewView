@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.drwang.views.App;
 import com.drwang.views.R;
 import com.drwang.views.adapter.PhotoViewPagerAdapter;
 import com.drwang.views.base.BasicActivity;
@@ -203,7 +204,7 @@ public class ImagePreviewActivity extends BasicActivity {
             photoViewPagerAdapter.notifyDataSetChanged();
             EventBus.getDefault().post(new DeleteImageEvent(removedImageBean));
             //通知系统
-            MediaScannerConnection.scanFile(this, new String[]{removedImageBean.path.toString()}, null, null);
+            MediaScannerConnection.scanFile(App.sApplication, new String[]{removedImageBean.path.toString()}, null, null);
 //            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + removedImageBean.path)));
         }).setNegativeButton("取消", (view, which) -> {
 

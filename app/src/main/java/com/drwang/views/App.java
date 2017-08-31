@@ -6,6 +6,7 @@ import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -22,6 +23,7 @@ public class App extends Application {
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this).
                 setMaxCacheSizeOnLowDiskSpace(100 * ByteConstants.MB)
                 .build();
+        LeakCanary.install(this);
 //        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
 //                .setBitmapMemoryCacheParamsSupplier(bitmapCacheParamsSupplier)
 //                .setCacheKeyFactory(cacheKeyFactory)

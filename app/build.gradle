@@ -16,7 +16,7 @@ android {
     }
 
     signingConfigs {
-        defaultrelease {
+        defaultRelease {
             storeFile file("image_editer.jks")
             keyAlias "drwang"
             storePassword "drwang6688"
@@ -28,7 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.defaultrelease
+            signingConfig signingConfigs.defaultRelease
         }
     }
     sourceSets {
@@ -71,7 +71,11 @@ dependencies {
     //walle
     compile 'com.meituan.android.walle:library:1.1.5'
 
-    compile project(':library')
+    compile project(':gpuImageLibrary')
+    //leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
 walle {
     // 指定渠道包的输出路径

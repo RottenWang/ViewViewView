@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.drwang.views.App;
 import com.drwang.views.util.FileUtil;
 
 import java.io.File;
@@ -267,16 +268,22 @@ public class CanvasView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         bitmapTemp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(bitmapTemp);
-        left = (mCanvas.getWidth() - bitmap.getWidth()) / 2;
-        right = mCanvas.getWidth() / 2 + bitmap.getWidth() / 2;
-        top = (mCanvas.getHeight() - bitmap.getHeight()) / 2;
-        bottom = mCanvas.getHeight() / 2 + bitmap.getHeight() / 2;
-
+        if (bitmap == null) {
+            return;
+        }
+        initPoint();
 
         if (!hasInvokeInterfaceImpl && mOnSizeChangedInterface != null) {
             hasInvokeInterfaceImpl = true;
             mOnSizeChangedInterface.onSizeHasChanged(left, top, right, bottom);
         }
+    }
+
+    private void initPoint() {
+        left = (mCanvas.getWidth() - bitmap.getWidth()) / 2;
+        right = mCanvas.getWidth() / 2 + bitmap.getWidth() / 2;
+        top = (mCanvas.getHeight() - bitmap.getHeight()) / 2;
+        bottom = mCanvas.getHeight() / 2 + bitmap.getHeight() / 2;
     }
 
     public void setBitmap(Bitmap bitmap, String name, String path, GPUImageFilter filter, float scale) {
@@ -445,7 +452,7 @@ public class CanvasView extends View {
         try {
             file.getParentFile().mkdirs();
             image.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
-            MediaScannerConnection.scanFile(getContext(),
+            MediaScannerConnection.scanFile(App.sApplication,
                     new String[]{
                             file.toString()
                     }, null,
