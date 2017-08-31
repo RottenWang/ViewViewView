@@ -14,7 +14,6 @@ import com.drwang.views.base.BasicActivity;
 import com.drwang.views.event.EditImageEvent;
 import com.drwang.views.util.ShareUtils;
 import com.drwang.views.view.CanvasView;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -81,9 +80,15 @@ public class EditImageActivity extends BasicActivity {
         }
     }
 
-    @OnClick(R.id.tv_share)
-    public void share(View v) {
+    @OnClick(R.id.tv_share_to_we_chat_timeline)
+    public void shareTimeline(View v) {
         Bitmap currentBitmap = canvas_view.getCurrentBitmap();
-        ShareUtils.shareToWeChat(currentBitmap);
+        ShareUtils.shareToWeChat(currentBitmap,1);
+    }
+
+    @OnClick(R.id.tv_share_to_we_chat)
+    public void shareSession(View v) {
+        Bitmap currentBitmap = canvas_view.getCurrentBitmap();
+        ShareUtils.shareToWeChat(currentBitmap,0);
     }
 }

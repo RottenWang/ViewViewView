@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.renderscript.Sampler;
 import android.widget.Toast;
 
 import com.drwang.views.App;
@@ -16,7 +14,6 @@ import com.drwang.views.bean.Constants;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -40,7 +37,7 @@ public class ShareUtils {
         return wxapi;
     }
 
-    public static void shareToWeChat(Bitmap bitmap) {
+    public static void shareToWeChat(Bitmap bitmap, int type) {
         if (!isWeixinAvilible(App.sApplication)) {
             Toast.makeText(App.sApplication, App.sApplication.getResources().getString(R.string.text_install_we_chat), Toast.LENGTH_LONG).show();
             return;
@@ -50,14 +47,13 @@ public class ShareUtils {
         WXImageObject wxImageObject = new WXImageObject(bitmap);
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = wxImageObject;
-
         Bitmap bitmapThumb = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
         bitmap.recycle();
         msg.thumbData = bmpToByteArray(bitmapThumb);
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("img");
         req.message = msg;
-        req.scene = SendMessageToWX.Req.WXSceneSession; /*: SendMessageToWX.Req.WXSceneTimeline;*/
+        req.scene = type == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
         wxapi.sendReq(req);
     }
 

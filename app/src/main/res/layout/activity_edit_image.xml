@@ -23,21 +23,33 @@
         android:text="@string/text_user_origin_image_save" />
 
     <Button
-        android:id="@+id/tv_share"
+        android:id="@+id/tv_share_to_we_chat"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:gravity="center"
-        android:text="@string/text_share"
+        android:text="微信"
+        android:textColor="@color/hal_black2"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/tv_share_to_we_chat_timeline"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/tv_share_to_we_chat"
+        android:text="朋友圈"
         android:textColor="@color/hal_black2"
         android:textSize="18sp" />
 
     <com.drwang.views.view.CanvasView
         android:id="@+id/canvas_view"
         android:layout_width="match_parent"
-        android:layout_above="@id/tv_share"
         android:layout_height="match_parent"
+        android:layout_above="@id/tv_share_to_we_chat"
         android:layout_below="@+id/btn_save" />
 </RelativeLayout>
