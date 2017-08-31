@@ -66,5 +66,10 @@ http://blog.csdn.net/zivensonice/article/details/51691136
 #Github Release 实现自动更新功能
 http://blog.csdn.net/Eggy2015/article/details/52138751
 
+#OpenGL
+http://www.jianshu.com/nb/2135411
+
+#GPUImage
+http://www.jianshu.com/p/7a58a7a61f4c
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
