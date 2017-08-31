@@ -2,21 +2,21 @@ package com.drwang.views.util;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 
 import com.drwang.views.activity.DecorationActivity;
 import com.drwang.views.activity.EditImageActivity;
 import com.drwang.views.activity.FilterActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
-import com.drwang.views.activity.MainActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
+import com.drwang.views.activity.SelectTitleImageActivity;
 import com.drwang.views.activity.ShadowActivity;
 import com.drwang.views.activity.SoftInputActivity;
+import com.drwang.views.bean.ImageEntityBean;
 
-import static android.R.attr.bitmap;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -105,6 +105,14 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, EditImageActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toSelectTitleImageActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, SelectTitleImageActivity.class);
         activity.startActivity(intent);
     }
 }

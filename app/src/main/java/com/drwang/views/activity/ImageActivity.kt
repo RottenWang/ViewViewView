@@ -22,23 +22,28 @@ import com.drwang.views.adapter.ImageAdapter
 import com.drwang.views.base.BasicActivity
 import com.drwang.views.bean.ImageEntityBean
 import com.drwang.views.event.DeleteImageEvent
+import com.drwang.views.event.GifImageInfoEvent
 import com.drwang.views.support.LocalThreadPoolManager
 import com.drwang.views.support.PriorityRunnable
 import com.drwang.views.support.fresco.FrescoScheme
 import com.drwang.views.support.fresco.FrescoUtils
 import com.drwang.views.util.DensityUtil
+import com.drwang.views.util.IntentUtil
 import com.drwang.views.util.SharedPreferencesUtils
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
 import kotlinx.android.synthetic.main.activity_image.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class ImageActivity : BasicActivity() {
     val TITLE_IMAGE_KEY = "TITLE_KEY";
     var titleRes: Int = 0;
     var mImageList: ArrayList<ImageEntityBean>? = null;
+    var  mGifList :  ArrayList<ImageEntityBean>? = null;
     var mImageAdapter: ImageAdapter? = null;
+    var isLoadFinished : Boolean = false;
     val LOAD_ALL = 0;
     override fun initializeView() {
         setSupportActionBar(tool_bar)
@@ -46,17 +51,23 @@ class ImageActivity : BasicActivity() {
         titleRes = SharedPreferencesUtils.getInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg);
         recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         mImageList = ArrayList()
+        mGifList = ArrayList()
         mImageAdapter = ImageAdapter(this, mImageList);
         recycler_view.adapter = mImageAdapter;
         setTitleImage(true);
         simpleDraweeView_title.setOnClickListener {
-            if (titleRes == R.drawable.default_title_bg2) {
-                titleRes = R.drawable.default_title_bg
-                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg)
-            } else {
-                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg2)
-                titleRes = R.drawable.default_title_bg2
+            if (!isLoadFinished){
+                return@setOnClickListener
             }
+            EventBus.getDefault().postSticky(GifImageInfoEvent(mGifList))
+            IntentUtil.toSelectTitleImageActivity(ImageActivity@this);
+//            if (titleRes == R.drawable.default_title_bg2) {
+//                titleRes = R.drawable.default_title_bg
+//                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg)
+//            } else {
+//                SharedPreferencesUtils.putInt(TITLE_IMAGE_KEY, R.drawable.default_title_bg2)
+//                titleRes = R.drawable.default_title_bg2
+//            }
             setTitleImage(false)
         }
     }
@@ -117,6 +128,7 @@ class ImageActivity : BasicActivity() {
                     override fun run() {
                         if (data.moveToFirst()) {
                             var imageList = ArrayList<ImageEntityBean>();
+                            var gifList = ArrayList<ImageEntityBean>();
                             var imageBean: ImageEntityBean
                             do {
                                 val path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]))
@@ -130,13 +142,20 @@ class ImageActivity : BasicActivity() {
                                 if (width <= 0 || height <= 0) {
                                     continue
                                 }
+
                                 imageBean = ImageEntityBean(path, name, dateTime, width, height)
-                                imageList.add(imageBean)
+                                if (name.endsWith(".gif")){
+                                    gifList.add(imageBean)
+                                }else {
+                                    imageList.add(imageBean)
+                                }
 
                             } while (data.moveToNext())
                             data.close()
                             runOnUiThread {
-                                mImageList?.addAll(imageList);
+                                isLoadFinished = true
+                                mImageList?.addAll(imageList)
+                                mGifList?.addAll(gifList)
                                 mImageAdapter?.notifyDataSetChanged()
                                 this@ImageActivity.supportLoaderManager.destroyLoader(LOAD_ALL)
                             }
