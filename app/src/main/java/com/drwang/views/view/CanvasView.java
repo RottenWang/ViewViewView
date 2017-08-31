@@ -2,6 +2,7 @@ package com.drwang.views.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
@@ -22,6 +23,9 @@ import com.drwang.views.util.FileUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 
 import static com.drwang.views.view.CanvasView.DrawType.TYPE_DRAG;
 import static com.drwang.views.view.CanvasView.DrawType.TYPE_POLY_TO_POLY;
@@ -63,14 +67,19 @@ public class CanvasView extends View {
 
     private float translateX;
     private float translateY;
+    private String imagePath;
+    private GPUImageFilter filter;
+    private float scale;
+    private boolean isSaveOriginalImage; //是否保存原图
 
     enum DrawType {
-        TYPE_DRAG,TYPE_POLY_TO_POLY,
+        TYPE_DRAG, TYPE_POLY_TO_POLY,
     }
 
     enum TouchArea {
         LEFT_TOP, RIGHT_TOP, LEFT_BOTTOM, RIGHT_BOTTOM, OTHER
     }
+
     DrawType dType;
     TouchArea tArea;
 
@@ -127,7 +136,7 @@ public class CanvasView extends View {
             mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
         }
         mCanvas.restoreToCount(save);
-        if (dType == TYPE_POLY_TO_POLY){
+        if (dType == TYPE_POLY_TO_POLY) {
             drawCircle(mCanvas);
         }
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
@@ -270,12 +279,15 @@ public class CanvasView extends View {
         }
     }
 
-    public void setBitmap(Bitmap bitmap, String name) {
-        if (bitmap == null || name == null) {
+    public void setBitmap(Bitmap bitmap, String name, String path, GPUImageFilter filter, float scale) {
+        if (bitmap == null || name == null || path == null) {
             return;
         }
         this.name = name;
         this.bitmap = bitmap;
+        this.imagePath = path;
+        this.scale = scale;
+        this.filter = filter;
         mSetBitmap = true;
         invalidate();
     }
@@ -385,12 +397,25 @@ public class CanvasView extends View {
     }
 
     public void saveImages() {
-        initSaveMatrix();
-        Bitmap bitmap2 = Bitmap.createBitmap(this.bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrixSave, false);
+        Bitmap bitmap2;
+        if (isSaveOriginalImage) {
+            GPUImage gpuImage = new GPUImage(getContext());
+            gpuImage.setFilter(filter);
+            Bitmap bitmapOriginal = BitmapFactory.decodeFile(imagePath);
+            Bitmap bitmapWithFilterApplied = gpuImage.getBitmapWithFilterApplied(bitmapOriginal);
+            initSaveMatrix(bitmapWithFilterApplied, scale);
+            bitmap2 = Bitmap.createBitmap(bitmapWithFilterApplied, 0, 0, bitmapWithFilterApplied.getWidth(), bitmapWithFilterApplied.getHeight(), matrixSave, false);
+        } else {
+            initSaveMatrix(bitmap, 1);
+            bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrixSave, false);
+        }
         saveImage(FileUtil.getFoldPath(), System.currentTimeMillis() + name, bitmap2);
+
+
+//        Bitmap bitmap2 = Bitmap.createBitmap(this.bitmap, 0, 0, this.bitmap.getWidth(), this.bitmap.getHeight(), matrixSave, false);
     }
 
-    private void initSaveMatrix() {
+    private void initSaveMatrix(Bitmap bitmap, float scale) {
         matrixSave = new Matrix();
         float[] srcSave = {0, 0,//left top
                 bitmap.getWidth(),//right top
@@ -400,15 +425,19 @@ public class CanvasView extends View {
                 bitmap.getWidth(),//right top
                 0, 0, bitmap.getHeight(),//left bottom
                 bitmap.getWidth(), bitmap.getHeight()};//right bottom;
-        dstSave[0] = dstSave[0] + dst[0] - src[0];
-        dstSave[1] = dstSave[1] + dst[1] - src[1];
-        dstSave[2] = dstSave[2] + dst[2] - src[2];
-        dstSave[3] = dstSave[3] + dst[3] - src[3];
-        dstSave[4] = dstSave[4] + dst[4] - src[4];
-        dstSave[5] = dstSave[5] + dst[5] - src[5];
-        dstSave[6] = dstSave[6] + dst[6] - src[6];
-        dstSave[7] = dstSave[7] + dst[7] - src[7];
+        dstSave[0] = dstSave[0] + (dst[0] - src[0]) / scale;
+        dstSave[1] = dstSave[1] + (dst[1] - src[1]) / scale;
+        dstSave[2] = dstSave[2] + (dst[2] - src[2]) / scale;
+        dstSave[3] = dstSave[3] + (dst[3] - src[3]) / scale;
+        dstSave[4] = dstSave[4] + (dst[4] - src[4]) / scale;
+        dstSave[5] = dstSave[5] + (dst[5] - src[5]) / scale;
+        dstSave[6] = dstSave[6] + (dst[6] - src[6]) / scale;
+        dstSave[7] = dstSave[7] + (dst[7] - src[7]) / scale;
         matrixSave.setPolyToPoly(srcSave, 0, dstSave, 0, 4);
+    }
+
+    public void setSaveOriginalImage(boolean saveOriginalImage) {
+        isSaveOriginalImage = saveOriginalImage;
     }
 
     private void saveImage(final String folderName, final String fileName, final Bitmap image) {

@@ -71,6 +71,7 @@ public class FilterActivity extends AppCompatActivity {
     private FilterAdapter mFilterAdapter;
     private FilterInfo mFilterInfo;
     private List<FilterInfo> mFilterList2;
+    private float scale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +233,7 @@ public class FilterActivity extends AppCompatActivity {
         int height = bitmapOrigin.getHeight();
         int newWidth = width;
         int newHeight = height;
-        float scale = 1.0f;
+        scale = 1.0f;
         if (newWidth > screenWidth || newHeight > screenHeight) {
             //格式化宽和高
             if (newWidth > screenWidth) {
@@ -351,7 +352,7 @@ public class FilterActivity extends AppCompatActivity {
         gpuImageSave.setFilter(mFilterList2.get(i).filter);
         Bitmap bitmap = Bitmap.createBitmap(gpuImage.mCurrentBitmap);
         Bitmap bitmapWithFilterApplied = gpuImageSave.getBitmapWithFilterApplied(bitmap);
-        EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied, mList.get(currentPosition).name));
+        EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied, mList.get(currentPosition).name, mList.get(currentPosition).path, mFilterList2.get(i).filter,scale));
         IntentUtil.toEditImageActivity(this);
 //        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
 //            @Override

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
@@ -17,28 +18,39 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 
 public class EditImageActivity extends BasicActivity {
     private Bitmap mBitmap;
     @BindView(R.id.canvas_view)
     CanvasView canvas_view;
+    @BindView(R.id.cb_save)
+    CheckBox cb_save;
     private String name;
+    private GPUImageFilter filter;
+    private String path;
+    private float scale;
 
     @Override
     protected void initializeView() {
-        EditImageEvent stickyEvent = EventBus.getDefault().getStickyEvent(EditImageEvent.class);
-        if (stickyEvent != null) {
-            mBitmap = stickyEvent.bitmap;
-            name = stickyEvent.name;
-            EventBus.getDefault().removeStickyEvent(stickyEvent);
+        EditImageEvent imageEvent = EventBus.getDefault().getStickyEvent(EditImageEvent.class);
+        if (imageEvent != null) {
+            mBitmap = imageEvent.bitmap;
+            name = imageEvent.name;
+            path = imageEvent.path;
+            filter = imageEvent.filter;
+            scale = imageEvent.scale;
+            EventBus.getDefault().removeStickyEvent(imageEvent);
         }
-        canvas_view.setBitmap(mBitmap, name);
+        canvas_view.setBitmap(mBitmap, name,path,filter,scale);
     }
 
 
     @Override
     protected void initializeData() {
-
+        cb_save.setOnCheckedChangeListener((v,b)->{
+            canvas_view.setSaveOriginalImage(b);
+        });
     }
 
 

@@ -5,19 +5,27 @@
     android:layout_height="match_parent"
     android:background="@color/color_white">
 
-    <com.drwang.views.view.CanvasView
-    android:id="@+id/canvas_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:text="保存"
         android:textColor="@color/hal_black2"
         android:textSize="18sp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:text="使用原图保存"
+        android:id="@+id/cb_save"
+        android:layout_height="50dp" />
+
+    <com.drwang.views.view.CanvasView
+        android:layout_below="@+id/btn_save"
+        android:id="@+id/canvas_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
