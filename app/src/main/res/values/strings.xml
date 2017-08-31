@@ -13,4 +13,5 @@
     <string name="text_save">保存</string>
     <string name="text_back">返回</string>
     <string name="text_next">继续</string>
+    <string name="text_install_we_chat" >请先安装微信</string>
 </resources>

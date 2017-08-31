@@ -14,4 +14,5 @@
     <string name="text_save">Save</string>
     <string name="text_back">Back</string>
     <string name="text_next">Next</string>
+    <string name="text_install_we_chat">First,Please Install WeChat</string>
 </resources>

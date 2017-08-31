@@ -69,6 +69,10 @@
         <activity
             android:name=".activity.SelectTitleImageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

@@ -403,7 +403,11 @@ public class CanvasView extends View {
         }
     }
 
-    public void saveImages() {
+    public Bitmap getCurrentBitmap() {
+        return saveImages(false);
+    }
+
+    public Bitmap saveImages(boolean isSaveLocal) {
         Bitmap bitmap2;
         if (isSaveOriginalImage) {
             GPUImage gpuImage = new GPUImage(getContext());
@@ -416,8 +420,10 @@ public class CanvasView extends View {
             initSaveMatrix(bitmap, 1);
             bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrixSave, false);
         }
-        saveImage(FileUtil.getFoldPath(), System.currentTimeMillis() + name, bitmap2);
-
+        if (isSaveLocal) {
+            saveImage(FileUtil.getFoldPath(), System.currentTimeMillis() + name, bitmap2);
+        }
+        return bitmap2;
 
 //        Bitmap bitmap2 = Bitmap.createBitmap(this.bitmap, 0, 0, this.bitmap.getWidth(), this.bitmap.getHeight(), matrixSave, false);
     }

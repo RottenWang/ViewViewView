@@ -12,7 +12,9 @@ import android.widget.CheckBox;
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.event.EditImageEvent;
+import com.drwang.views.util.ShareUtils;
 import com.drwang.views.view.CanvasView;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,13 +44,13 @@ public class EditImageActivity extends BasicActivity {
             scale = imageEvent.scale;
             EventBus.getDefault().removeStickyEvent(imageEvent);
         }
-        canvas_view.setBitmap(mBitmap, name,path,filter,scale);
+        canvas_view.setBitmap(mBitmap, name, path, filter, scale);
     }
 
 
     @Override
     protected void initializeData() {
-        cb_save.setOnCheckedChangeListener((v,b)->{
+        cb_save.setOnCheckedChangeListener((v, b) -> {
             canvas_view.setSaveOriginalImage(b);
         });
     }
@@ -65,7 +67,7 @@ public class EditImageActivity extends BasicActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         } else {
-            canvas_view.saveImages();
+            canvas_view.saveImages(true);
         }
     }
 
@@ -74,8 +76,14 @@ public class EditImageActivity extends BasicActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 101) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                canvas_view.saveImages();
+                canvas_view.saveImages(true);
             }
         }
+    }
+
+    @OnClick(R.id.tv_share)
+    public void share(View v) {
+        Bitmap currentBitmap = canvas_view.getCurrentBitmap();
+        ShareUtils.shareToWeChat(currentBitmap);
     }
 }
