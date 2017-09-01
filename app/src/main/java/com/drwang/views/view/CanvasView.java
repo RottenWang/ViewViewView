@@ -19,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.drwang.views.App;
+import com.drwang.views.support.LocalThreadPoolManager;
+import com.drwang.views.support.PriorityRunnable;
 import com.drwang.views.util.FileUtil;
 
 import java.io.File;
@@ -454,20 +456,26 @@ public class CanvasView extends View {
     }
 
     private void saveImage(final String folderName, final String fileName, final Bitmap image) {
-        File file = new File(folderName, fileName);
-        try {
-            file.getParentFile().mkdirs();
-            image.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
-            MediaScannerConnection.scanFile(App.sApplication,
-                    new String[]{
-                            file.toString()
-                    }, null,
-                    (path, uri) -> {
-                        Log.i("saveImage", "saveImage: path = " + path + "uri = " + uri);
-                    });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        LocalThreadPoolManager.execute(new PriorityRunnable(10) {
+            @Override
+            public void run() {
+                File file = new File(folderName, fileName);
+                try {
+                    file.getParentFile().mkdirs();
+                    image.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
+                    MediaScannerConnection.scanFile(App.sApplication,
+                            new String[]{
+                                    file.toString()
+                            }, null,
+                            (path, uri) -> {
+                                Log.i("saveImage", "saveImage: path = " + path + "uri = " + uri);
+                            });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public void setOnSizeChangedInterface(OnSizeChangedInterface onSizeChangedInterface) {
