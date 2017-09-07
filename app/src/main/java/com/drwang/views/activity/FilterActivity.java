@@ -349,10 +349,12 @@ public class FilterActivity extends AppCompatActivity {
     public void save(View v) {
         GPUImage gpuImageSave = new GPUImage(this);
         int i = mFilterList.indexOf(mFilterInfo);
+        float progress = mFilterList.get(i).progress;
+        mFilterList2.get(i).setProgress(progress);
         gpuImageSave.setFilter(mFilterList2.get(i).filter);
         Bitmap bitmap = Bitmap.createBitmap(gpuImage.mCurrentBitmap);
         Bitmap bitmapWithFilterApplied = gpuImageSave.getBitmapWithFilterApplied(bitmap);
-        EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied, mList.get(currentPosition).name, mList.get(currentPosition).path, mFilterList2.get(i).filter,scale));
+        EventBus.getDefault().postSticky(new EditImageEvent(bitmapWithFilterApplied, mList.get(currentPosition).name, mList.get(currentPosition).path, mFilterList2.get(i).filter, scale));
         IntentUtil.toEditImageActivity(this);
 //        gpuImage.saveToPictures(foldPath, name, new GPUImage.OnPictureSavedListener() {
 //            @Override
