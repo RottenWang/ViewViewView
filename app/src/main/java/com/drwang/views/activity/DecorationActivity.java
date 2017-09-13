@@ -28,6 +28,8 @@ public class DecorationActivity extends BasicActivity {
         for (int i = 0; i < 40; i++) {
             mList.add(i + "");
         }
+
+
         exampleAdapter = new ExampleAdapter(this, mList);
         recyclerView.setAdapter(exampleAdapter);
     }
