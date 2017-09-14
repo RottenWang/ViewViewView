@@ -1,2 +1,1 @@
 -dontwarn jp.co.cyberagent.android.gpuimage.**
--keep class com.sina.weibo.sdk.** { *; }
