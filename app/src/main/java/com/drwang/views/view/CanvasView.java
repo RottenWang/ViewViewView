@@ -139,7 +139,7 @@ public class CanvasView extends View {
             mCanvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2, (getHeight() - bitmap.getHeight()) / 2, paint);
         }
         mCanvas.restoreToCount(save);
-        if (dType == TYPE_POLY_TO_POLY) {
+        if (dType == TYPE_POLY_TO_POLY)  {
             drawCircle(mCanvas);
         }
         canvas.drawBitmap(bitmapTemp, 0, 0, paint);
