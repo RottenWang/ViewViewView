@@ -1,10 +1,7 @@
 package com.drwang.views.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -13,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.drwang.views.R;
 import com.drwang.views.bean.ImageEntityBean;
-import com.drwang.views.event.DeleteImageEvent;
 import com.drwang.views.event.ImageScaleEvent;
 import com.drwang.views.event.ShowOrHideEvent;
 import com.drwang.views.support.fresco.FrescoScheme;
@@ -25,7 +21,6 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.List;
 
 import me.relex.photodraweeview.PhotoDraweeView;

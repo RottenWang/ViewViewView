@@ -14,9 +14,6 @@ import com.drwang.views.activity.RecyclerActivity;
 import com.drwang.views.activity.SelectTitleImageActivity;
 import com.drwang.views.activity.ShadowActivity;
 import com.drwang.views.activity.SoftInputActivity;
-import com.drwang.views.bean.ImageEntityBean;
-
-import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2017/7/7.

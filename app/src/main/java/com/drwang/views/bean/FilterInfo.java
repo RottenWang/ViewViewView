@@ -1,13 +1,11 @@
 package com.drwang.views.bean;
 
 import android.graphics.Bitmap;
-import android.widget.ScrollView;
 
 import com.drwang.views.event.RefreshGPUImageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 
 /**

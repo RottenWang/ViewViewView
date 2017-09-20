@@ -46,11 +46,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 
-import static com.drwang.views.R.id.gl_surface_view;
 
 
 public class FilterActivity extends AppCompatActivity {
-    @BindView(gl_surface_view)
+    @BindView(R.id.gl_surface_view)
     GLSurfaceView glsurfaceview;
     @BindView(R.id.rl_slider)
     RelativeLayout rl_slider;

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.drwang.views.R;
 import com.drwang.views.event.SupportEvent;
 
 import org.greenrobot.eventbus.EventBus;

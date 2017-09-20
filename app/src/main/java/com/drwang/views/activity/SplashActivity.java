@@ -1,25 +1,19 @@
 package com.drwang.views.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.drwang.views.R;
-import com.drwang.views.bean.ImageEntityBean;
-
-import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
 

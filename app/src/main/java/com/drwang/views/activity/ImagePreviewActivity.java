@@ -2,7 +2,6 @@ package com.drwang.views.activity;
 
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;

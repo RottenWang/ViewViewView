@@ -1,7 +1,5 @@
 package com.drwang.views.util;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * Created by Administrator on 2017/8/31.
  */
