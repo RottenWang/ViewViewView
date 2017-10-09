@@ -6,12 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by wang on 2017/10/9.
@@ -38,7 +39,9 @@ public class SelectedMoneyView2 extends View {
     private int middleColor;
     private int deltaMoney;
     private boolean isFullScreenWidth;  //是否需要满屏幕
-
+    int currentMoney;
+    DecimalFormat df = new DecimalFormat("0.00");
+    private int titleColor;
 
     public SelectedMoneyView2(Context context) {
         this(context, null);
@@ -57,18 +60,10 @@ public class SelectedMoneyView2 extends View {
         density = getResources().getDisplayMetrics().density;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
-        paint.setTextSize(density * 16);
         deltaX = 15 * density;
-        setMoney(10, 100, 1140, 1140, true);
-        setDeviDeMoneyColor(Color.GRAY);
-        setMoneyColor(Color.RED);
-        setMiddleLineColor(Color.RED);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setMoney(200, 600, 3000, 3800);
-            }
-        }, 5000);
+        setMoney(100, 600, 3600, 3800, true);
+        setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
+
     }
 
     @Override
@@ -86,6 +81,7 @@ public class SelectedMoneyView2 extends View {
             scrollerXDefault += deltaX / 2.0f;
             scrollerCurrent = scrollerXDefault;
         }
+        paint.setTextSize(density * 16);
         paint.setColor(devideMoneyColor);
         paint.setStyle(Paint.Style.FILL);
         int height = getHeight();
@@ -119,17 +115,33 @@ public class SelectedMoneyView2 extends View {
         float lineLength = height - 50 * density;
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setColor(middleColor);
-        //画线
+        //画中线
         canvas.drawLine(width / 2, lineLength, width / 2, height, paint);
         //画小圆
         canvas.drawCircle(width / 2, lineLength, 2 * density, paint);
         //画金额
-        drawMoney(canvas);
+        paint.setStyle(Paint.Style.FILL);
+        drawMoney(canvas, width / 2, height / 2); //金额的位置
+        //画标题
+        drawTitle(canvas, width / 2, (int) (height / 2 - 30 * density));
     }
 
-    int currentMoney;
+    private void drawTitle(Canvas canvas, int centerX, int centerY) {
+        paint.setColor(titleColor);
+        paint.setTextSize(17 * density);
+        String text = "借款金额(元)";
+        Rect rect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), rect); //获取文字边界
+        float lineX = centerX - (rect.left + rect.right) / 2.0f; // 计算文字的基准线
+        float lineY = centerY - (rect.top + rect.bottom) / 2.0f;
+        canvas.drawText(text, lineX, lineY, paint);
 
-    private void drawMoney(Canvas canvas) {
+    }
+
+
+    private void drawMoney(Canvas canvas, int centerX, int centerY) {
+        paint.setTextSize(25 * density);
+        paint.setColor(moneyColor);
         float v = scrollerCurrent - scrollerXDefault;
         int delta;
         if (v >= 0) {
@@ -154,7 +166,12 @@ public class SelectedMoneyView2 extends View {
             }
         }
         currentMoney = money;
-        canvas.drawText(String.valueOf(money), 0, 200, paint);
+        Rect rect = new Rect();
+        String text = df.format(money);
+        paint.getTextBounds(text, 0, text.length(), rect); //获取文字边界
+        float lineX = centerX - (rect.left + rect.right) / 2.0f; // 计算文字的基准线
+        float lineY = centerY - (rect.top + rect.bottom) / 2.0f;
+        canvas.drawText(text, lineX, lineY, paint);
 
     }
 
@@ -318,6 +335,10 @@ public class SelectedMoneyView2 extends View {
         this.middleColor = color;
     }
 
+    private void setTitleColor(int color) {
+        this.titleColor = color;
+    }
+
     /**
      * 设置刻度money
      *
@@ -377,5 +398,20 @@ public class SelectedMoneyView2 extends View {
      */
     public void setIsFullScreenWidth(boolean isFullScreenWidth) {
         this.isFullScreenWidth = isFullScreenWidth;
+    }
+
+    /**
+     * 设置颜色
+     *
+     * @param devideAndMoneyColor 刻度和刻度金额颜色
+     * @param moneyColor          当前金额的颜色
+     * @param midLineColor        中线颜色
+     * @param titleColor          标题颜色
+     */
+    public void setColors(int devideAndMoneyColor, int moneyColor, int midLineColor, int titleColor) {
+        setDeviDeMoneyColor(devideAndMoneyColor);
+        setMoneyColor(moneyColor);
+        setMiddleLineColor(midLineColor);
+        setTitleColor(titleColor);
     }
 }
