@@ -80,5 +80,8 @@ https://gank.io/post/560e15be2dca930e00da1083#toc_1
 
 http://www.jianshu.com/p/fbfdd6fa6154
 
+#blueTooth
+http://blog.csdn.net/vnanyesheshou/article/details/51554852
+
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
