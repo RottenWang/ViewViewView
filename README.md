@@ -83,5 +83,8 @@ http://www.jianshu.com/p/fbfdd6fa6154
 #blueTooth
 http://blog.csdn.net/vnanyesheshou/article/details/51554852
 
+#Transition
+http://rkhcy.github.io/2017/09/27/TransitionNote2/
+
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
