@@ -228,7 +228,7 @@ public class SelectedMoneyView2 extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                ViewParent parent = getParent();
+                ViewParent parent = getParent();//请求不要拦截事件
                 if (parent != null) {
                     parent.requestDisallowInterceptTouchEvent(true);
                 }
