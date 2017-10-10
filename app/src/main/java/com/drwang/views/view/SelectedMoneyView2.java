@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -65,8 +66,14 @@ public class SelectedMoneyView2 extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
         deltaX = 15 * density;
-        setMoney(100, 600, 700, 0, 5000, DEFAULT_DIVIDE_VALUE, true);
+        setMoney(100, 600, 3000, 0,0, 2600, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                setMoney(50, 600, 3000, 0,0, 2600);
+            }
+        },5000);
 
     }
 
@@ -100,18 +107,18 @@ public class SelectedMoneyView2 extends View {
 //            return delta * deltaX + scrollerXDefault;
 //        }
             int money = (range / 2 - delta) * deltaMoney + startMoney;
-            if (money < minMoney * deltaMoney) {
-                money = minMoney * deltaMoney;
-            }
-            if (money > maxMoney * deltaMoney) {
-                money = maxMoney * deltaMoney;
-            }
+//            if (money < minMoney * deltaMoney) {
+//                money = minMoney * deltaMoney;
+//            }
+//            if (money > maxMoney * deltaMoney) {
+//                money = maxMoney * deltaMoney;
+//            }
             int mid;
-            if (minMoney == maxMoney) {
-                mid = (int) (money / deltaMoney + 0.5f);
-            } else {
-                mid = (int) ((money - startMoney) / deltaMoney + 0.5f);
-            }
+//            if (minMoney == maxMoney) {
+//                mid = (int) (money / deltaMoney + 0.5f);
+//            } else {
+            mid = (int) ((money - startMoney) / deltaMoney + 0.5f);
+//            }
             scrollerCurrent += (mid - index) * deltaX;
 
         }
@@ -433,8 +440,11 @@ public class SelectedMoneyView2 extends View {
         if (defalutSelectedMoney > maxMoney) {//保证默认选择的值位小于等于最大值
             defalutSelectedMoney = maxMoney;
         }
-        if ((maxMoney - minMoney) > ranges) { //保证范围至少是最大值与最小值之间的
-            ranges = maxMoney - minMoney;
+        if (defalutSelectedMoney < minMoney) {
+            defalutSelectedMoney = minMoney;
+        }
+        if ((maxMoney - startMoney) > ranges) { //保证范围至少是最大值与最小值之间的
+            ranges = maxMoney - startMoney;
         }
         setDeltaMoney(deltaMoney);
         setMinMoney(minMoney);
@@ -494,9 +504,9 @@ public class SelectedMoneyView2 extends View {
      */
     private void setDefaultSelectedMoney(int money) {
         //默认金额小于0  小于起始值  小于最小值  大于最大值 return
-        if (money < 0 || money < startMoney || money < minMoney * deltaMoney || money > maxMoney * deltaMoney) {
-            return;
-        }
+//        if (money < 0 || money < startMoney || money < minMoney * deltaMoney || money > maxMoney * deltaMoney) {
+//            return;
+//        }
         this.defaultSelectedMoney = money;
         this.isNeedSetDefaultLocation = true;
     }
