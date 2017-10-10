@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -68,13 +67,6 @@ public class SelectedMoneyView2 extends View {
         deltaX = 15 * density;
         setMoney(100, 600, 3000, 0,0, 2600, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                setMoney(50, 600, 3000, 0,0, 2600);
-            }
-        },5000);
-
     }
 
     @Override
