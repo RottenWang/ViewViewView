@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import java.text.DecimalFormat;
 
@@ -37,11 +38,14 @@ public class SelectedMoneyView2 extends View {
     private int devideMoneyColor;
     private int moneyColor;
     private int middleColor;
-    private int deltaMoney;
+    private int deltaMoney = 100;
     private boolean isFullScreenWidth;  //是否需要满屏幕
     int currentMoney;
+    private int startMoney;
     DecimalFormat df = new DecimalFormat("0.00");
     private int titleColor;
+    private int defaultSelectedMoney;
+    private boolean isNeedSetDefaultLocation;
 
     public SelectedMoneyView2(Context context) {
         this(context, null);
@@ -61,7 +65,7 @@ public class SelectedMoneyView2 extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
         deltaX = 15 * density;
-        setMoney(100, 600, 3600, 3800, true);
+        setMoney(50, 100, 100, 100, 100, 400, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
 
     }
@@ -80,6 +84,31 @@ public class SelectedMoneyView2 extends View {
             isNeedResetScrollerDefault = false;
             scrollerXDefault += deltaX / 2.0f;
             scrollerCurrent = scrollerXDefault;
+        }
+        if (isNeedSetDefaultLocation) { //计算默认刻度值
+            isNeedSetDefaultLocation = false;
+//            计算index  再计算需要平移的距离
+            int index = (int) ((defaultSelectedMoney - startMoney) / deltaMoney + 0.5f);
+            float v = scrollerCurrent - scrollerXDefault;
+            int delta;
+            if (v >= 0) {
+                delta = (int) (v / deltaX + 0.5f);
+            } else {
+                delta = (int) (v / deltaX - 0.5f);
+            }
+//        if (currentX == delta || delta > rangeMax - minMoney || delta < rangeMin + (range - maxMoney)) { //如果本次计算的位置相同 或者超出了默认的范围  那么就return
+//            return delta * deltaX + scrollerXDefault;
+//        }
+            int money = (range / 2 - delta) * deltaMoney + startMoney;
+            if (money < minMoney * deltaMoney) {
+                money = minMoney * deltaMoney;
+            }
+            if (money > maxMoney * deltaMoney) {
+                money = maxMoney * deltaMoney;
+            }
+            int mid = (int) (money / deltaMoney + 0.5f);
+            scrollerCurrent += (mid - index) * deltaX;
+
         }
         paint.setTextSize(density * 16);
         paint.setColor(devideMoneyColor);
@@ -152,7 +181,7 @@ public class SelectedMoneyView2 extends View {
 //        if (currentX == delta || delta > rangeMax - minMoney || delta < rangeMin + (range - maxMoney)) { //如果本次计算的位置相同 或者超出了默认的范围  那么就return
 //            return delta * deltaX + scrollerXDefault;
 //        }
-        int money = (range / 2 - delta) * deltaMoney;
+        int money = (range / 2 - delta) * deltaMoney + startMoney;
         if (money < minMoney * deltaMoney) {
             money = minMoney * deltaMoney;
         }
@@ -176,7 +205,7 @@ public class SelectedMoneyView2 extends View {
     }
 
     private void drawText(int i, Canvas canvas, float x, float y) {
-        String text = String.valueOf(i * deltaMoney);
+        String text = String.valueOf(i * deltaMoney + startMoney);
         Rect rect = new Rect();
         paint.getTextBounds(text, 0, text.length(), rect); //获取文字边界
         float lineX = x - (rect.left + rect.right) / 2.0f; // 计算文字的基准线
@@ -192,7 +221,10 @@ public class SelectedMoneyView2 extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                getParent().requestDisallowInterceptTouchEvent(true);
+                ViewParent parent = getParent();
+                if (parent != null) {
+                    parent.requestDisallowInterceptTouchEvent(true);
+                }
                 startX = event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -210,12 +242,12 @@ public class SelectedMoneyView2 extends View {
             case MotionEvent.ACTION_CANCEL:
                 startX = 0;
                 /*回到最近的刻度*/
-                if (scrollerCurrent > w / 2 - minMoney * deltaX) { //向右滑 超过最小范围
+                if (scrollerCurrent > w / 2 - minMoney * deltaX + startMoney / deltaMoney * deltaX) { //向右滑 超过最小范围
                     //超过左边
-                    animToLocation(scrollerCurrent, w / 2 - minMoney * deltaX, 200);
+                    animToLocation(scrollerCurrent, w / 2 - minMoney * deltaX + startMoney / deltaMoney * deltaX, 200);
 //                    scrollTo(scrollerXDefault, 0);
-                } else if (scrollerCurrent < -(totalWidth - w / 2 - (range - maxMoney) * deltaX)) { //向左滑 超过中线
-                    animToLocation(scrollerCurrent, -(totalWidth - w / 2 - (range - maxMoney) * deltaX), 200);
+                } else if (scrollerCurrent < -(totalWidth - w / 2 - (range - maxMoney) * deltaX) + startMoney / deltaMoney * deltaX) { //向左滑 超过中线
+                    animToLocation(scrollerCurrent, -(totalWidth - w / 2 - (range - maxMoney) * deltaX) + startMoney / deltaMoney * deltaX, 200);
                 } else {  //在中间  需要计算 归零点
                     float lineX = calculatorCurrentMoney();
                     animToLocation(scrollerCurrent, lineX, 200);
@@ -235,9 +267,6 @@ public class SelectedMoneyView2 extends View {
         } else {
             delta = (int) (v / deltaX - 0.5f);
         }
-//        if (currentX == delta || delta > rangeMax - minMoney || delta < rangeMin + (range - maxMoney)) { //如果本次计算的位置相同 或者超出了默认的范围  那么就return
-//            return delta * deltaX + scrollerXDefault;
-//        }
         currentX = delta;
         int money = (range / 2 - delta) * deltaMoney;
         return delta * deltaX + scrollerXDefault;
@@ -258,12 +287,12 @@ public class SelectedMoneyView2 extends View {
     boolean isNeedResetScrollerDefault;
 
     /**
-     * 设置view显示的金额最大值
+     * 设置view显示的金额的范围  从startMoney开始显示
      *
      * @param range
      */
     public void setRange(int range) {
-        range = range / deltaMoney;
+        range = (range + startMoney) / deltaMoney;
         if (range % 5 != 0) {
             range += 5 - range % 5;
         }
@@ -273,6 +302,15 @@ public class SelectedMoneyView2 extends View {
         this.range = range;
         rangeMin = -range / 2;
         rangeMax = range / 2;
+    }
+
+    /**
+     * 设置刻度尺最小值默认为0
+     *
+     * @param startMoney
+     */
+    private void setDivideMinMoney(int startMoney) {
+        this.startMoney = startMoney;
     }
 
     /**
@@ -306,6 +344,8 @@ public class SelectedMoneyView2 extends View {
 
     public interface OnSelectedChangedListener {
         void onChanged(int money);
+
+        void onMoneySetError();
     }
 
     /**
@@ -348,30 +388,54 @@ public class SelectedMoneyView2 extends View {
 //        if (money % 100 != 0) {
 //            money = 100 * (money / 100);
 //        }
+        if (money == 0) {
+            return;
+        }
         deltaMoney = money;
     }
 
     /**
      * 设置各种金额  需要同时设置
      *
-     * @param deltaMoney 刻度金额
-     * @param minMoney   //最小的选择金额
-     * @param maxMoney   //最大的选择金额
-     * @param ranges     //显示的范围  从 0 到range
+     * @param deltaMoney           刻度金额
+     * @param minMoney             //最小的选择金额
+     * @param maxMoney             //最大的选择金额
+     * @param startMoney           刻度的起始金额 最小值为0
+     * @param ranges               //显示的范围  从 0 到range
+     * @param defalutSelectedMoney 默认选中的金额  传-1  则默认选中居中值 否则 则传具体的数值
      */
-    public void setMoney(int deltaMoney, int minMoney, int maxMoney, int ranges) {
-        setMoney(deltaMoney, minMoney, maxMoney, ranges, false);
+    public void setMoney(int deltaMoney, int minMoney, int maxMoney, int startMoney, int ranges, int defalutSelectedMoney) {
+        setMoney(deltaMoney, minMoney, maxMoney, startMoney, ranges, defalutSelectedMoney, false);
     }
 
-    private void setMoney(int deltaMoney, int minMoney, int maxMoney, int ranges, boolean isInit) {
-
+    private void setMoney(int deltaMoney, int minMoney, int maxMoney, int startMoney, int ranges, int defalutSelectedMoney, boolean isInit) {
+        //保证所有金额都大于0
+        if (deltaMoney < 0 || minMoney < 0 || maxMoney < 0 || ranges < 0 || startMoney < 0) {
+            if (mOnSelectedChangedListener != null) {//金额设置有误  可能是服务器传值问题
+                mOnSelectedChangedListener.onMoneySetError();
+            }
+            return;
+        }
+        if (minMoney > maxMoney) { //保证最小值 小于等于最大值
+            minMoney = maxMoney;
+        }
+        if (startMoney > minMoney) { //保证起始值 小于等于最小值  否则会出现绘制错误
+            startMoney = minMoney;
+        }
+        if (defalutSelectedMoney > maxMoney) {//保证默认选择的值位小于等于最大值
+            defalutSelectedMoney = maxMoney;
+        }
+        if ((maxMoney - minMoney) > ranges) { //保证范围至少是最大值与最小值之间的
+            ranges = maxMoney - minMoney;
+        }
         setDeltaMoney(deltaMoney);
         setMinMoney(minMoney);
         setMaxMoney(maxMoney);
+        setDivideMinMoney(startMoney);
         setRange(ranges);
+        setDefaultSelectedMoney(defalutSelectedMoney);
         if (!isInit) {
             calculateTranslate();
-
         }
         requestLayout();
         invalidate();
@@ -414,4 +478,20 @@ public class SelectedMoneyView2 extends View {
         setMiddleLineColor(midLineColor);
         setTitleColor(titleColor);
     }
+
+    /**
+     * 设置默认的选择的金额 金额如果格式不正确 会默认归至最近刻度
+     *
+     * @param money
+     */
+    private void setDefaultSelectedMoney(int money) {
+        //默认金额小于0  小于起始值  小于最小值  大于最大值 return
+        if (money < 0 || money < startMoney || money < minMoney * deltaMoney || money > maxMoney * deltaMoney) {
+            return;
+        }
+        this.defaultSelectedMoney = money;
+        this.isNeedSetDefaultLocation = true;
+    }
+
+
 }
