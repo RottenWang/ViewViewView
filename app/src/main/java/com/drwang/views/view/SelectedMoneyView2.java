@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
  */
 
 public class SelectedMoneyView2 extends View {
-
+    public static final int DEFAULT_DIVIDE_VALUE = -1; //默认刻度值
     private Paint paint;
     private float density;
     private float deltaX; //每个刻度之间的距离
@@ -65,7 +65,7 @@ public class SelectedMoneyView2 extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
         deltaX = 15 * density;
-        setMoney(50, 100, 100, 100, 100, 400, true);
+        setMoney(100, 600, 700, 0, 5000, DEFAULT_DIVIDE_VALUE, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
 
     }
@@ -106,7 +106,12 @@ public class SelectedMoneyView2 extends View {
             if (money > maxMoney * deltaMoney) {
                 money = maxMoney * deltaMoney;
             }
-            int mid = (int) (money / deltaMoney + 0.5f);
+            int mid;
+            if (minMoney == maxMoney) {
+                mid = (int) (money / deltaMoney + 0.5f);
+            } else {
+                mid = (int) ((money - startMoney) / deltaMoney + 0.5f);
+            }
             scrollerCurrent += (mid - index) * deltaX;
 
         }
@@ -402,7 +407,7 @@ public class SelectedMoneyView2 extends View {
      * @param maxMoney             //最大的选择金额
      * @param startMoney           刻度的起始金额 最小值为0
      * @param ranges               //显示的范围  从 0 到range
-     * @param defalutSelectedMoney 默认选中的金额  传-1  则默认选中居中值 否则 则传具体的数值
+     * @param defalutSelectedMoney 默认选中的金额  传 -1 {@link SelectedMoneyView2#DEFAULT_DIVIDE_VALUE}  则默认选中居中值 否则 则传具体的数值
      */
     public void setMoney(int deltaMoney, int minMoney, int maxMoney, int startMoney, int ranges, int defalutSelectedMoney) {
         setMoney(deltaMoney, minMoney, maxMoney, startMoney, ranges, defalutSelectedMoney, false);
@@ -421,6 +426,9 @@ public class SelectedMoneyView2 extends View {
         }
         if (startMoney > minMoney) { //保证起始值 小于等于最小值  否则会出现绘制错误
             startMoney = minMoney;
+        }
+        if (defalutSelectedMoney == DEFAULT_DIVIDE_VALUE) {
+            defalutSelectedMoney = (ranges + startMoney) / 2;
         }
         if (defalutSelectedMoney > maxMoney) {//保证默认选择的值位小于等于最大值
             defalutSelectedMoney = maxMoney;
@@ -444,12 +452,12 @@ public class SelectedMoneyView2 extends View {
 
     private void calculateTranslate() {
         totalWidth = deltaX * range;
-        if (totalWidth <= w && isFullScreenWidth) {
-            totalWidth = w;
+        if (totalWidth <= getMeasuredWidth() && isFullScreenWidth) {
+            totalWidth = getMeasuredWidth();
             deltaX = totalWidth / (range * 1.0f);
             scrollerXDefault = 0;
         } else {
-            scrollerXDefault = -(totalWidth - w) / 2.0f;
+            scrollerXDefault = -(totalWidth - getMeasuredWidth()) / 2.0f;
         }
         scrollerCurrent = scrollerXDefault;
     }
