@@ -221,6 +221,8 @@ public class SelectedMoneyView2 extends View {
 
     float startX;
     float moveX;
+    float startY;
+    boolean canMoveDivide;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -230,12 +232,26 @@ public class SelectedMoneyView2 extends View {
                 if (parent != null) {
                     parent.requestDisallowInterceptTouchEvent(true);
                 }
+
                 startX = event.getX();
+                startY = event.getY();
+                if (startY > getHeight() - 50 * density) {  //限制滑动范围   从底部向上 50dp
+                    canMoveDivide = true;
+                }
+                ;
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (startX == 0) {
                     startX = event.getX();
                     return true;
+                }
+                if (startY == 0) {
+                    startY = event.getY();
+                    canMoveDivide = true;
+                    return true;
+                }
+                if (!canMoveDivide) {
+                    return false;
                 }
                 moveX = event.getX();
                 scrollerCurrent += moveX - startX;
@@ -245,7 +261,12 @@ public class SelectedMoneyView2 extends View {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                if (!canMoveDivide) {
+                    return false;
+                }
+                canMoveDivide = false;
                 startX = 0;
+                startY = 0;
                 /*回到最近的刻度*/
                 if (scrollerCurrent > w / 2 - minMoney * deltaX + startMoney / deltaMoney * deltaX) { //向右滑 超过最小范围
                     //超过左边
@@ -284,7 +305,8 @@ public class SelectedMoneyView2 extends View {
     }
 
     /**
-     *  用于执行动画
+     * 用于执行动画
+     *
      * @param scrollerCurrent
      */
     public void setScrollerCurrent(float scrollerCurrent) {
