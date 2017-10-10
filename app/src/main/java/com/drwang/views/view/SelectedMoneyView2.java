@@ -65,8 +65,9 @@ public class SelectedMoneyView2 extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
         deltaX = 15 * density;
-        setMoney(100, 600, 3000, 0,0, 2600, true);
+        setMoney(100, 600, 1500, 600, 0, 1500, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
+//        setIsFullScreenWidth(true);
     }
 
     @Override
@@ -138,11 +139,11 @@ public class SelectedMoneyView2 extends View {
         }
 
         canvas.restore();
+
+        drawOthers(canvas);
     }
 
-    @Override
-    public void onDrawForeground(Canvas canvas) { //画其他部分
-        super.onDrawForeground(canvas);
+    private void drawOthers(Canvas canvas) {
         int width = getWidth();
         int height = getHeight();
         float lineLength = height - 50 * density;
@@ -282,7 +283,10 @@ public class SelectedMoneyView2 extends View {
         animateX.start();
     }
 
-
+    /**
+     *  用于执行动画
+     * @param scrollerCurrent
+     */
     public void setScrollerCurrent(float scrollerCurrent) {
         this.scrollerCurrent = scrollerCurrent;
         invalidate();
@@ -296,7 +300,7 @@ public class SelectedMoneyView2 extends View {
      * @param range
      */
     public void setRange(int range) {
-        range = (range + startMoney) / deltaMoney;
+        range = (range) / deltaMoney;
         if (range % 5 != 0) {
             range += 5 - range % 5;
         }
@@ -347,9 +351,9 @@ public class SelectedMoneyView2 extends View {
     }
 
     public interface OnSelectedChangedListener {
-        void onChanged(int money);
+        void onChanged(int money); //金额变化
 
-        void onMoneySetError();
+        void onMoneySetError();//金额设置有错误
     }
 
     /**
@@ -413,13 +417,22 @@ public class SelectedMoneyView2 extends View {
     }
 
     private void setMoney(int deltaMoney, int minMoney, int maxMoney, int startMoney, int ranges, int defalutSelectedMoney, boolean isInit) {
-        //保证所有金额都大于0
-        if (deltaMoney < 0 || minMoney < 0 || maxMoney < 0 || ranges < 0 || startMoney < 0) {
+        //保证所有金额都不小于0
+        if (deltaMoney <= 0 || minMoney < 0 || maxMoney < 0 || ranges < 0 || startMoney < 0) {
             if (mOnSelectedChangedListener != null) {//金额设置有误  可能是服务器传值问题
                 mOnSelectedChangedListener.onMoneySetError();
             }
             return;
         }
+        /*--------保证所有值 都可以被deltaMoney 整除----------*/
+        minMoney = deltaMoney * (minMoney / deltaMoney);
+        maxMoney = deltaMoney * (maxMoney / deltaMoney);
+        startMoney = deltaMoney * (startMoney / deltaMoney);
+        if (defalutSelectedMoney != DEFAULT_DIVIDE_VALUE) {
+            defalutSelectedMoney = deltaMoney * (defalutSelectedMoney / deltaMoney);
+        }
+        ranges = deltaMoney * (ranges / deltaMoney);
+        /*------------------------------------------------*/
         if (minMoney > maxMoney) { //保证最小值 小于等于最大值
             minMoney = maxMoney;
         }
@@ -435,7 +448,7 @@ public class SelectedMoneyView2 extends View {
         if (defalutSelectedMoney < minMoney) {
             defalutSelectedMoney = minMoney;
         }
-        if ((maxMoney - startMoney) > ranges) { //保证范围至少是最大值与最小值之间的
+        if ((maxMoney - startMoney) > ranges) { //保证范围至少是最大值与起始值之间的
             ranges = maxMoney - startMoney;
         }
         setDeltaMoney(deltaMoney);
@@ -465,13 +478,15 @@ public class SelectedMoneyView2 extends View {
     }
 
     /**
-     * 设置是否刻度必须满屏幕
+     * 设置是否刻度必须满一屏
      * 默认不满
      *
      * @param isFullScreenWidth
      */
     public void setIsFullScreenWidth(boolean isFullScreenWidth) {
         this.isFullScreenWidth = isFullScreenWidth;
+        requestLayout();
+        invalidate();
     }
 
     /**
