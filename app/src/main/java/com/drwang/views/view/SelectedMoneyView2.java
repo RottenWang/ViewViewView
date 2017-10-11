@@ -294,7 +294,7 @@ public class SelectedMoneyView2 extends View {
             delta = (int) (v / deltaX - 0.5f);
         }
         currentX = delta;
-        int money = (range / 2 - delta) * deltaMoney;
+//        int money = (range / 2 - delta) * deltaMoney;
         return delta * deltaX + scrollerXDefault;
     }
 
@@ -321,7 +321,7 @@ public class SelectedMoneyView2 extends View {
      *
      * @param range
      */
-    public void setRange(int range) {
+    private void setRange(int range) {
         range = (range) / deltaMoney;
         /*------------保证range 是5的倍数 去掉这段代码后 则------------------*/
         if (range % 5 != 0) {
@@ -351,7 +351,7 @@ public class SelectedMoneyView2 extends View {
      * @param minMoney
      */
 
-    public void setMinMoney(int minMoney) {
+    private void setMinMoney(int minMoney) {
 
         this.minMoney = minMoney / deltaMoney;
     }
@@ -361,7 +361,7 @@ public class SelectedMoneyView2 extends View {
      *
      * @param maxMoney
      */
-    public void setMaxMoney(int maxMoney) {
+    private void setMaxMoney(int maxMoney) {
         this.maxMoney = maxMoney / deltaMoney;
     }
 
