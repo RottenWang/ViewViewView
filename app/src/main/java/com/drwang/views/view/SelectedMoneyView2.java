@@ -323,9 +323,11 @@ public class SelectedMoneyView2 extends View {
      */
     public void setRange(int range) {
         range = (range) / deltaMoney;
+        /*------------保证range 是5的倍数 去掉这段代码后 则------------------*/
         if (range % 5 != 0) {
             range += 5 - range % 5;
         }
+        /*------------------------------*/
         if (range % 2 != 0) {
             isNeedResetScrollerDefault = true;
         }
@@ -524,6 +526,7 @@ public class SelectedMoneyView2 extends View {
         setMoneyColor(moneyColor);
         setMiddleLineColor(midLineColor);
         setTitleColor(titleColor);
+        invalidate();
     }
 
     /**
