@@ -99,6 +99,7 @@ public class SelectedMoneyView2 extends View {
 //        if (currentX == delta || delta > rangeMax - minMoney || delta < rangeMin + (range - maxMoney)) { //如果本次计算的位置相同 或者超出了默认的范围  那么就return
 //            return delta * deltaX + scrollerXDefault;
 //        }
+            //因为默认是会居中平移 所以 需要计算一下默认的金额
             int money = (range / 2 - delta) * deltaMoney + startMoney;
 //            if (money < minMoney * deltaMoney) {
 //                money = minMoney * deltaMoney;
@@ -110,8 +111,10 @@ public class SelectedMoneyView2 extends View {
 //            if (minMoney == maxMoney) {
 //                mid = (int) (money / deltaMoney + 0.5f);
 //            } else {
+            //计算mid 的index
             mid = (int) ((money - startMoney) / deltaMoney + 0.5f);
 //            }
+            //根据设置的默认值 与mid 的index 的差值  去增加当前需要平移的数值
             scrollerCurrent += (mid - index) * deltaX;
 
         }
@@ -123,9 +126,9 @@ public class SelectedMoneyView2 extends View {
         float lineLong = density * 20;  //长刻度的高度
         float startX = 0;
         float startY;
-        //画金额的线
         canvas.save();
         canvas.translate(scrollerCurrent, 0);
+        //画金额的线
         for (int i = 0; i <= range; i++) {
             if (i % 5 == 0) {
                 startY = height - lineLong;
