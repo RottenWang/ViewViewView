@@ -65,7 +65,7 @@ public class SelectedMoneyView2 extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(density);
         deltaX = 15 * density;
-        setMoney(100, 600, 1500, 600, 0, 1500, true);
+        setMoney(100, 600, 1500, 600, 2000, DEFAULT_DIVIDE_VALUE, true);
         setColors(Color.GRAY, Color.RED, Color.RED, Color.GRAY);
 //        setIsFullScreenWidth(true);
     }
@@ -466,17 +466,17 @@ public class SelectedMoneyView2 extends View {
         if (startMoney > minMoney) { //保证起始值 小于等于最小值  否则会出现绘制错误
             startMoney = minMoney;
         }
+        if ((maxMoney - startMoney) > ranges) { //保证范围至少是最大值与起始值之间的
+            ranges = maxMoney - startMoney;
+        }
         if (defalutSelectedMoney == DEFAULT_DIVIDE_VALUE) {
-            defalutSelectedMoney = (ranges + startMoney) / 2;
+            defalutSelectedMoney = startMoney + ranges / 2;
         }
         if (defalutSelectedMoney > maxMoney) {//保证默认选择的值位小于等于最大值
             defalutSelectedMoney = maxMoney;
         }
         if (defalutSelectedMoney < minMoney) {
             defalutSelectedMoney = minMoney;
-        }
-        if ((maxMoney - startMoney) > ranges) { //保证范围至少是最大值与起始值之间的
-            ranges = maxMoney - startMoney;
         }
         setDeltaMoney(deltaMoney);
         setMinMoney(minMoney);
