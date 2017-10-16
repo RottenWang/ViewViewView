@@ -1,5 +1,7 @@
 package com.drwang.views.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -25,9 +27,16 @@ public class FlipBoardView extends View {
     Bitmap bitmap;
     private int degree;
     ObjectAnimator oa = ObjectAnimator.ofInt(this, "degree", 0, 360);
+    ObjectAnimator ox = ObjectAnimator.ofInt(this, "degreeX", 0, 45);
+    private int degreeX;
 
     public void setDegree(int degree) {
         this.degree = degree;
+        invalidate();
+    }
+
+    public void setDegreeX(int degreeX) {
+        this.degreeX = degreeX;
         invalidate();
     }
 
@@ -54,17 +63,27 @@ public class FlipBoardView extends View {
         oa.setDuration(1000);
         oa.setRepeatCount(ValueAnimator.INFINITE);
         oa.setRepeatMode(ValueAnimator.RESTART);
+        ox.setInterpolator(new LinearInterpolator());
+        ox.setDuration(2000);
+        ox.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                oa.start();
+            }
+        });
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        oa.start();
+        ox.start();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        ox.cancel();
         oa.cancel();
     }
 
@@ -81,7 +100,7 @@ public class FlipBoardView extends View {
         canvas.translate(centerX, centerY);
         canvas.rotate(-degree);
         camera.save();
-        camera.rotateX(-45);
+        camera.rotateX(-degreeX);
         camera.applyToCanvas(canvas);
         camera.restore();
 //        canvas.clipRect(0, centerY, getWidth(), getHeight());
