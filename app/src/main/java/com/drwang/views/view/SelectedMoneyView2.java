@@ -259,7 +259,7 @@ public class SelectedMoneyView2 extends View {
                 moveX = event.getX();
                 scrollerCurrent += moveX - startX;
                 startX = moveX;
-                calculatorCurrentMoney();
+//                calculatorCurrentMoney();
                 invalidate();//申请重绘
                 break;
             case MotionEvent.ACTION_UP:
