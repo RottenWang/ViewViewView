@@ -68,6 +68,7 @@ public class MainActivity extends BasicActivity {
                 break;
             case R.id.tv_decoration:
                 IntentUtil.toDecorationActivity(this);
+//                NotificationStyle.clickNotify(this);
                 break;
         }
     }
