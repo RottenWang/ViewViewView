@@ -24,9 +24,6 @@ http://blog.163.com/shexinyang@126/blog/static/136739312201502351946523/
 http://www.jianshu.com/p/22e27a639787
 
 #git
-http://gitbook.liuhui998.com/
-
-#git
 https://git-scm.com/doc
 
 #git 看到了哪
