@@ -95,4 +95,25 @@ public class BitmapUtil {
         Bitmap bitmapResize = Bitmap.createBitmap(source, 0, 0, sourceWidth, sourceHeight > height ? height : sourceHeight, matrix, false);
         imageView.setImageBitmap(bitmapResize);
     }
+
+
+    /**
+     * 生成制定宽高的图片
+     *
+     * @param source
+     * @param width
+     * @param height
+     */
+    public static Bitmap generateBitmapUseWidthAndHeight(Bitmap source, int width, int height) {
+        Bitmap bitmap;
+        int sourceWidth = source.getWidth();
+        int sourceHeight = source.getHeight();
+        Matrix matrix = new Matrix();
+        float scaleX = width / (sourceWidth * 1.0f);
+        float scaleY = height / (sourceHeight * 1.0f);
+        matrix.postScale(scaleX, scaleY);
+        bitmap = Bitmap.createBitmap(source, 0, 0, sourceWidth, sourceHeight, matrix, false);
+        source.recycle();
+        return bitmap;
+    }
 }

@@ -183,7 +183,10 @@
             android:textColor="@android:color/black"
             android:textSize="18dp" />
 
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/iv_icon"
+            android:layout_height="wrap_content" />
         <com.drwang.views.view.FlipBoardView
             android:layout_width="match_parent"
             android:layout_height="200dp" />
