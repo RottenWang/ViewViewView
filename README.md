@@ -83,5 +83,7 @@ http://blog.csdn.net/vnanyesheshou/article/details/51554852
 #Transition
 http://rkhcy.github.io/2017/09/27/TransitionNote2/
 
+#各种手机日志抓取
+http://bbs.360.cn/thread-14766776-1-1.html
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
