@@ -7,7 +7,6 @@
     android:background="@android:color/white"
     tools:context="com.drwang.views.activity.SoftInputActivity">
 
-
     <com.drwang.views.view.ScanView
         android:id="@+id/scan"
         android:layout_width="150dp"
@@ -56,4 +55,8 @@
         android:layout_height="15dp"
         android:layout_marginTop="100dp" />
 
+    <com.drwang.views.view.FloatingImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/leak_canary_icon" />
 </RelativeLayout>
