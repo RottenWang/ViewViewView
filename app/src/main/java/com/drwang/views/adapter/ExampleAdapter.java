@@ -29,6 +29,7 @@ public class ExampleAdapter extends BaseRecyclerViewAdapter<String> {
         return new ExampleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_text, parent, false));
     }
 
+
     @Override
     protected void onBindHeaderView(View itemView) {
 
