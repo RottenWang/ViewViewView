@@ -95,8 +95,15 @@ git branch --merged
 git branch --no-merged
 删除远程分支
 git push origin --delete branchName
-推送本地分支到远程
-git push origin local_branch:origin_branch
+
+
+使用rebase
+1. 切换到需要合并的分支 假设为 branch-A
+2. 使用指令  git rebase master
+3. 切换到master分支
+4.使用指令 git megere branch-A
+
+git remote prune origin 删除远端已删除掉的分支(本地使用git branch -a 还能看到 但是实际已经不存在的分支)
 
 
 

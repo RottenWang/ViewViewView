@@ -47,7 +47,6 @@ import butterknife.OnClick;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 
 
-
 public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.gl_surface_view)
     GLSurfaceView glsurfaceview;
