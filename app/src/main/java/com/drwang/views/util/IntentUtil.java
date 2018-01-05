@@ -14,6 +14,7 @@ import com.drwang.views.activity.RecyclerActivity;
 import com.drwang.views.activity.SelectTitleImageActivity;
 import com.drwang.views.activity.ShadowActivity;
 import com.drwang.views.activity.SoftInputActivity;
+import com.drwang.views.activity.TextActivity;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -110,6 +111,13 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, SelectTitleImageActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toTextActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }  Intent intent = new Intent(activity, TextActivity.class);
         activity.startActivity(intent);
     }
 }

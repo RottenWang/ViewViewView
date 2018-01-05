@@ -87,7 +87,9 @@
                 <action android:name="NotificationStyle.Click.Activity" />
             </intent-filter>
         </receiver>
-
+        <activity
+            android:name=".activity.TextActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
