@@ -24,7 +24,6 @@ public class ArtTextView extends View {
     Path path;
     private float density;
     int[] colors = {Color.RED, Color.parseColor("#FFFF7119"), Color.YELLOW, Color.GREEN, Color.BLUE, Color.parseColor("#065279"), Color.parseColor("#AAC20AFF")};
-    float[] positions = {0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.3f};
 
     public ArtTextView(Context context) {
         this(context, null);
