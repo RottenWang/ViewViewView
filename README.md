@@ -88,3 +88,6 @@ http://bbs.360.cn/thread-14766776-1-1.html
 
 #View绘制相关方法及先后顺序
 ![View绘制相关方法及先后顺序](_hencoder_view_draw.png)
+
+#支持硬件加速(GPU代替CPU绘制)最低级别API
+![支持硬件加速(GPU代替CPU绘制)最低级别API](hardware.jpg)
