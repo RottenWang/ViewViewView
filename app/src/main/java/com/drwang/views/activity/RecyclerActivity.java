@@ -152,10 +152,18 @@ public class RecyclerActivity extends BasicActivity {
 
         @Override
         public int getSpanSize(int position) {
-            if (position == 0) {
-                return 3;
-            } else {
+            position = exampleAdapter.getRealPosition(position);
+            if (position < 0){
+                position = 0;
+            }
+            if (mList == null) {
                 return 1;
+            } else if (mList.size() == 0) {
+                return 3;
+            } else if (mList.get(position).length() > 2) {
+                return 1;
+            } else {
+                return 3;
             }
         }
     }

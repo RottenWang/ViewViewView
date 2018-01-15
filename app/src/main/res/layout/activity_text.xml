@@ -10,6 +10,10 @@
 
     <com.drwang.views.view.TBProgressView
         android:layout_width="match_parent"
-        android:padding="20dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:padding="20dp" />
+
+    <com.drwang.views.view.LyricRollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 </LinearLayout>

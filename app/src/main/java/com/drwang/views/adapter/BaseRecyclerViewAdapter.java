@@ -77,7 +77,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     ;
 
-    private int getRealPosition(int position) {
+    public int getRealPosition(int position) {
         if (hasHeader()) {
             return position - 1;
         } else {
