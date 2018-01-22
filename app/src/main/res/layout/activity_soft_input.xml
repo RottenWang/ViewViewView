@@ -57,6 +57,5 @@
 
     <com.drwang.views.view.FloatingImageView
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/leak_canary_icon" />
+        android:layout_height="50dp" />
 </RelativeLayout>

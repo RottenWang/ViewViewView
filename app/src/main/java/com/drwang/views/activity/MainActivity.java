@@ -10,8 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -162,7 +164,63 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void initializeData() {
+        String radioVersion = Build.getRadioVersion();
+        String board = Build.BOARD;
+        String bootloader = Build.BOOTLOADER;
+        String brand = Build.BRAND;
+        String device = Build.DEVICE;
+        String display = Build.DISPLAY;
+        String fingerprint = Build.FINGERPRINT;
+        String hardware = Build.HARDWARE;
+        String host = Build.HOST;
+        String id = Build.ID;
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        String product = Build.PRODUCT;
+        String serial = Build.SERIAL;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String[] supported32BitAbis = Build.SUPPORTED_32_BIT_ABIS;
+            String[] supported64BitAbis = Build.SUPPORTED_64_BIT_ABIS;
+            String[] supportedAbis = Build.SUPPORTED_ABIS;
+            for (int i = 0; i < supported32BitAbis.length; i++) {
+                Log.d("wangchen", "supported32BitAbis = " + supported32BitAbis[i]);
+            }
+            for (int i = 0; i < supported64BitAbis.length; i++) {
+                Log.d("wangchen", "supported64BitAbis = " + supported64BitAbis[i]);
+            }
+            for (int i = 0; i < supportedAbis.length; i++) {
+                Log.d("wangchen", "supportedAbis = " + supportedAbis[i]);
+            }
+        }
 
+        String tags = Build.TAGS;
+        long time = Build.TIME;
+        String type = Build.TYPE;
+        String user = Build.USER;
+        String cpuAbi = Build.CPU_ABI;
+        String cpuAbi2 = Build.CPU_ABI2;
+        String radio = Build.RADIO;
+        Log.d("wangchen", "radioVersion = " + radioVersion);
+        Log.d("wangchen", "board = " + board);
+        Log.d("wangchen", "bootloader = " + bootloader);
+        Log.d("wangchen", "brand = " + brand);
+        Log.d("wangchen", "device = " + device);
+        Log.d("wangchen", "display = " + display);
+        Log.d("wangchen", "fingerprint = " + fingerprint);
+        Log.d("wangchen", "hardware = " + hardware);
+        Log.d("wangchen", "host = " + host);
+        Log.d("wangchen", "id = " + id);
+        Log.d("wangchen", "manufacturer = " + manufacturer);
+        Log.d("wangchen", "model = " + model);
+        Log.d("wangchen", "product = " + product);
+        Log.d("wangchen", "serial = " + serial);
+        Log.d("wangchen", "tags = " + tags);
+        Log.d("wangchen", "time = " + time);
+        Log.d("wangchen", "type = " + type);
+        Log.d("wangchen", "user = " + user);
+        Log.d("wangchen", "cpuAbi = " + cpuAbi);
+        Log.d("wangchen", "cpuAbi2 = " + cpuAbi2);
+        Log.d("wangchen", "radio = " + radio);
     }
 
 }
