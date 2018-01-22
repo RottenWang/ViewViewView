@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.drwang.views.util.ShareUtils;
+import com.sina.weibo.sdk.utils.LogUtil;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -46,19 +48,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 result = "分享成功";
             }
             break;
-//            case BaseResp.ErrCode.ERR_USER_CANCEL:
-//                result = "分享取消";
-//                break;
-//            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-//                result = "分享取消";
-//                break;
-//            default:
-//                result = "分享取消";
-//                break;
+            case BaseResp.ErrCode.ERR_USER_CANCEL:
+                result = "分享取消";
+                break;
+            case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                result = "分享取消";
+                break;
+            default:
+                result = "分享取消";
+                break;
         }
         if (result != null){
             Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
         }
+        Log.d("wangchen","baseResp.errCode =" + baseResp.errCode);
         this.finish();
     }
 
