@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.net.Uri
 import android.os.Bundle
@@ -33,6 +34,7 @@ import com.drwang.views.util.DensityUtil
 import com.drwang.views.util.IntentUtil
 import com.drwang.views.util.MathUtil
 import com.drwang.views.util.SharedPreferencesUtils
+import com.drwang.views.view.GridItemDecoration
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
@@ -53,7 +55,8 @@ class ImageActivity : BasicActivity() {
     override fun initializeView() {
         setSupportActionBar(tool_bar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recycler_view.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        recycler_view.addItemDecoration(GridItemDecoration((10 * resources.displayMetrics.density).toInt(), Color.GREEN))
         mImageList = ArrayList()
         mGifList = ArrayList()
         mImageAdapter = ImageAdapter(this, mImageList, ImageAdapter.TYPE_NORMAL);
@@ -165,9 +168,9 @@ class ImageActivity : BasicActivity() {
 
     @Subscribe
     fun onGifChangeEvent(gifChangeEvent: GifChangeEvent) {
-        if(gifChangeEvent.imageEntityBean != null){
+        if (gifChangeEvent.imageEntityBean != null) {
             path = gifChangeEvent.imageEntityBean.path;
-        }else {
+        } else {
             path = STRING_DEFAULT
         }
         setImageToTitleBg(false)
@@ -188,11 +191,11 @@ class ImageActivity : BasicActivity() {
         if (!file.exists()) {
             uri = FrescoScheme.SCHEME_RES + packageName + "/" + R.drawable.default_title_bg2;
             decodeResource = BitmapFactory.decodeResource(resources, R.drawable.default_title_bg2);
-            SharedPreferencesUtils.putString(TITLE_KEY,STRING_DEFAULT);
+            SharedPreferencesUtils.putString(TITLE_KEY, STRING_DEFAULT);
         } else {
             uri = FrescoScheme.SCHEME_FILE + path!!;
             decodeResource = BitmapFactory.decodeFile(path)
-            SharedPreferencesUtils.putString(TITLE_KEY,path);
+            SharedPreferencesUtils.putString(TITLE_KEY, path);
         }
         Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(uri))
         val width = decodeResource.width

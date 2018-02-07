@@ -38,7 +38,7 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
     public ImageAdapter(Activity context, ArrayList<ImageEntityBean> list, int type) {
         super(context, list);
         this.mList = list;
-        width = context.getResources().getDisplayMetrics().widthPixels / 2;
+        width = context.getResources().getDisplayMetrics().widthPixels / 3;
         this.type = type;
     }
 
@@ -67,12 +67,9 @@ public class ImageAdapter extends BaseRecyclerViewAdapter<ImageEntityBean> {
             item_iv = (SimpleDraweeView) itemView.findViewById(R.id.item_iv);
             fl_root = (FrameLayout) itemView.findViewById(R.id.fl_root);
             item_tv = (TextView) itemView.findViewById(R.id.item_tv);
-            fl_root.getLayoutParams().width = width;
-            fl_root.getLayoutParams().height = width;
-            item_iv.getLayoutParams().width = width;
-            item_iv.getLayoutParams().height = width;
-            item_tv.getLayoutParams().width = width;
-            item_tv.getLayoutParams().height = width;
+//            fl_root.getLayoutParams().width = width;
+//            fl_root.getLayoutParams().height = width;
+
         }
 
         @Override
