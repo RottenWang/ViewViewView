@@ -1,5 +1,6 @@
 package com.drwang.views.view;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -29,9 +30,20 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     }
 
+
+    @Override
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        super.onDrawOver(c, parent, state);
+        draw(c,parent);
+    }
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
+
+    }
+
+    private void draw(Canvas c,RecyclerView parent){
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) (layoutManager);
@@ -51,10 +63,9 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
                 int right = childAt1.getRight();
                 int bottom = childAt1.getBottom();
                 int left = childAt1.getLeft();
-
+                mLinearGradient = new LinearGradient(0, 0, Resources.getSystem().getDisplayMetrics().widthPixels, 0, colors, null, Shader.TileMode.CLAMP);
+                paint.setShader(mLinearGradient);
                 if (position % spanCount == 0) {
-//                    mLinearGradient = new LinearGradient(0, top, left, bottom, colors, null, Shader.TileMode.CLAMP);
-//                    paint.setShader(mLinearGradient);
                     c.drawRect(0, top, left, bottom, paint);
                     c.drawRect(0, bottom, right + width, bottom + width, paint);
                     if (isFirstLine) {

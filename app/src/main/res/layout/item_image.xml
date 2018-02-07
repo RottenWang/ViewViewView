@@ -10,6 +10,7 @@
         android:id="@+id/item_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         fresco:fadeDuration="0"
         fresco:placeholderImage="@color/hal_black"
         fresco:roundBottomLeft="false"
@@ -19,6 +20,6 @@
 
     <TextView
         android:id="@+id/item_tv"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp" />
 </FrameLayout>
