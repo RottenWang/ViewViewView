@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -21,11 +20,17 @@ import android.widget.TextView;
 
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
+import com.drwang.views.dagger.DaggerMainActivityComponent;
+import com.drwang.views.dagger.MainActivityModule;
+import com.drwang.views.dagger.OkHttpClient;
+import com.drwang.views.dagger.RetrofitMananger;
 import com.drwang.views.kotlin.KotlinBase_1;
 import com.drwang.views.util.BitmapUtil;
 import com.drwang.views.util.IntentUtil;
 
 import java.io.FileNotFoundException;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -136,7 +141,11 @@ public class MainActivity extends BasicActivity {
         }
     }
 
+    @Inject
+    RetrofitMananger retrofitMananger;
 
+    //    @Inject
+//    Factory mFactory;
     @Override
     public int setContentViewRes() {
         return R.layout.activity_main;
@@ -160,6 +169,10 @@ public class MainActivity extends BasicActivity {
 //                IntentUtil.toPieViewActivity(MainActivity.this);
 //            }
 //        });
+//        DaggerFactoryActivityComponent.create().inject(this);
+//        mFactory.toast();
+        DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule("????")).build().inject(this);
+        retrofitMananger.toast();
     }
 
     @Override
