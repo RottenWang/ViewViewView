@@ -1,17 +1,18 @@
 <resources>
     <string name="app_name">Beaut</string>
 
-    <string name="local_image">本地图片</string>
-    <string name="text_share">分享</string>
-    <string name="text_edit">编辑</string>
-    <string name="text_delete">删除</string>
-    <string name="text_more">更多</string>
-    <string name="text_filter">滤镜</string>
-    <string name="text_effect">效果</string>
-    <string name="text_use_default_gif">使用默认动图</string>
-    <string name="text_user_origin_image_save">使用原图保存</string>
-    <string name="text_save">保存</string>
-    <string name="text_back">返回</string>
-    <string name="text_next">继续</string>
-    <string name="text_install_we_chat" >请先安装微信</string>
+    <string name="local_image">Local Images</string>
+
+    <string name="text_share">Share</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_delete">Delete</string>
+    <string name="text_more">More</string>
+    <string name="text_filter">Filters</string>
+    <string name="text_effect">Effects</string>
+    <string name="text_use_default_gif">Use Default Gif</string>
+    <string name="text_user_origin_image_save">Save Origin Image</string>
+    <string name="text_save">Save</string>
+    <string name="text_back">Back</string>
+    <string name="text_next">Next</string>
+    <string name="text_install_we_chat">First,Please Install WeChat</string>
 </resources>

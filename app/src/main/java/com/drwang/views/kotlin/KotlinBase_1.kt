@@ -93,7 +93,7 @@ class KotlinBase_1() {
         var index: Int = 0
         //when 表达式 相当于switch
         var aa = when (index) {
-            1 -> sum(index, index)
+            1 and 2 -> sum(index, index)
             2 -> sumOx(index, index)
             else -> "as"
         }
