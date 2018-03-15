@@ -1,5 +1,5 @@
 # kotlin基本语法
-
+内容均来自https://www.kotlincn.net/docs/reference/basic-syntax.html
 ## 1.定义包
 
 包的生命应处于源文件顶部:
