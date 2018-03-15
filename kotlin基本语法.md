@@ -15,6 +15,7 @@ import java.util.*
 
 ## 2.定义函数
 
+
 带有两个```Int```参数,返回```Int```的函数:
 
 ```kotlin
