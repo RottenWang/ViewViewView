@@ -1,8 +1,6 @@
-# kotlin杂记
+# kotlin基本语法
 
-## 1.基本语法
-
-### 1.定义包
+## 1.定义包
 
 包的生命应处于源文件顶部:
 
@@ -15,7 +13,7 @@ import java.util.*
 
 目录与包的结构无需匹配:源代码可以在文件的任意位置
 
-### 2.定义函数
+## 2.定义函数
 
 带有两个```Int```参数,返回```Int```的函数:
 
@@ -49,7 +47,7 @@ fun printSum(a:Int,b:Int) {
 }
 ```
 
-### 3.定义变量
+## 3.定义变量
 
 一次赋值(只读)的局部变量:
 
@@ -78,7 +76,7 @@ fun incrementX(){
 }
 ```
 
-### 4.注释
+## 4.注释
 
  正如 Java 和JavaScript,Kotlin支持行注释及块注释
 
@@ -91,7 +89,7 @@ fun incrementX(){
 
  与java不同的是,Kotlin的块注释可以嵌套.
 
-### 5.使用字符串模版
+## 5.使用字符串模版
 
 ```kotlin
 var a = 1
@@ -103,7 +101,7 @@ a = 2
 val s2 = "${s1.replace("is","was")}, but now is $a"
 ```
 
-### 6.使用条件表达式
+## 6.使用条件表达式
 
 ```kotlin
 fun maxOf(a: Int,b: Int):Int {
@@ -121,7 +119,7 @@ fun maxOf(a: Int,b: Int):Int {
 fun maxOf(a: Int,b: Int) = if(a > b) a else b 
 ```
 
-### 7.使用可空值及`null`检测
+## 7.使用可空值及`null`检测
 
 当某个变量的值可以为`null`的时候,必须在声明处的类型后添加`?`来标识该引用可为空.
 
@@ -168,7 +166,7 @@ println(x * y)
 
 参见[空安全](https://www.kotlincn.net/docs/reference/null-safety.html)。
 
-### 8.使用类型检测及自动类型转换
+## 8.使用类型检测及自动类型转换
 
 `is` 运算符检测一个表达式是否某类型的一个实例.如果一个不可变的局部变量或属性已经判断出为类型,那么检测后的分支中可以直接当作该类型使用,无需显式转换:
 
@@ -205,7 +203,7 @@ fun getStringLength(obj: Any): Int? {
 
 注: 自动转换只支持方法内变量或者不可变类变量 可变类变量无法进行自动转换
 
-### 9.使用`for`循环
+## 9.使用`for`循环
 
 ```kotlin
 val items = listOf("apple", "banana", "kiwifruit")
@@ -223,7 +221,7 @@ for (index in items.indices) {
 }
 ```
 
-### 10.使用`when`表达式
+## 10.使用`when`表达式
 
 ```kotlin
 fun describe(obj: Any): String =
@@ -236,7 +234,7 @@ when (obj) {
 }
 ```
 
-### 11.使用区间(range)
+## 11.使用区间(range)
 
 使用`in`运算符来检测某个数字是否在指定区间内:
 
@@ -281,7 +279,7 @@ for (x in 9 downTo 0 step 3){
 }
 ```
 
-### 12.使用集合
+## 12.使用集合
 
 对集合进行迭代:
 
@@ -311,7 +309,7 @@ fruits
 .forEach{println(it)}
 ```
 
-### 13.创建基本类实例
+## 13.创建基本类实例
 
 ```kotlin
 val rectangle = Rectangle(5.0,2.0) // 不需要"new"关键字
