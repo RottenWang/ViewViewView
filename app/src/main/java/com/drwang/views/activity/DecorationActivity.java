@@ -19,7 +19,6 @@ public class DecorationActivity extends BasicActivity {
     List<String> mList;
     private ExampleAdapter exampleAdapter;
 
-
     @Override
     protected void initializeView() {
         LinearLayoutManager layout = new LinearLayoutManager(this);
