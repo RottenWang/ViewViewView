@@ -106,4 +106,7 @@ git push origin --delete branchName
 git remote prune origin 删除远端已删除掉的分支(本地使用git branch -a 还能看到 但是实际已经不存在的分支)
 
 
-
+打tag
+git tag -a v1.0.3 -m "Release version v1.0.3"
+提交tag
+git push origin --tags
