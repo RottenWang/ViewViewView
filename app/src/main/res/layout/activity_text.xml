@@ -13,7 +13,10 @@
         android:layout_height="100dp"
         android:padding="20dp" />
 
-    <com.drwang.views.view.LyricRollView
+    <!--<com.drwang.views.view.LyricRollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp" />-->
+    <com.drwang.views.view.PentagonView
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent" />
 </LinearLayout>
