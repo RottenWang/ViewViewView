@@ -46,7 +46,6 @@ public class PieView extends View {
     private Rect rect;
     private DecimalFormat df;
     private RectF rectF;
-    private boolean isFirst = true;
 
     public PieView(Context context) {
         super(context);
@@ -101,10 +100,11 @@ public class PieView extends View {
         rectF.set(paddingLeft, paddingTop, drawWidth, drawHeight);
         Set<String> names = mValueMap.keySet();
         float currentAngle;
+        mStartAngle = 0;
         for (String name : names) {
             mPaint.setColor(Color.argb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255)));
             currentAngle = allAngle * (mValueMap.get(name) / (mCount * 1.0f));
-            if (isFirst) {
+            if (maxCount ==  mValueMap.get(name)) {
                 canvas.save();
                 setTransLate(canvas, mStartAngle, currentAngle);
 
@@ -186,12 +186,10 @@ public class PieView extends View {
             }
             mPaint.setColor(Color.BLACK);
             canvas.drawText(percentString, 0, percentString.length(), textX, textY, mPaint);
-            if (isFirst) {
+            if (maxCount ==  mValueMap.get(name)) {
                 canvas.restore();
-                isFirst = false;
             }
         }
-        isFirst = true;
 
     }
 
@@ -203,25 +201,23 @@ public class PieView extends View {
      * @param currentAngle
      */
     private void setTransLate(Canvas canvas, float startAngle, float currentAngle) {
-        float half = 0;
+        float half = currentAngle / 2f;
         float transLength = 10;
-        float transX = 0f;
-        float transY = 0f;
-        half = currentAngle / 2f;
+        PointF pointF = new PointF();
         //这里判断应该用startAngle 先判断所在象限 因为此时默认未0  所有不做判断
         if (currentAngle <= 90) {
-            transX = (float) (transLength * Math.cos(Math.toRadians(half)));
-            transY = (float) (transLength * Math.sin(Math.toRadians(half)));
+            pointF.x = (float) (transLength * Math.cos(Math.toRadians(half)));
+            pointF.y = (float) (transLength * Math.sin(Math.toRadians(half)));
         } else if (currentAngle == 180) {
-            transX = transLength;
-            transY = transLength;
+            pointF.x = transLength;
+            pointF.y = transLength;
         } else if (currentAngle < 360) {
-            transX = -(float) (transLength * Math.sin(Math.toRadians(half - 90)));
-            transY = (float) (transLength * Math.cos(Math.toRadians(half - 90)));
+            pointF.x = -(float) (transLength * Math.sin(Math.toRadians(half - 90)));
+            pointF.y = (float) (transLength * Math.cos(Math.toRadians(half - 90)));
         } else if (currentAngle == 360) {
 
         }
-        canvas.translate(transX, transY);
+        canvas.translate(pointF.x, pointF.y);
     }
 
 
@@ -261,7 +257,7 @@ public class PieView extends View {
     }
 
     private float mCount;
-
+    float maxCount = 0;
     /**
      * calculator all data;
      */
@@ -270,6 +266,7 @@ public class PieView extends View {
         for (String name : names) {
             float count = mValueMap.get(name);
             mCount += count;
+            maxCount = count > maxCount ? count : maxCount;
         }
     }
 
