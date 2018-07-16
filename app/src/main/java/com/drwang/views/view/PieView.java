@@ -43,6 +43,10 @@ public class PieView extends View {
     PointF pointBigAngle = new PointF();
     private double x;
     private double y;
+    private Rect rect;
+    private DecimalFormat df;
+    private RectF rectF;
+    private boolean isFirst = true;
 
     public PieView(Context context) {
         super(context);
@@ -64,6 +68,9 @@ public class PieView extends View {
         mValueMap = new TreeMap<>();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+        rect = new Rect();
+        df = new DecimalFormat("0.00");
+        rectF = new RectF();
     }
 
 
@@ -91,20 +98,25 @@ public class PieView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float allAngle = 360f;
-        RectF rectF = new RectF(paddingLeft, paddingTop, drawWidth, drawHeight);
+        rectF.set(paddingLeft, paddingTop, drawWidth, drawHeight);
         Set<String> names = mValueMap.keySet();
         float currentAngle;
         for (String name : names) {
             mPaint.setColor(Color.argb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255)));
             currentAngle = allAngle * (mValueMap.get(name) / (mCount * 1.0f));
+            if (isFirst) {
+                canvas.save();
+                setTransLate(canvas, mStartAngle, currentAngle);
+
+            }
             canvas.drawArc(rectF, mStartAngle, currentAngle, true, mPaint);
             float percent = mValueMap.get(name) / (mCount * 1.0f);
-            DecimalFormat df = new DecimalFormat("0.00");
+
             percent *= 100;
             String percentString = df.format(percent) + "%";
             mStartAngle += currentAngle;
             mStartAngle = mStartAngle > 360 ? 360 : mStartAngle;
-            Rect rect = new Rect();
+
             mPaint.setTextSize(size);
             mPaint.getTextBounds(percentString, 0, percentString.length(), rect);
             int halfX = Math.abs(rect.left - rect.right) / 2;
@@ -174,8 +186,42 @@ public class PieView extends View {
             }
             mPaint.setColor(Color.BLACK);
             canvas.drawText(percentString, 0, percentString.length(), textX, textY, mPaint);
+            if (isFirst) {
+                canvas.restore();
+                isFirst = false;
+            }
         }
+        isFirst = true;
 
+    }
+
+    /**
+     * 设置偏移
+     *
+     * @param canvas
+     * @param startAngle
+     * @param currentAngle
+     */
+    private void setTransLate(Canvas canvas, float startAngle, float currentAngle) {
+        float half = 0;
+        float transLength = 10;
+        float transX = 0f;
+        float transY = 0f;
+        half = currentAngle / 2f;
+        //这里判断应该用startAngle 先判断所在象限 因为此时默认未0  所有不做判断
+        if (currentAngle <= 90) {
+            transX = (float) (transLength * Math.cos(Math.toRadians(half)));
+            transY = (float) (transLength * Math.sin(Math.toRadians(half)));
+        } else if (currentAngle == 180) {
+            transX = transLength;
+            transY = transLength;
+        } else if (currentAngle < 360) {
+            transX = -(float) (transLength * Math.sin(Math.toRadians(half - 90)));
+            transY = (float) (transLength * Math.cos(Math.toRadians(half - 90)));
+        } else if (currentAngle == 360) {
+
+        }
+        canvas.translate(transX, transY);
     }
 
 

@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -74,7 +75,7 @@ public class PentagonView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         path = new Path();
         oa = ObjectAnimator.ofFloat(this, "percentAll", 0f, 1f);
-        oa.setInterpolator(new LinearInterpolator());
+        oa.setInterpolator(new FastOutSlowInInterpolator());
         oa.setDuration(500);
         oa.setRepeatCount(0);
     }

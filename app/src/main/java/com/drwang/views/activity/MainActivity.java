@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.drwang.views.R;
 import com.drwang.views.base.BasicActivity;
-import com.drwang.views.dagger.DaggerMainActivityComponent;
+//import com.drwang.views.dagger.DaggerMainActivityComponent;
 import com.drwang.views.dagger.MainActivityModule;
 import com.drwang.views.dagger.OkHttpClient;
 import com.drwang.views.dagger.RetrofitMananger;
@@ -171,8 +171,8 @@ public class MainActivity extends BasicActivity {
 //        });
 //        DaggerFactoryActivityComponent.create().inject(this);
 //        mFactory.toast();
-        DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule("????")).build().inject(this);
-        retrofitMananger.toast();
+//        DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule("????")).build().inject(this);
+//        retrofitMananger.toast();
     }
 
     @Override
