@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.drwang.views.activity.DecorationActivity;
 import com.drwang.views.activity.EditImageActivity;
 import com.drwang.views.activity.FilterActivity;
+import com.drwang.views.activity.FlipBoardActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
 import com.drwang.views.activity.PaintActivity;
@@ -117,7 +118,16 @@ public class IntentUtil {
     public static void toTextActivity(Activity activity) {
         if (activity == null) {
             return;
-        }  Intent intent = new Intent(activity, TextActivity.class);
+        }
+        Intent intent = new Intent(activity, TextActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toFlipBoardActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, FlipBoardActivity.class);
         activity.startActivity(intent);
     }
 }

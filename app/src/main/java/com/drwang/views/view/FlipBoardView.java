@@ -25,24 +25,54 @@ public class FlipBoardView extends View {
     Paint paint;
     Camera camera;
     Bitmap bitmap;
+    private int startDegree = 0;
+
     private int degree;
-    ObjectAnimator oa = ObjectAnimator.ofInt(this, "degree", 0, 360);
+    ObjectAnimator oa = ObjectAnimator.ofInt(this, "degree", startDegree, startDegree + 270);
     ObjectAnimator ox = ObjectAnimator.ofInt(this, "degreeX", 0, 45);
+    ObjectAnimator ox2 = ObjectAnimator.ofInt(this, "degreeX2", 0, 45);
     private int degreeX;
+    private int degreeX2;
 
     public void setDegree(int degree) {
         this.degree = degree;
         invalidate();
     }
 
+    public void setStartDegree(int degree) {
+        startDegree = degree;
+        oa.setIntValues(startDegree, startDegree + 270);
+//        resetDegree();
+    }
+
+    private void resetDegree() {
+        ox.cancel();
+        oa.cancel();
+        ox2.cancel();
+        degreeX2 = 0;
+        degreeX = 0;
+        degree = startDegree;
+//        ox.start();
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+        resetDegree();
+    }
+
+
     public void setDegreeX(int degreeX) {
         this.degreeX = degreeX;
         invalidate();
     }
 
+    public void setDegreeX2(int degreeX2) {
+        this.degreeX2 = degreeX2;
+        invalidate();
+    }
+
     public FlipBoardView(Context context) {
         this(context, null);
-
     }
 
     public FlipBoardView(Context context, @Nullable AttributeSet attrs) {
@@ -60,23 +90,51 @@ public class FlipBoardView extends View {
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_bg);
         camera.setLocation(0, 0, 6 * getResources().getDisplayMetrics().density);
         oa.setInterpolator(new LinearInterpolator());
-        oa.setDuration(1000);
-        oa.setRepeatCount(ValueAnimator.INFINITE);
-        oa.setRepeatMode(ValueAnimator.RESTART);
+        oa.setDuration(800);
         ox.setInterpolator(new LinearInterpolator());
-        ox.setDuration(2000);
+        ox.setDuration(500);
         ox.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                oa.start();
+                postDelayed(() -> {
+                    oa.start();
+
+                }, 200);
+            }
+        });
+        oa.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+//                ox2.start();
+                postDelayed(() -> {
+                    ox2.start();
+
+                }, 200);
+            }
+        });
+        ox2.setDuration(500);
+        ox2.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                postDelayed(() -> {
+                    resetDegree();
+                    ox.start();
+                }, 200);
+
             }
         });
     }
 
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        ox.cancel();
+        oa.cancel();
+        ox2.cancel();
         ox.start();
     }
 
@@ -85,6 +143,7 @@ public class FlipBoardView extends View {
         super.onDetachedFromWindow();
         ox.cancel();
         oa.cancel();
+        ox2.cancel();
     }
 
     @Override
@@ -104,7 +163,8 @@ public class FlipBoardView extends View {
         camera.applyToCanvas(canvas);
         camera.restore();
 //        canvas.clipRect(0, centerY, getWidth(), getHeight());
-        canvas.clipRect(-centerX, -centerY, centerX, centerY);
+        //裁剪区域大一点 防止非正方形旋转时 由于裁剪区域过小而造成的部分图像缺失问题
+        canvas.clipRect(-centerX, 0, centerX, centerY * 2);
         canvas.rotate(degree);
         canvas.translate(-centerX, -centerY);
         canvas.drawBitmap(bitmap, x, y, paint);
@@ -116,9 +176,10 @@ public class FlipBoardView extends View {
         canvas.translate(centerX, centerY);
         canvas.rotate(-degree);
         camera.save();
+        camera.rotateX(degreeX2);
         camera.applyToCanvas(canvas);
         camera.restore();
-        canvas.clipRect(-centerX, -centerY, centerX, 0);
+        canvas.clipRect(-centerX, -centerY * 2, centerX, 0);
         canvas.rotate(degree);
         canvas.translate(-centerX, -centerY);
         canvas.drawBitmap(bitmap, x, y, paint);
