@@ -9,6 +9,7 @@ import com.drwang.views.activity.FilterActivity;
 import com.drwang.views.activity.FlipBoardActivity;
 import com.drwang.views.activity.ImageActivity;
 import com.drwang.views.activity.ImagePreviewActivity;
+import com.drwang.views.activity.MaterialActivity;
 import com.drwang.views.activity.PaintActivity;
 import com.drwang.views.activity.PieViewActivity;
 import com.drwang.views.activity.RecyclerActivity;
@@ -128,6 +129,12 @@ public class IntentUtil {
             return;
         }
         Intent intent = new Intent(activity, FlipBoardActivity.class);
+        activity.startActivity(intent);
+    } public static void toMaterialActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, MaterialActivity.class);
         activity.startActivity(intent);
     }
 }
