@@ -14,6 +14,7 @@ import android.util.TypedValue;
 
 public class MaterialEditText extends AppCompatEditText {
     private static final int TOP_OFFSET = (int) dp2px(20);
+    private static final int TOP_OFFSET2 = (int) dp2px(20);
     private static final int TOP_OFFSET_Y = (int) dp2px(5);
     private static final int LABEL_LEFT_OFFSET = (int) dp2px(4);
     private CharSequence hint;
@@ -55,7 +56,7 @@ public class MaterialEditText extends AppCompatEditText {
         setPadding(getPaddingLeft(), getPaddingTop() + TOP_OFFSET + TOP_OFFSET_Y, getPaddingRight(), getPaddingBottom());
         hint = getHint();
         showAnimator = ObjectAnimator.ofFloat(this, "percent", 1f);
-        hideAnimator = ObjectAnimator.ofFloat(this, "percent", 1f,0f);
+        hideAnimator = ObjectAnimator.ofFloat(this, "percent", 1f, 0f);
         addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,7 +88,8 @@ public class MaterialEditText extends AppCompatEditText {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setAlpha((int) (255 * percent));
-        canvas.drawText(hint, 0, hint.length(), LABEL_LEFT_OFFSET, TOP_OFFSET + TOP_OFFSET_Y, paint);
+        canvas.drawText(hint, 0, hint.length(), LABEL_LEFT_OFFSET, TOP_OFFSET  + TOP_OFFSET_Y + TOP_OFFSET2 * (1f - percent)
+                , paint);
 
     }
 
