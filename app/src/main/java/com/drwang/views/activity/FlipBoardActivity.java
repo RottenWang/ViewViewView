@@ -9,6 +9,7 @@ import com.drwang.views.adapter.ExampleAdapter;
 import com.drwang.views.base.BasicActivity;
 import com.drwang.views.decoration.CustomerItemDecoration;
 import com.drwang.views.view.FlipBoardView;
+import com.drwang.views.view.TagLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +17,10 @@ import java.util.List;
 import butterknife.BindView;
 
 public class FlipBoardActivity extends BasicActivity {
-    @BindView(R.id.fbv_1)
-    FlipBoardView fbv_1;
-    @BindView(R.id.fbv_2)
-    FlipBoardView fbv_2;
-
+    @BindView(R.id.tagLayout)
+    TagLayout tagLayout;
     @Override
     protected void initializeView() {
-        fbv_1.setStartDegree(90);
-        fbv_1.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg_rectangle));
-        fbv_2.setStartDegree(180);
-        fbv_2.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg_rectangle2));
 
     }
 

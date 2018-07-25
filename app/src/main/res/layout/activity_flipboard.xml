@@ -1,22 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.drwang.views.view.FlipBoardView
+    <com.drwang.views.view.TagLayout
+        android:id="@+id/tagLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent"
+        android:paddingEnd="10dp"
+        android:paddingStart="20dp">
 
-    <com.drwang.views.view.FlipBoardView
-        android:id="@+id/fbv_1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
 
-    <com.drwang.views.view.FlipBoardView
-        android:id="@+id/fbv_2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_title_bg2" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_bg" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_bg" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_bg" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_bg" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="hahahahahahahaasdfasdfsdfasdfasdfasdfsdfsdfsfsdfsfsfsfsfsfsfsfsfsfs" />
+    </com.drwang.views.view.TagLayout>
 </LinearLayout>
