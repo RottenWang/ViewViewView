@@ -11,16 +11,12 @@ import android.view.ViewGroup;
 import java.util.Arrays;
 
 public class TagLayout extends ViewGroup {
-    Rect[] rects;
-
     public TagLayout(Context context) {
         super(context);
         init();
     }
 
-    private void init() {
-        setBackgroundColor(Color.GRAY);
-    }
+
 
     public TagLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,7 +27,10 @@ public class TagLayout extends ViewGroup {
         super(context, attrs, defStyleAttr);
         init();
     }
-
+    private void init() {
+        setBackgroundColor(Color.GRAY);
+    }
+    Rect[] rects;
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -44,8 +43,9 @@ public class TagLayout extends ViewGroup {
         View child;
         int paddingStart = getPaddingStart();
         int paddingEnd = getPaddingEnd();
+        int getPaddingTop = getPaddingTop();
         int widthUsed = 0;
-        int heightUsed = 0;
+        int heightUsed = getPaddingTop;
         int lineHeight = 0;
         int lastRightMargin = 0;
         int totalWidth = MeasureSpec.getSize(widthMeasureSpec);
@@ -57,8 +57,9 @@ public class TagLayout extends ViewGroup {
             int leftMargin = layoutParams.leftMargin;
             int rightMargin = layoutParams.rightMargin;
 
-            if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.UNSPECIFIED &&
-                    child.getMeasuredWidth() + widthUsed + paddingStart + leftMargin + rightMargin + lastRightMargin + paddingEnd > totalWidth || (child.getMeasuredState() & MEASURED_STATE_TOO_SMALL) != 0) {
+            if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.UNSPECIFIED
+                    && child.getMeasuredWidth() + widthUsed + paddingStart + leftMargin + rightMargin + lastRightMargin + paddingEnd > totalWidth
+                    || (child.getMeasuredState() & MEASURED_STATE_TOO_SMALL) != 0) {
                 widthUsed = 0;
                 lastRightMargin = 0;
                 heightUsed += lineHeight;
