@@ -17,7 +17,6 @@ public class TagLayout extends ViewGroup {
     }
 
 
-
     public TagLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -27,10 +26,13 @@ public class TagLayout extends ViewGroup {
         super(context, attrs, defStyleAttr);
         init();
     }
+
     private void init() {
         setBackgroundColor(Color.GRAY);
     }
+
     Rect[] rects;
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -75,6 +77,9 @@ public class TagLayout extends ViewGroup {
             lastRightMargin = rightMargin;
 
         }
+        setMeasuredDimension(resolveSizeAndState(widthUsed, widthMeasureSpec, 0), resolveSizeAndState(heightUsed + lineHeight, heightMeasureSpec, 0));
+
+
     }
 
     @Override
