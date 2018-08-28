@@ -25,6 +25,7 @@ import com.drwang.views.dagger.MainActivityModule;
 import com.drwang.views.dagger.OkHttpClient;
 import com.drwang.views.dagger.RetrofitMananger;
 import com.drwang.views.kotlin.KotlinBase_1;
+import com.drwang.views.test.SynchronizedTest;
 import com.drwang.views.util.BitmapUtil;
 import com.drwang.views.util.IntentUtil;
 
@@ -167,6 +168,11 @@ public class MainActivity extends BasicActivity {
                 tv_pieview.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+//        SynchronizedTest test = new SynchronizedTest();
+//        Thread a = new Thread(test::a);
+//        Thread b = new Thread(test::aa);
+//        a.start();
+//        b.start();
 //        ButterKnife.bind(this);
 //        findViewById(R.id.tv_pieview).setOnClickListener(new View.OnClickListener() {
 //            @Override
