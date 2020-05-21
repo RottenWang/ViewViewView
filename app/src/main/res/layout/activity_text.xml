@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.drwang.views.view.ArtTextView
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+    <!--    <com.drwang.views.view.ArtTextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp" />-->
 
-    <com.drwang.views.view.TBProgressView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:padding="20dp" />
+    <!--    <com.drwang.views.view.TBProgressView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:padding="20dp" />-->
 
     <!--<com.drwang.views.view.LyricRollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="200dp" />-->
-    <com.drwang.views.view.PentagonView
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="200dp" />-->
+    <!--    <com.drwang.views.view.PentagonView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent" />-->
+    <com.drwang.views.view.TetrisView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rlOp" />
+
+    <RelativeLayout
+        android:id="@+id/rlOp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tvLeft"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_custom_bg"
+            android:gravity="center"
+            android:text="左"
+            android:textColor="@color/color_white"
+            android:textSize="18dp" />
+        <TextView
+            android:id="@+id/tvRight"
+            android:layout_width="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_custom_bg"
+            android:gravity="center"
+            android:text="右"
+            android:textColor="@color/color_white"
+            android:textSize="18dp" />
+    </RelativeLayout>
+</RelativeLayout>
